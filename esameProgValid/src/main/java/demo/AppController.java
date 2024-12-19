@@ -29,8 +29,10 @@ public class AppController {
     @PostMapping("/credenziali")
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,
-                        @RequestParam("ruolo") String ruolo, Model model) {
-        if ("mario".equals(username)  && "rossi".equals(password) && "amministrativo".equals(ruolo)) {
+                        @RequestParam("ruolo") String ruolo,
+                        @RequestParam("mail") String mail, Model model) {
+
+        if ("mario".equals(username)  && "rossi".equals(password) && "amministrativo".equals(ruolo) && "mail@gmail.com".equals(mail)) {
             return "list"; // redirect alla list
         } else {
             model.addAttribute("error", "Username o password errati");
