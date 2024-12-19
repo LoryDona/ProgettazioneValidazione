@@ -127,19 +127,4 @@ public class AppController {
             return "notfound";
     }
 
-
-    /*@RequestMapping("/show1")
-    public String show1(
-            @RequestParam(name="id", required=true) Long id,
-            Model model) {
-        Optional<Person> result = repository.findById(id);
-        if (result.isPresent()){
-            Person person = result.get();
-            model.addAttribute("person", person);
-            return "show1";
-        }
-        else
-            return "notfound";
-    }*/
-
 }
