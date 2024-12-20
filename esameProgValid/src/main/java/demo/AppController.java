@@ -127,4 +127,14 @@ public class AppController {
             return "notfound";
     }
 
+    @RequestMapping("/listProjects")
+    public String listProjects(Model model)
+    {
+
+        List<Project> projects = Administrator.projects;
+        model.addAttribute("projects", projects);
+
+        return "projects";
+    }
+
 }
