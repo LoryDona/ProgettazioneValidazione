@@ -16,14 +16,13 @@ import java.util.Optional;
 
 @Controller
 public class AppController {
+    private int contaFallimenti=0; //usato per controllare quante volte l'invio del report fallisce
 
     @Autowired
     private PersonRepository repository;
 
     @RequestMapping("/")
-    public String index(){
-        return "login";
-    }
+    public String index(){return "login";}
 
     // Metodo per gestire il login
     @PostMapping("/credenziali")
@@ -32,21 +31,51 @@ public class AppController {
                         @RequestParam("ruolo") String ruolo,
                         @RequestParam("mail") String mail, Model model) {
 
-        if ("mario".equals(username)  && "rossi".equals(password) && "amministrativo".equals(ruolo) && "mail@gmail.com".equals(mail)) {
+        if ("mario".equals(username)  && "rossi".equals(password) && "amministrativo".equals(ruolo) && "mail@gmail.com".equals(mail))
             return "list"; // redirect alla list
-        } else {
-            model.addAttribute("error", "Username o password errati");
-            return "login"; // torna alla pagina di login
+        else if ("a".equals(username)  && "a".equals(password) && "a".equals(ruolo) && "a".equals(mail))
+                return "invioReport"; //serve per testare la pagina dell'invio del report
+        else {
+            model.addAttribute("message", "Username o password errati");
+            return "result";
         }
     }
 
-    // Metodo per gestire il login
+    // Metodo per gestire il recupero della password
     @PostMapping("/recupero")
     public String login(@RequestParam("emailRecupero") String emailRecupero, Model model) {
-        System.out.println("Inviata mail a: "+emailRecupero);
-        return "login"; // torna alla pagina di login
+        // Messaggio da mostrare nella pagina
+        String message = "Invio a "+emailRecupero+" avvenuto con successo";
+        model.addAttribute("message", message);
+        // Restituisci la vista con il messaggio
+        return "result";
     }
 
+    @PostMapping("/submitReport")
+    public String submitReport(
+            @RequestParam("email") String email,
+            @RequestParam("report") String reportName,
+            Model model) {
+        String message="";
+        float randomValue=(float) Math.random();//simula un errore di rete, se minore di 0,5 c'è un errore
+        if (randomValue > 0.5) {
+            message = "Report "+reportName+" inviato a " + email;
+            contaFallimenti=0;
+        }
+        else if (randomValue < 0.5 && contaFallimenti<3) {
+            message = "Errore nell'invio";
+            contaFallimenti++;
+        }
+        else{
+            message = "Controllare lo stato della rete";
+            contaFallimenti=0;
+        }
+        model.addAttribute("message", message);
+        // Restituisci la vista con il messaggio
+        return "result";
+    }
+
+    //---------------------------------------------------------------------------
     @RequestMapping("/list")
     public String list(Model model){
         List<Person> data = new LinkedList<>();
