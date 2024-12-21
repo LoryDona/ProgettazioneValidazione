@@ -13,29 +13,27 @@
 </head>
 <body>
 <h2>Login</h2>
-<form action="/credenziali" method="post">
+<form action="mainPage" method="post">
   <div>
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required>
   </div>
+
   <div>
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required>
   </div>
-  <div>
-    <label for="mail">Mail:</label>
-    <input type="text" id="mail" name="mail" required>
-  </div>
-  <div>
-    <label for="ruolo">Ruolo:</label>
-    <input type="text" id="ruolo" name="ruolo" required>
-  </div>
+
   <button type="submit">Accedi</button>
 </form>
 
+
 <br>
 <a href="javascript:void(0);" onclick="mostraRecuperoPassword()">Password dimenticata?</a><br>
-<a href="listProjects"> List projects </a>
+<a href="createUser">Create user</a><br>
+<a href="list">List users</a><br>
+
+
 
 <!-- Sezione per il recupero password, inizialmente nascosta -->
 <form action="/recupero" method="post">
