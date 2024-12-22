@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrator page</title>
+</head>
+<body>
+
+<h1 th:text="${person.getFirstName()}"></h1>
+<h1 th:text="${person.getLastName()}"></h1>
+
+<br>
+<a th:href="@{/listProjectScientificManager(IDScientificManager=${person.getId()})}"> List projects </a>
+
+<br>
+<a href="/"> Go to the login page </a>
+
+
+</body>
+</html>

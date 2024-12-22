@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create user</title>
+</head>
+<body>
+
+<form action="/credenziali" method="post">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+    </div>
+
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+
+    <div>
+        <label for="mail">Mail:</label>
+        <input type="email" id="mail" name="mail" required>
+    </div>
+
+    <div>
+        <label for="role">Ruolo:</label>
+        <select id="role" name="role" required>
+            <option value="" disabled selected>Seleziona un ruolo</option>
+            <option value="administrator">Administrator</option>
+            <option value="scientificManager">Scientific Manager</option>
+            <option value="Researcher">Researcher</option>
+        </select>
+    </div>
+
+    <button type="submit">Crea</button>
+</form>
+
+
+</body>
+</html>
