@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project</title>
+</head>
+<body>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Name Project</th>
+        <th>Administrator</th>
+        <th>ScientificManager</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="project: ${projects}">
+        <td th:text="${project.nameProject}"> </td>
+        <td th:text="${project.administrator.firstName}"> </td>
+        <td th:text="${project.ScientificManager.firstName}"> </td>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+<a href="javascript:history.back()">Go Back</a>
+<br>
+<a href="/"> Go to the login page </a>
+
+</body>
+</html>

@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import jakarta.persistence.*;
+
 @Entity
 public class Person {
 
@@ -14,11 +16,17 @@ public class Person {
     private String firstName;
     private String lastName;
 
+    private String password;
+
+    private String role;
+
     protected Person() {}
 
-    public Person(String firstName, String lastName) {
+    public Person(String firstName, String lastName, String password, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.password = password;
+        this.role = role;
     }
 
     @Override
@@ -32,12 +40,20 @@ public class Person {
         return id;
     }
 
+    public String getRole() {
+        return role;
+    }
+
     public String getFirstName() {
         return firstName;
     }
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
 }

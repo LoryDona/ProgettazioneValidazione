@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/CreateWorkPackagePage}" method="post">
+
+    <div>
+        <label for="nameWorkPackage">Name workPackage:</label>
+        <input type="text" id="nameWorkPackage" name="nameWorkPackage" required>
+    </div>
+
+
+    <div>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea>
+    </div>
+
+    <div>
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="startDate" required />
+    </div>
+
+    <div>
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate" required />
+    </div>
+
+    <input type="hidden" name="nameProject" th:value="${project.getNameProject()}" />
+
+    <div>
+        <button type="submit">Create Work Package</button>
+    </div>
+
+</form>
+</body>
+</html>
