@@ -12,6 +12,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.io.FileWriter;
+import java.io.IOException;
 
 @Controller
 public class AppController {
@@ -67,6 +69,29 @@ public class AppController {
         String message = "Invio a "+emailRecupero+" avvenuto con successo";
         model.addAttribute("message", message);
         // Restituisci la vista con il messaggio
+        return "result";
+    }
+
+    @PostMapping("/createReport")
+    public String createReport(
+            @RequestParam("results") String results,
+            @RequestParam("hours") String hours,
+            @RequestParam("activities") String activities,
+            Model model) {
+
+        if (results.equals("") || hours.equals("") || activities.equals("")){
+            model.addAttribute("message", "Nessun campo può essere vuoto");
+        }
+        else{
+            try (FileWriter writer = new FileWriter("output.txt")) {
+                writer.write("Risultati:\n"+results+"\nOre: "+hours+"\nActivities:\n"+activities);
+            } catch (IOException e) {
+                System.err.println("Errore durante il salvataggio della stringa: " + e.getMessage());
+                model.addAttribute("message", "Errore nel salvataggio");
+            }
+            model.addAttribute("message", "Report Salvato");
+        }
+
         return "result";
     }
 
