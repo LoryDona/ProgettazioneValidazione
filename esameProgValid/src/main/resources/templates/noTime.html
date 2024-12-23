@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>No time</title>
+</head>
+<body>
+<div class="message-container">
+    <h1>Insufficient Hours</h1>
+    <p>The hours are insufficient, remaining hours of this scientificManager: <span th:text="${freeHours}"></span></p>
+
+    <a href="javascript:history.back()">Go Back</a>
+    <br>
+    <a href="/"> Go to the login page </a>
+
+</div>
+</body>
+</html>
