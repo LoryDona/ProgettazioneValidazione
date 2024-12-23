@@ -1,11 +1,8 @@
 package demo;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
+import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.List;
 
 public class Project {
 
@@ -13,10 +10,14 @@ public class Project {
     private String nameProject;
     private ScientificManager scientificManager;
 
-    public String state;
-    public Date startDate;
-    public Date endDate;
-    public int budget;
+    private String state;
+    private Date startDate;
+    private Date endDate;
+    private int budget;
+
+    private List<WorkPackage> workPackeges = new ArrayList<WorkPackage>();
+
+
 
     public Project(String nameProject, Administrator administrator, ScientificManager scientificManager, String state, Date startDate, Date endDate, int budget)
     {
@@ -61,4 +62,12 @@ public class Project {
         return budget;
     }
 
+    public void addPackage(WorkPackage workPackage)
+    {
+        workPackeges.add(workPackage);
+    }
+
+    public List<WorkPackage> getWorkPackeges() {
+        return workPackeges;
+    }
 }

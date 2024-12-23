@@ -9,7 +9,7 @@ import jakarta.persistence.Entity;
 @Entity
 public class Administrator extends Person{
 
-    public static List<Project> projects;
+    private static List<Project> projects = new ArrayList<Project>();
     public Administrator(String firstName, String lastName, String password)
     {
         super(firstName, lastName, password, "administrator");
@@ -20,12 +20,11 @@ public class Administrator extends Person{
     // l'amministratore aggiunge un progetto nuovo con associato il responsabile scientifico
     public void addProject(String nameProject, ScientificManager scientificManager, String state, Date startDate, Date endDate, int budget)
     {
-        if(projects == null)
-        {
-            projects = new ArrayList<>();
-        }
+        projects = new ArrayList<>();
         projects.add(new Project(nameProject, this, scientificManager, state, startDate, endDate, budget));
     }
 
-
+    public static List<Project> getProjects() {
+        return projects;
+    }
 }
