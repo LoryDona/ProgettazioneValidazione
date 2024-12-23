@@ -30,6 +30,25 @@ public class AppController {
                         @RequestParam("role") String role,
                         @RequestParam("mail") String mail, Model model) {
 
+        String[] parts = username.split(" ");
+        String firstName = parts.length > 0 ? parts[0] : "";
+        String lastName = parts.length > 1 ? parts[1] : "";
+
+        for (Person p: repository.findAll()) {
+            {
+                // Esiste già l'utente, non possono esserci 2 username uguali
+                if (p.getFirstName().equals(firstName) && p.getLastName().equals(lastName)) {
+                    return "userAlreadyExists";
+                }
+            }
+        }
+
+        if(role.equals("administrator")) {
+            repository.save(new Administrator(firstName, lastName, password));
+        }
+        else if(role.equals("scientificManager"))
+        {
+            repository.save(new ScientificManager(firstName, lastName, password));
         }
         else
         {
@@ -38,6 +57,8 @@ public class AppController {
 
         return "login";
     }
+
+
 
     // Metodo per gestire il recupero della password
     @PostMapping("/recupero")
