@@ -440,7 +440,84 @@ public class AppController {
     }
 
 
+// ***********************************************************************************************************************************************
 
+    @RequestMapping("/createMilestone")
+    public String createMilestone(@RequestParam(name="NameProject", required=true) String projectName,
+                                    Model model) {
+
+        Project project = Administrator.getProjects().stream()
+                .filter(pro -> projectName.equals(pro.getNameProject()))
+                .findFirst().get();
+
+        model.addAttribute("project", project);
+
+        if(project != null) {
+            return "insertMilestone";
+        }
+        else {
+            return "_error";
+        }
+
+    }
+
+
+    @PostMapping("/CreateMilestone")
+    public String createWorkPackage(
+            @RequestParam("nameMilestone") String nameMilestone,
+            @RequestParam("descriptionMilestone") String descriptionMilestone,
+            @RequestParam("startDate") String startDate,
+            @RequestParam("endDate") String endDate,
+            @RequestParam("nameProject") String nameProject,
+            Model model
+    ) {
+
+        Optional<Project> optionalProject = Administrator.getProjects().stream()
+                .filter(project -> nameProject.equals(project.getNameProject()))
+                .findFirst();
+
+
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
+
+        if(optionalProject.isPresent()) {
+
+            if(start.isAfter(end))
+            {
+                return "errorDate";
+            }
+
+            System.out.println("Numero package:" + optionalProject.get().getWorkPackeges().stream().count());
+
+            Optional<WorkPackage> optionalWorkPackageDuplicate = optionalProject.get().getWorkPackeges().stream()
+                    .filter(workPackage -> workPackage.getNameWorkPackage().equals(nameWorkPackage)).findFirst();
+
+            if(optionalWorkPackageDuplicate.isPresent())
+            {
+                return "errorDuplicateWorkPacakge";
+            }
+
+            // Aggiungi il workPackage all'interno del task
+            optionalProject.get().addPackage(new WorkPackage(nameWorkPackage, Date.from(start.atStartOfDay(ZoneId.systemDefault()).toInstant()),Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant()), description));
+
+            ScientificManager scientificManager  = Administrator.getProjects().stream()
+                    .filter(project -> project.getNameProject().equals(nameProject))
+                    .findFirst().get().getScientificManager();
+
+            List<Project> projects = Administrator.getProjects().stream().
+                    filter(project -> project.getScientificManager().getId().equals(scientificManager.getId())).toList();
+
+            repository.save(scientificManager);
+
+            model.addAttribute("projects", projects);
+
+            return "projectsScientificManager";
+        }
+        else {
+            return "_error";
+        }
+    }
+    // ******************************************************************************************************************************************************************************
 
 }
 

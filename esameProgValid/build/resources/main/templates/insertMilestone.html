@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/CreateMilestonePage}" method="post">
+
+    <div>
+        <label for="nameMilestone">Name Milestone:</label>
+        <input type="text" id="nameMilestone" name="nameMilestone" required>
+    </div>
+
+
+    <div>
+        <label for="descriptionMilestone">Description:</label>
+        <textarea id="descriptionMilestone" name="descriptionMilestone" required></textarea>
+    </div>
+
+    <div>
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="startDate" required />
+    </div>
+
+    <div>
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate" required />
+    </div>
+
+    <input type="hidden" name="nameProject" th:value="${project.getNameProject()}" />
+
+    <div>
+        <button type="submit">Create Milestone</button>
+    </div>
+
+</form>
+</body>
+</html>
