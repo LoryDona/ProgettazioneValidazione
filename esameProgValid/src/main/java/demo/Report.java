@@ -1,11 +1,11 @@
 package demo;
 
 public class Report {
-    String title;
-    String results;
-    String hours;
-    String activities;
-    String firma;
+    private String title;
+    private String results;
+    private String hours;
+    private String activities;
+    private String firma;
 
     public Report(String tit, String res, String h, String act,String f) {
         title=tit;
