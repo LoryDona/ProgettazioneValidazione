@@ -8,14 +8,26 @@
 <body>
 <h1>Inserisci i dati</h1>
 <form action="/createReport" method="post">
+  <p>Titolo del report:</p>
+  <input type="text" name="title">
   <p>Risultati ottenuti:</p>
   <textarea name="results" rows="4" cols="50"></textarea>
   <p>Rendicontazione delle ore lavorative:</p>
   <input type="number" name="hours">
   <p>Attività svolte durante il periodo di riferimento:</p>
   <textarea name="activities" rows="4" cols="50"></textarea>
+  <p>Firma:</p>
+  <input type="text" name="firma">
   <br><br>
-  <button type="submit">Crea</button>
+
+  <!-- Pulsante per "Crea" con un nome diverso -->
+  <button type="submit" name="submitAction" value="create">Crea</button>
+
+  <!-- Pulsante per "Bozza" con un nome diverso -->
+  <button type="submit" name="submitAction" value="bozza">Bozza</button>
+
+  <!-- Pulsante per recuperare la bozza  -->
+  <button type="submit" name="submitAction" value="recupera">Recupera Bozza</button>
 </form>
 </body>
 </html>

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -18,6 +20,7 @@ import java.io.IOException;
 @Controller
 public class AppController {
     private int contaFallimenti=0; //usato per controllare quante volte l'invio del report fallisce
+    Set<Report> setReport=new HashSet<>();
 
     @Autowired
     private PersonRepository repository;
@@ -60,8 +63,6 @@ public class AppController {
         return "login";
     }
 
-
-
     // Metodo per gestire il recupero della password
     @PostMapping("/recupero")
     public String login(@RequestParam("emailRecupero") String emailRecupero, Model model) {
@@ -72,34 +73,73 @@ public class AppController {
         return "result";
     }
 
+    //INIZIO PARTE SUI REPORT-----------------------------------------------------------------------
     @PostMapping("/createReport")
     public String createReport(
+            @RequestParam("title") String title,
             @RequestParam("results") String results,
             @RequestParam("hours") String hours,
             @RequestParam("activities") String activities,
+            @RequestParam("firma") String firma,
+            @RequestParam("submitAction") String submitAction,
             Model model) {
 
-        if (results.equals("") || hours.equals("") || activities.equals("")){
-            model.addAttribute("message", "Nessun campo può essere vuoto");
-        }
-        else{
-            try (FileWriter writer = new FileWriter("output.txt")) {
-                writer.write("Risultati:\n"+results+"\nOre: "+hours+"\nActivities:\n"+activities);
-            } catch (IOException e) {
-                System.err.println("Errore durante il salvataggio della stringa: " + e.getMessage());
-                model.addAttribute("message", "Errore nel salvataggio");
+        //se premo create salvo il report
+        if (submitAction.equals("create")){
+            if (results.equals("") || hours.equals("") || activities.equals("") || Integer.parseInt(hours)<1 || title.equals("") || firma.equals("")) {
+                model.addAttribute("message", "Nessun campo può essere vuoto e le ore devono essere maggiori di 0");
             }
-            model.addAttribute("message", "Report Salvato");
+            else{
+                try (FileWriter writer = new FileWriter(title+".txt")) {
+                    writer.write("Risultati:\n"+results+"\nOre: "+hours+"\nActivities:\n"+activities+"\nFirma: "+firma);
+                } catch (IOException e) {
+                    System.err.println("Errore durante il salvataggio: " + e.getMessage());
+                    model.addAttribute("message", "Errore nel salvataggio");
+                }
+                model.addAttribute("message", "Report Salvato");
+            }
+         }
+        else{
+            if (title.equals(""))
+                model.addAttribute("message", "Scrivere almeno il nome per salvare in bozza");
+            else{
+                if (setReport.contains(new Report(title,results,hours,activities,firma))){
+                    setReport.remove(new Report(title,results,hours,activities,firma));//rimuovo quello vecchio
+                    setReport.add(new Report(title,results,hours,activities,firma));
+                }
+                else{
+                    setReport.add(new Report(title,results,hours,activities,firma));
+                }
+                model.addAttribute("message", "Report in bozza");
+            }
         }
 
         return "result";
     }
 
+    @RequestMapping("/invioReport")
+    public String showReportPage(Model model) {
+        // Path della cartella contenente i file .txt
+        String folderPath = " C:/Users/crist/Desktop/ProgettazioneValidazione-main"; // Cambia con il percorso della tua cartella
+
+        // Leggi i file .txt dalla cartella
+        File folder = new File(folderPath);
+        FilenameFilter txtFilter = (dir, name) -> name.toLowerCase().endsWith(".txt");
+        File[] files = folder.listFiles(txtFilter);
+        System.out.println("Prova: "+files.length);
+        // Passa i nomi dei file (senza estensione) al modello
+        if (files != null) {
+            String[] reportNames = Arrays.stream(files)
+                    .map(file -> file.getName().replaceAll(".txt$", ""))
+                    .toArray(String[]::new);
+            model.addAttribute("reportNames", reportNames);
+        }
+
+        return "invioReport"; // La vista HTML
+    }
+
     @PostMapping("/submitReport")
-    public String submitReport(
-            @RequestParam("email") String email,
-            @RequestParam("report") String reportName,
-            Model model) {
+    public String submitReport(@RequestParam("email") String email, @RequestParam("report") String reportName, Model model) {
         String message="";
         float randomValue=(float) Math.random();//simula un errore di rete, se minore di 0,5 c'è un errore
         if (randomValue > 0.5) {
@@ -119,7 +159,8 @@ public class AppController {
         return "result";
     }
 
-    //---------------------------------------------------------------------------
+    //Fine PARTE SUI REPORT---------------------------------------------------------------
+
     @RequestMapping("/list")
     public String list(Model model){
         List<Person> data = new LinkedList<>();
@@ -136,9 +177,7 @@ public class AppController {
     }
 
     @RequestMapping("/read")
-    public String read(
-            @RequestParam(name="id", required=true) Long id,
-            Model model) {
+    public String read(@RequestParam(name="id", required=true) Long id, Model model) {
         Optional<Person> result = repository.findById(id);
         if (result.isPresent()){
             Person person = result.get();
@@ -160,9 +199,7 @@ public class AppController {
     }
 
     @RequestMapping("/edit")
-    public String edit(
-            @RequestParam(name="id", required=true) Long id,
-            Model model) {
+    public String edit(@RequestParam(name="id", required=true) Long id, Model model) {
         Optional<Person> result = repository.findById(id);
         if (result.isPresent()) {
             Person person = result.get();
