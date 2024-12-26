@@ -1,10 +1,14 @@
 package demo;
 import jakarta.persistence.Entity;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 public class ScientificManager extends Person{
+
+    private static List<WorkPackage> works = new ArrayList<WorkPackage>();
 
     private int free_hours;
 
@@ -15,10 +19,6 @@ public class ScientificManager extends Person{
 
     public ScientificManager(){};
 
-    public static Collection<Object> getWorkPackageList() {
-        return null;
-    }
-
     public void setFree_hours(int hours)
     {
         free_hours = hours;
@@ -28,4 +28,14 @@ public class ScientificManager extends Person{
     {
         return free_hours;
     }
+
+
+    public void addWorkPackage(String nameWorkPackage, Date startDate, Date endDate, String description) {
+        works = new ArrayList<>();
+        works.add(new WorkPackage(nameWorkPackage, startDate, endDate, description));
+    }
+    public static List<WorkPackage> getWorkPackageList() {
+        return works;
+    }
+
 }
