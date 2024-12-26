@@ -1,32 +1,57 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Menu a Tendina con Pulsante</title>
+  <title>Lista dei report</title>
 </head>
 <body>
-<h1>Seleziona un Report</h1>
-<form action="/submitReport" method="POST">
-  <!-- Campo Email -->
+
+<h1>Seleziona un report da modificare</h1>
+<table border="1">
+  <thead>
+  <tr>
+    <th>id</th>
+    <th>Name</th>
+    <th>Edit Report</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="report: ${reports}">
+    <td th:text="${report.id}"> 1 </td>
+    <td th:text="${report.title}"> prova </td>
+    <td> <a href="editReport" th:href="@{editReport(id=${report.id})}"> edit </a></td>
+  </tr>
+  </tbody>
+</table>
+
+<form action="submitReport" method="get">
+  <h1>Seleziona un report da inviare</h1>
+  <table border="1">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Name</th>
+      <th>Send Report</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="report: ${reports}">
+      <td th:text="${report.id}">1</td>
+      <td th:text="${report.title}">prova</td>
+      <td>
+        <button type="submit" name="action" th:value="${report.id}">send</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
   <label for="email">Inserisci la tua email:</label>
   <br>
   <input type="email" id="email" name="email" required>
   <br><br>
-
-  <!-- Menu a Tendina -->
-  <label for="report">Seleziona un report:</label>
-  <br>
-  <select name="report" id="report" required>
-    <!-- Le opzioni vengono generate dinamicamente -->
-    <th:block th:each="reportName : ${reportNames}">
-      <option th:value="${reportName}" th:text="${reportName}"></option>
-    </th:block>
-  </select>
-  <br><br>
-
-  <!-- Pulsante Invia -->
-  <button type="submit">Invia</button>
 </form>
+
+<a href="createReport"> Crea un nuovo report </a>
 </body>
 </html>

@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>MVC Web application</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+<h1>Edit a record</h1>
+<form action="updateReport" method="post">
+  <input type="hidden" name="id" value="10" th:value="${report.id}"> <br>
+  Titolo:<input type="text" name="title"  th:value="${report.title}"><br>
+  Risultati:<input type="text" name="results"  th:value="${report.results}"><br>
+  Ore:<input type="number" name="hours"  th:value="${report.hours}"><br>
+  Attività:<input type="text" name="activities"  th:value="${report.activities}"><br>
+  Firma:<input type="text" name="firma"  th:value="${report.firma}"><br>
+  <!-- Pulsante per "Crea" con un nome diverso -->
+  <button type="submit" name="submitAction" value="create">Crea</button>
+  <!-- Pulsante per "Bozza" con un nome diverso -->
+  <button type="submit" name="submitAction" value="bozza">Bozza</button>
+</form>
+
+<a href="invioReport"> Torna alla lista dei report </a>
+
+</body>
+</html>

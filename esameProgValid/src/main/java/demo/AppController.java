@@ -74,8 +74,56 @@ public class AppController {
     }
 
     //INIZIO PARTE SUI REPORT-----------------------------------------------------------------------
-    @PostMapping("/createReport")
-    public String createReport(
+    //visualizza la pagina con la lista dei report
+    @RequestMapping("/invioReport")
+    public String listaReport(Model model) {
+        model.addAttribute("reports", setReport);
+        return "invioReport"; // La vista HTML
+    }
+
+    //pagina per modificare i report in stato di bozza
+    @RequestMapping("/editReport")
+    public String editReport(@RequestParam(name="id", required=true) Long id, Model model) {
+        Report rep=null;
+        for(Report r: setReport) {
+            if (r.getId().equals(id)) {
+                rep=r;
+            }
+        }
+        model.addAttribute("report", rep);
+        return "editReport";
+    }
+
+    //invia un determinato report ad una mail specificata, simula anche un errore di rete
+    @RequestMapping("/submitReport")
+    public String submitReport(@RequestParam("email") String email, Model model) {
+        String message="";
+        float randomValue=(float) Math.random();//simula un errore di rete, se minore di 0,5 c'è un errore
+        if (randomValue > 0.5) {
+            message = "Report "+" inviato a " + email;
+            contaFallimenti=0;
+        }
+        else if (randomValue < 0.5 && contaFallimenti<3) {
+            message = "Errore nell'invio";
+            contaFallimenti++;
+        }
+        else{
+            message = "Controllare lo stato della rete";
+            contaFallimenti=0;
+        }
+        model.addAttribute("message", message);
+        // Restituisci la vista con il messaggio
+        return "result";
+    }
+
+    @RequestMapping("/createReport")
+    public String mostraPaginaCreateReport(Model model) {
+        return "createReport"; // La vista HTML
+    }
+
+    //crea un report dal nulla
+    @PostMapping("/memoriseReport")
+    public String memoriseReport(
             @RequestParam("title") String title,
             @RequestParam("results") String results,
             @RequestParam("hours") String hours,
@@ -96,6 +144,7 @@ public class AppController {
                     System.err.println("Errore durante il salvataggio: " + e.getMessage());
                     model.addAttribute("message", "Errore nel salvataggio");
                 }
+                setReport.add(new Report(title,results,hours,activities,firma));
                 model.addAttribute("message", "Report Salvato");
             }
          }
@@ -103,59 +152,50 @@ public class AppController {
             if (title.equals(""))
                 model.addAttribute("message", "Scrivere almeno il nome per salvare in bozza");
             else{
-                if (setReport.contains(new Report(title,results,hours,activities,firma))){
-                    setReport.remove(new Report(title,results,hours,activities,firma));//rimuovo quello vecchio
-                    setReport.add(new Report(title,results,hours,activities,firma));
-                }
-                else{
-                    setReport.add(new Report(title,results,hours,activities,firma));
-                }
+                setReport.remove(new Report(title,results,hours,activities,firma));//remove the old report
+                setReport.add(new Report(title,results,hours,activities,firma));
                 model.addAttribute("message", "Report in bozza");
             }
         }
-
         return "result";
     }
 
-    @RequestMapping("/invioReport")
-    public String showReportPage(Model model) {
-        // Path della cartella contenente i file .txt
-        String folderPath = " C:/Users/crist/Desktop/ProgettazioneValidazione-main"; // Cambia con il percorso della tua cartella
-
-        // Leggi i file .txt dalla cartella
-        File folder = new File(folderPath);
-        FilenameFilter txtFilter = (dir, name) -> name.toLowerCase().endsWith(".txt");
-        File[] files = folder.listFiles(txtFilter);
-        System.out.println("Prova: "+files.length);
-        // Passa i nomi dei file (senza estensione) al modello
-        if (files != null) {
-            String[] reportNames = Arrays.stream(files)
-                    .map(file -> file.getName().replaceAll(".txt$", ""))
-                    .toArray(String[]::new);
-            model.addAttribute("reportNames", reportNames);
-        }
-
-        return "invioReport"; // La vista HTML
-    }
-
-    @PostMapping("/submitReport")
-    public String submitReport(@RequestParam("email") String email, @RequestParam("report") String reportName, Model model) {
-        String message="";
-        float randomValue=(float) Math.random();//simula un errore di rete, se minore di 0,5 c'è un errore
-        if (randomValue > 0.5) {
-            message = "Report "+reportName+" inviato a " + email;
-            contaFallimenti=0;
-        }
-        else if (randomValue < 0.5 && contaFallimenti<3) {
-            message = "Errore nell'invio";
-            contaFallimenti++;
+    @PostMapping("/updateReport")
+    public String updateReport(
+            @RequestParam(name="id", required=true) Long id,
+            @RequestParam(name="title", required=true) String title,
+            @RequestParam(name="results", required=true) String results,
+            @RequestParam(name="hours", required=true) String hours,
+            @RequestParam(name="activities", required=true) String activities,
+            @RequestParam(name="firma", required=true) String firma,
+            @RequestParam("submitAction") String submitAction,
+            Model model){
+        //se premo create salvo il report
+        if (submitAction.equals("create")){
+            if (results.equals("") || hours.equals("") || activities.equals("") || Integer.parseInt(hours)<1 || title.equals("") || firma.equals("")) {
+                model.addAttribute("message", "Nessun campo può essere vuoto e le ore devono essere maggiori di 0");
+            }
+            else{
+                try (FileWriter writer = new FileWriter(title+".txt")) {
+                    writer.write("Risultati:\n"+results+"\nOre: "+hours+"\nActivities:\n"+activities+"\nFirma: "+firma);
+                } catch (IOException e) {
+                    System.err.println("Errore durante il salvataggio: " + e.getMessage());
+                    model.addAttribute("message", "Errore nel salvataggio");
+                }
+                setReport.remove(new Report(title,results,hours,activities,firma));//remove the old report
+                setReport.add(new Report(title,results,hours,activities,firma));
+                model.addAttribute("message", "Report Salvato");
+            }
         }
         else{
-            message = "Controllare lo stato della rete";
-            contaFallimenti=0;
+            if (title.equals(""))
+                model.addAttribute("message", "Scrivere almeno il nome per salvare in bozza");
+            else{
+                setReport.remove(new Report(title,results,hours,activities,firma));//remove the old report
+                setReport.add(new Report(title,results,hours,activities,firma));
+                model.addAttribute("message", "Report in bozza");
+            }
         }
-        model.addAttribute("message", message);
-        // Restituisci la vista con il messaggio
         return "result";
     }
 
@@ -172,9 +212,7 @@ public class AppController {
     }
 
     @RequestMapping("/input")
-    public String input(){
-        return "input";
-    }
+    public String input(){return "input";}
 
     @RequestMapping("/read")
     public String read(@RequestParam(name="id", required=true) Long id, Model model) {
@@ -293,11 +331,7 @@ public class AppController {
     }
 
     @RequestMapping("/createUser")
-    public String createUser(Model model)
-    {
-
-        return "createUser";
-    }
+    public String createUser(Model model) {return "createUser";}
 
     @RequestMapping("/createProjectData")
     public String createProjectData(@RequestParam(name="IDAdministrator", required=true) Long IDAdministrator,
