@@ -29,6 +29,17 @@
         </select>
     </div>
 
+    <!-- Seleziona WorPackage
+    <div>
+        <label for="workPackage">Responsabile Scientifico:</label>
+        <select id="workPackage" name="workPackage.get" required>
+            <option value="" disabled selected>Seleziona un Responsabile Scientifico</option>
+            <th:block th:each="manager : ${scientificManager}">
+                <option th:value="${manager.getId()}" th:text="${manager.getFirstName()}">Responsabile Scientifico</option>
+            </th:block>
+        </select>
+    </div>
+    -->
     <div>
         <label for="startDate">Start Date:</label>
         <input type="date" id="startDate" name="startDate" required />

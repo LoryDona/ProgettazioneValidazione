@@ -17,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 @Controller
 public class AppController {
@@ -446,25 +447,32 @@ public class AppController {
 // ***********************************************************************************************************************************************
 
     @RequestMapping("/createMilestone")
-    public String createMilestone(@RequestParam(name="NameProject", required=true) String projectName,
-                                    Model model) {
+    public String createMilestone(
+            @RequestParam(name="NameProject", required=true) String projectName,
+            @RequestParam(name="workPackageNames", required=false) List<WorkPackage> workPackageNames,  // Solo i nomi dei work package
+            Model model) {
 
+        // Recupera il progetto
         Project project = Administrator.getProjects().stream()
                 .filter(pro -> projectName.equals(pro.getNameProject()))
-                .findFirst().get();
+                .findFirst()
+                .orElse(null);
 
-        model.addAttribute("project", project);
+        //Recupera i workpackage
+        WorkPackage works = ScientificManager.getWorkPackageList().stream()
+                .filter(pro -> workPackageNames.equals(pro.getNameWorkPackage()))
+                .findFirst()
+                .orElse(null);
 
-        if(project != null) {
-            return "insertMilestone";
+        if (project != null) {
+            model.addAttribute("project", project);
+            model.addAttribute("workPackages", project.getWorkPackeges());
+            return "insertMilestone";  // Restituisci la vista per l'inserimento della milestone
+        } else {
+            return "errorPage";  // Se il progetto non viene trovato, mostra una pagina di errore
         }
-        else {
-            return "insertMilestone";
-        }
-
-
-
     }
+
 
 
     @PostMapping("/CreateMilestonePage")
@@ -475,8 +483,10 @@ public class AppController {
             @RequestParam("endDate") String endDate,
             @RequestParam(name = "state", required = true) String state,
             @RequestParam("nameProject") String nameProject,
+            //  @RequestParam("workPackageIds") List<WorkPackage> workPackageIds,
             Model model
     ) {
+
 
         LocalDate parsedStartDate = LocalDate.parse(startDate);
         LocalDate parsedEndDate = LocalDate.parse(endDate);
@@ -491,6 +501,10 @@ public class AppController {
             {
                 return "errorDate";
             }
+            List<String> workPackageNames = optionalProject.get().getWorkPackeges()
+                    .stream()
+                    .map(WorkPackage::getNameWorkPackage) // Estrai il nome di ogni WorkPackage
+                    .collect(Collectors.toList());
 
             Project proj = optionalProject.get(); //Per estrarre il valore del progetto da option
 
@@ -532,20 +546,29 @@ public class AppController {
             if (holidays.contains(endMonthDay)) {
                 return "errorHolidayEndDate";
             }
+/*
+            List<WorkPackage> workPackages = new ArrayList<>();
+            for (Integer workPackageId : workPackageIds) {
+                Optional<WorkPackage> workPackage = proj.getWorkPackeges().stream()
+                        .filter(wp -> wp.getNameWorkPackage().equals(workPackageId))
+                        .findFirst();
+                workPackage.ifPresent(workPackages::add);  // Aggiungi il WorkPackage se trovato
+            }
 
-                // Aggiunta di Milestone
-                optionalProject.get().addMilestone(new Milestone(nameMilestone, Date.from(parsedStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(parsedEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), descriptionMilestone, state));
+ */
+            // Aggiunta di Milestone
+            optionalProject.get().addMilestone(new Milestone(nameMilestone, Date.from(parsedStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(parsedEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), descriptionMilestone, state, workPackageNames));
 
-                ScientificManager scientificManager  = Administrator.getProjects().stream()
-                        .filter(project -> project.getNameProject().equals(nameProject))
-                        .findFirst().get().getScientificManager();
+            ScientificManager scientificManager  = Administrator.getProjects().stream()
+                    .filter(project -> project.getNameProject().equals(nameProject))
+                    .findFirst().get().getScientificManager();
 
-                List<Project> projects = Administrator.getProjects().stream().
-                        filter(project -> project.getScientificManager().getId().equals(scientificManager.getId())).toList();
+            List<Project> projects = Administrator.getProjects().stream().
+                    filter(project -> project.getScientificManager().getId().equals(scientificManager.getId())).toList();
 
-                repository.save(scientificManager);
+            repository.save(scientificManager);
 
-                model.addAttribute("projects", projects);
+            model.addAttribute("projects", projects);
 
             return "projectsScientificManager";
         }
@@ -553,9 +576,8 @@ public class AppController {
             return "errorDate";
         }
 
-        }
+    }
 
     // ******************************************************************************************************************************************************************************
 
 }
-

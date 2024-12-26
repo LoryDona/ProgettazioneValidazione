@@ -1,5 +1,8 @@
 package demo;
 import jakarta.persistence.Entity;
+
+import java.util.Collection;
+
 @Entity
 public class ScientificManager extends Person{
 
@@ -11,6 +14,10 @@ public class ScientificManager extends Person{
     }
 
     public ScientificManager(){};
+
+    public static Collection<Object> getWorkPackageList() {
+        return null;
+    }
 
     public void setFree_hours(int hours)
     {

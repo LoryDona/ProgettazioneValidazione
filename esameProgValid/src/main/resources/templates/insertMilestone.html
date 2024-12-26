@@ -29,17 +29,17 @@
         </select>
     </div>
 
-    <!-- Seleziona WorPackage
+    <!-- Seleziona WorkPackage -->
     <div>
-        <label for="workPackage">Responsabile Scientifico:</label>
-        <select id="workPackage" name="workPackage.get" required>
-            <option value="" disabled selected>Seleziona un Responsabile Scientifico</option>
-            <th:block th:each="manager : ${scientificManager}">
-                <option th:value="${manager.getId()}" th:text="${manager.getFirstName()}">Responsabile Scientifico</option>
+        <label for="workPackage">Work Package:</label>
+        <select id="workPackage" name="workPackages" multiple>
+            <option value="" disabled selected>Seleziona un Work Package</option>
+            <th:block th:each="workPackage : ${workPackages}">
+                <option th:value="${workPackage.nameWorkPackage}" th:text="${workPackage.nameWorkPackage}"></option>
             </th:block>
+
         </select>
     </div>
-    -->
     <div>
         <label for="startDate">Start Date:</label>
         <input type="date" id="startDate" name="startDate" required />

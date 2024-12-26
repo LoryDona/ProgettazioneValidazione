@@ -21,7 +21,7 @@ public class Milestone {
     private String nameMilestone;
     private String descriptionMilestone;
 
-    private List<WorkPackage> workpackages = new ArrayList<WorkPackage>();
+    public List<WorkPackage> workpackages = new ArrayList<WorkPackage>();
 
     private Date startDate;
     private Date endDate;
@@ -29,12 +29,11 @@ public class Milestone {
     //   private StatusMilestone statusMilestone;
 
 
-    public Milestone(String nameMilestone, Date startDate, Date endDate, String descriptionMilestone, String state) {
+    public Milestone(String nameMilestone, Date startDate, Date endDate, String descriptionMilestone, String state, List<String> workPackages) {
         this.nameMilestone = nameMilestone;
         this.descriptionMilestone = descriptionMilestone;
-            this.startDate = startDate;
+        this.startDate = startDate;
         this.endDate = endDate;
-      //  this.statusMilestone = StatusMilestone.NOT_STARTED;
     }
 
 
