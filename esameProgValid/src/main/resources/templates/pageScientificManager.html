@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Administrator page</title>
+    <title>Scientific manage page</title>
 </head>
 <body>
 
@@ -12,7 +12,6 @@
 
 <br>
 <a th:href="@{/listProjectScientificManager(IDScientificManager=${person.getId()})}"> List projects </a>
-
 <br>
 
 <h1>Set Free Hours</h1>
@@ -29,11 +28,39 @@
 </form>
 
 <br>
-<a href="/"> Go to the login page </a>
+
+<h2 th:text="${message}"></h2>
+
+<br>
+<h2>List work packages</h2>
+<br>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Project association name</th>
+        <th>Description</th>
+        <th>Start date</th>
+        <th>End date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="w: ${listWorkPackage}">
+        <td th:text="${w.getNameWorkPackage()}"> <b></b></td>
+        <td th:text="${w.getProjectAssociation().getNameProject()}"></td>
+        <td th:text="${w.getDescription()}"></td>
+        <td th:text="${w.getStartDate()}"></td>
+        <td th:text="${w.getEndDate()}"></td>
+    </tr>
+    </tbody>
+</table>
 
 <br>
 
-<h2 th:text="${message}"></h2>
+<a href="/"> Go to the login page </a>
+
+<br>
 
 </body>
 </html>

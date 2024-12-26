@@ -15,12 +15,13 @@ public class WorkPackage {
 
     private Date endDate;
 
-    public WorkPackage(String nameWorkPackage, Date startDate, Date endDate, String description)
+    public WorkPackage(Project projectAssociation, String nameWorkPackage, Date startDate, Date endDate, String description)
     {
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
         this.nameWorkPackage = nameWorkPackage;
+        this.projectAssociation = projectAssociation;
     }
 
     public void setProjectAssociation(Project projectAssociation) {

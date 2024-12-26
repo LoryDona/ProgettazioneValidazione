@@ -210,6 +210,20 @@ public class AppController {
             } else if (result.get() instanceof ScientificManager) {
                 model.addAttribute("person", (ScientificManager) result.get());
 
+                long idScientificManager = result.get().getId();
+
+                List<Project> projectSscientificManager = Administrator.getProjects().stream().
+                        filter(p -> p.getScientificManager().getId().equals(idScientificManager)).toList();
+
+                List<WorkPackage> workPackages = new ArrayList<WorkPackage>();
+
+                for(Project p : projectSscientificManager)
+                {
+                    workPackages.addAll(p.getWorkPackeges());
+                }
+
+                model.addAttribute("listWorkPackage", workPackages);
+
                 return "pageScientificManager";
             } else {
                 model.addAttribute("person", (Researcher) result.get());
@@ -383,7 +397,6 @@ public class AppController {
                 return "errorDate";
             }
 
-            System.out.println("Numero package:" + optionalProject.get().getWorkPackeges().stream().count());
 
             Optional<WorkPackage> optionalWorkPackageDuplicate = optionalProject.get().getWorkPackeges().stream()
                     .filter(workPackage -> workPackage.getNameWorkPackage().equals(nameWorkPackage)).findFirst();
@@ -394,7 +407,7 @@ public class AppController {
             }
 
             // Aggiungi il workPackage all'interno del task
-            optionalProject.get().addPackage(new WorkPackage(nameWorkPackage, Date.from(start.atStartOfDay(ZoneId.systemDefault()).toInstant()),Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant()), description));
+            optionalProject.get().addPackage(new WorkPackage(optionalProject.get(), nameWorkPackage, Date.from(start.atStartOfDay(ZoneId.systemDefault()).toInstant()),Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant()), description));
 
             ScientificManager scientificManager  = Administrator.getProjects().stream()
                     .filter(project -> project.getNameProject().equals(nameProject))
