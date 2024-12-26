@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.io.FileWriter;
@@ -456,67 +459,102 @@ public class AppController {
             return "insertMilestone";
         }
         else {
-            return "_error";
+            return "insertMilestone";
         }
+
+
 
     }
 
 
-    @PostMapping("/CreateMilestone")
-    public String createWorkPackage(
+    @PostMapping("/CreateMilestonePage")
+    public String createMilestone(
             @RequestParam("nameMilestone") String nameMilestone,
             @RequestParam("descriptionMilestone") String descriptionMilestone,
             @RequestParam("startDate") String startDate,
             @RequestParam("endDate") String endDate,
+            @RequestParam(name = "state", required = true) String state,
             @RequestParam("nameProject") String nameProject,
             Model model
     ) {
+
+        LocalDate parsedStartDate = LocalDate.parse(startDate);
+        LocalDate parsedEndDate = LocalDate.parse(endDate);
 
         Optional<Project> optionalProject = Administrator.getProjects().stream()
                 .filter(project -> nameProject.equals(project.getNameProject()))
                 .findFirst();
 
-
-        LocalDate start = LocalDate.parse(startDate);
-        LocalDate end = LocalDate.parse(endDate);
-
         if(optionalProject.isPresent()) {
 
-            if(start.isAfter(end))
+            if(parsedStartDate.isAfter(parsedEndDate))
             {
                 return "errorDate";
             }
 
-            System.out.println("Numero package:" + optionalProject.get().getWorkPackeges().stream().count());
+            Project proj = optionalProject.get(); //Per estrarre il valore del progetto da option
 
-            Optional<WorkPackage> optionalWorkPackageDuplicate = optionalProject.get().getWorkPackeges().stream()
-                    .filter(workPackage -> workPackage.getNameWorkPackage().equals(nameWorkPackage)).findFirst();
 
-            if(optionalWorkPackageDuplicate.isPresent())
-            {
-                return "errorDuplicateWorkPacakge";
+            //Check se c'è collisione con un altra millestone
+            for (Milestone existingMilestone : proj.getMilestones()) {
+                LocalDate existingStartDate = existingMilestone.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate existingEndDate = existingMilestone.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                if ((existingMilestone.getStartDate().equals(parsedStartDate) || existingMilestone.getEndDate().equals(parsedEndDate) ||
+                        (existingStartDate.isBefore(parsedStartDate) && existingEndDate.isAfter(parsedEndDate)))) {
+                    return "errorCollisionMilestone";
+                }
+            }
+            /*
+            //Controllo se esiste un altra Milestone che termini lo stesso giorno
+            for (Milestone existingMilestone : proj.getMilestones()) {
+                if ((existingMilestone.getEndDate().equals(parsedEndDate) )) {
+                    return "_error";
+                }
+            }
+            */
+
+            //Controllo che EndDate non sia in un giorno festivo
+            List<MonthDay> holidays = List.of(
+                    MonthDay.of(1, 1),  // Capodanno
+                    MonthDay.of(1, 6),  // Epifania
+                    MonthDay.of(4, 25), // Festa della Liberazione
+                    MonthDay.of(5, 1),  // Festa del Lavoro
+                    MonthDay.of(6, 2),  // Festa della Repubblica
+                    MonthDay.of(11, 1), // Ognissanti
+                    MonthDay.of(12, 8), // Immacolata
+                    MonthDay.of(12, 25) // Natale
+            );
+
+            // Estrai MonthDay da endDate
+            MonthDay endMonthDay = MonthDay.from(parsedEndDate);
+
+            // Verifica se la endDate cade in una festività
+            if (holidays.contains(endMonthDay)) {
+                return "errorHolidayEndDate";
             }
 
-            // Aggiungi il workPackage all'interno del task
-            optionalProject.get().addPackage(new WorkPackage(nameWorkPackage, Date.from(start.atStartOfDay(ZoneId.systemDefault()).toInstant()),Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant()), description));
+                // Aggiunta di Milestone
+                optionalProject.get().addMilestone(new Milestone(nameMilestone, Date.from(parsedStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(parsedEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), descriptionMilestone, state));
 
-            ScientificManager scientificManager  = Administrator.getProjects().stream()
-                    .filter(project -> project.getNameProject().equals(nameProject))
-                    .findFirst().get().getScientificManager();
+                ScientificManager scientificManager  = Administrator.getProjects().stream()
+                        .filter(project -> project.getNameProject().equals(nameProject))
+                        .findFirst().get().getScientificManager();
 
-            List<Project> projects = Administrator.getProjects().stream().
-                    filter(project -> project.getScientificManager().getId().equals(scientificManager.getId())).toList();
+                List<Project> projects = Administrator.getProjects().stream().
+                        filter(project -> project.getScientificManager().getId().equals(scientificManager.getId())).toList();
 
-            repository.save(scientificManager);
+                repository.save(scientificManager);
 
-            model.addAttribute("projects", projects);
+                model.addAttribute("projects", projects);
 
             return "projectsScientificManager";
         }
         else {
-            return "_error";
+            return "errorDate";
         }
-    }
+
+        }
+
     // ******************************************************************************************************************************************************************************
 
 }

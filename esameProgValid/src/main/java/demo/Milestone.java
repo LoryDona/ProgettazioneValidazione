@@ -5,43 +5,43 @@ import java.util.List;
 import java.util.Date;
 
 public class Milestone {
-
-    public enum StatusMilestone {
-        NOT_STARTED,
-        IN_PROGRESS,
-        COMPLETED,
-        LATE
-    }
-
+    /*
+        public enum StatusMilestone {
+            NOT_STARTED,
+            IN_PROGRESS,
+            COMPLETED,
+            LATE
+        }
+    */
     public List<Researcher> researchers;
-
+    ScientificManager scientificManager;
     private Project projectAssociation;
 
+    private String state;
     private String nameMilestone;
     private String descriptionMilestone;
 
-    private List<Task> tasks = new ArrayList<Task>();
-    private List<WorkPackage> workpackages = new ArrayList<>();
+    private List<WorkPackage> workpackages = new ArrayList<WorkPackage>();
 
     private Date startDate;
     private Date endDate;
 
-    private StatusMilestone statusMilestone;
+    //   private StatusMilestone statusMilestone;
 
 
-    public Milestone(String nameMilestone, Date startDate, Date endDate,  String descriptionMilestone) {
+    public Milestone(String nameMilestone, Date startDate, Date endDate, String descriptionMilestone, String state) {
         this.nameMilestone = nameMilestone;
         this.descriptionMilestone = descriptionMilestone;
-        this.startDate = startDate;
+            this.startDate = startDate;
         this.endDate = endDate;
-        this.statusMilestone = StatusMilestone.NOT_STARTED;
+      //  this.statusMilestone = StatusMilestone.NOT_STARTED;
     }
 
 
 
-    public StatusMilestone getStatusMilestone() { return statusMilestone; }
-
-    public void setStatusMilestone(StatusMilestone statusMilestone) { this.statusMilestone = statusMilestone; }
+    //  public StatusMilestone getStatusMilestone() { return statusMilestone; }
+    //  public void setStatusMilestone(StatusMilestone statusMilestone) { this.statusMilestone = statusMilestone; }
+    public String getState() { return state; }
 
     public void setProjectAssociation(Project projectAssociation) {
         this.projectAssociation = projectAssociation;
@@ -51,14 +51,6 @@ public class Milestone {
         return projectAssociation;
     }
 
-    public void addTask(Task task)
-    {
-        tasks.add(task);
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
 
     public void addWorkPackage(WorkPackage workPackage) { workpackages.add(workPackage); }
 
@@ -73,14 +65,13 @@ public class Milestone {
         return descriptionMilestone;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(Date endDate) {
         this.startDate = startDate;
     }
 
     public Date getStartDate() {
         return startDate;
     }
-
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
