@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<br>
+<h2>List Tasks of researcher</h2>
+<br>
+
+<h1 th:text="${person.getFirstName()}"></h1>
+<h1 th:text="${person.getLastName()}"></h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Name task</th>
+        <th>Scientific researcher name</th>
+        <th>Researchers</th>
+        <th>State</th>
+        <th>Start date</th>
+        <th>End date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="t: ${listTasks}">
+        <td th:text="${t.getNameTask()}"> <b></b></td>
+        <td th:text="${t.getWorkPackageAssociation().getProjectAssociation().getScientificManager().getFirstName()}"></td>
+        <td>
+            <ul>
+                <li th:each="researcher : ${t.getResearchers()}" th:text="${researcher.getFirstName()}"></li>
+            </ul>
+        </td>
+        <td th:text="${t.getState()}"></td>
+        <td th:text="${t.getStartDate()}"></td>
+        <td th:text="${t.getEndDate()}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+
+<a href="/"> Go to the login page </a>
+
+<br>
+
+</body>
+</html>

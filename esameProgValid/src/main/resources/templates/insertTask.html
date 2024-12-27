@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<form action="/addTask" method="post">
+
+    <div>
+        <label for="nameTask">Nome del Task:</label>
+        <input type="text" id="nameTask" name="nameTask" required />
+    </div>
+
+    <div>
+        <label for="Researcher">Ricercatori:</label>
+        <select id="Researcher" name="Researcher" multiple required>
+            <option value="" disabled>Seleziona uno o più ricercatori</option>
+            <th:block th:each="researcher : ${researchers}">
+                <option th:value="${researcher.getId()}" th:text="${researcher.getFirstName()}">Ricercatore</option>
+            </th:block>
+        </select>
+    </div>
+
+    <div>
+        <label for="state">Stato del Progetto:</label>
+        <select id="state" name="state" required>
+            <option value="" disabled selected>Seleziona lo Stato</option>
+            <option value="in_planning">In Pianificazione</option>
+            <option value="in_progress">In Corso</option>
+            <option value="completed">Completato</option>
+            <option value="on_hold">In Sospeso</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="startDate">Data di Inizio:</label>
+        <input type="date" id="startDate" name="startDate" required />
+    </div>
+
+    <div>
+        <label for="endDate">Data di Fine:</label>
+        <input type="date" id="endDate" name="endDate" required />
+    </div>
+
+    <input type="hidden" name="IDScientificManager" th:value="${scientificManager.getId()}" />
+    <input type="hidden" name="NameWorkPackage" th:value="${workPackage.getNameWorkPackage()}" />
+
+    <div>
+        <button type="submit">Crea Progetto</button>
+    </div>
+</form>
+
+</body>
+</html>
