@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -211,11 +210,13 @@ public class AppController {
             } else if (result.get() instanceof ScientificManager) {
                 model.addAttribute("person", (ScientificManager) result.get());
                 model.addAttribute("listWorkPackage", ((ScientificManager) result.get()).getWorkPackages());
+                model.addAttribute("listTasks", ((ScientificManager) result.get()).getTasks());
 
                 return "pageScientificManager";
             } else {
                 model.addAttribute("person", (Researcher) result.get());
-                return "pageResearcher"; // Da implementare ancora
+                model.addAttribute("listTasks", ((Researcher) result.get()).getTasks());
+                return "pageResearcher";
             }
         }
 
@@ -338,6 +339,8 @@ public class AppController {
 
         model.addAttribute("person", scientificManager);
         model.addAttribute("message", "Set hours correctly");
+        model.addAttribute("listTasks", scientificManager.getTasks());
+
 
         return "pageScientificManager";
     }
@@ -410,6 +413,8 @@ public class AppController {
             model.addAttribute("projects", projects);
             model.addAttribute("person", scientificManager);
             model.addAttribute("listWorkPackage", scientificManager.getWorkPackages());
+            model.addAttribute("listTasks", scientificManager.getTasks());
+
             //model.addAttribute("username", scientificManager.getFirstName() + " " + scientificManager.getLastName());
             //model.addAttribute("password", scientificManager.getPassword());
 
@@ -421,6 +426,72 @@ public class AppController {
         }
     }
 
+
+
+    @GetMapping("/createTask")
+    public String createTask(
+            @RequestParam("NameWorkPackage") String nameWorkPackage,
+            @RequestParam("ScientificManagerID") Long scientificManagerId,
+            Model model) {
+
+        ScientificManager scientificManager = ((ScientificManager)repository.findById(scientificManagerId).get());
+        List<Person> researchers = repository.findByRole("researcher");
+
+        WorkPackage workPackage = scientificManager.getWorkPackages().stream().
+                filter(w -> w.getNameWorkPackage().equals(nameWorkPackage)).findFirst().get();
+
+
+        model.addAttribute("workPackage", workPackage);
+        model.addAttribute("scientificManager", scientificManager);
+        model.addAttribute("researchers", researchers);
+
+        return "insertTask";
+
+    }
+
+
+
+    @PostMapping("/addTask")
+    public String addTask(
+            @RequestParam("nameTask") String nameTask,
+            @RequestParam("Researcher") List<Long> researcherIds,
+            @RequestParam("state") String state,
+            @RequestParam("startDate") LocalDate startDate,
+            @RequestParam("endDate") LocalDate endDate,
+            @RequestParam("IDScientificManager") Long IDScientificManager,
+            @RequestParam("NameWorkPackage") String NameWorkPackage,
+            Model model) {
+
+        ScientificManager scientificManager = ((ScientificManager) repository.findById(IDScientificManager).get());
+
+        WorkPackage workPackage = scientificManager.getWorkPackages().stream().
+                filter(w -> w.getNameWorkPackage().equals(NameWorkPackage)).findFirst().get();
+
+        List<Researcher> researchers = new ArrayList<>();
+
+        for(Task t : workPackage.getTasks())
+        {
+            if(t.getNameTask().equals(nameTask))
+            {
+                return "ErrorDuplicateNameTask";
+            }
+        }
+
+        for(Long id : researcherIds)
+        {
+            researchers.add((Researcher) repository.findById(id).get());
+        }
+
+        workPackage.addTask(new Task(nameTask, workPackage, researchers, state, Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())));
+
+
+
+        model.addAttribute("person", scientificManager);
+        model.addAttribute("listWorkPackage", scientificManager.getWorkPackages());
+        model.addAttribute("listTasks", scientificManager.getTasks());
+
+        return "pageScientificManager";
+    }
 
 
 

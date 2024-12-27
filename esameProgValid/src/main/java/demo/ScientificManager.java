@@ -41,6 +41,21 @@ public class ScientificManager extends Person{
         return workPackages;
     }
 
+
+    public List<Task> getTasks()
+    {
+
+        List<WorkPackage> workPackages = this.getWorkPackages();
+        List<Task> Tasks = new ArrayList<Task>();
+
+        for(WorkPackage w : workPackages)
+        {
+            Tasks.addAll(w.getTasks());
+        }
+
+        return Tasks;
+    }
+
     public List<Project> getProjects()
     {
         return Administrator.getProjects().stream().
