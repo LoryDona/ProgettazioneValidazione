@@ -473,7 +473,7 @@ public class AppController {
         {
             if(t.getNameTask().equals(nameTask))
             {
-                return "ErrorDuplicateNameTask";
+                return "errorDuplicateNameTask";
             }
         }
 
