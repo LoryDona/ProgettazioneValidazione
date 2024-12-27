@@ -210,20 +210,7 @@ public class AppController {
                 return "pageAdministrator";
             } else if (result.get() instanceof ScientificManager) {
                 model.addAttribute("person", (ScientificManager) result.get());
-
-                long idScientificManager = result.get().getId();
-
-                List<Project> projectSscientificManager = Administrator.getProjects().stream().
-                        filter(p -> p.getScientificManager().getId().equals(idScientificManager)).toList();
-
-                List<WorkPackage> workPackages = new ArrayList<WorkPackage>();
-
-                for(Project p : projectSscientificManager)
-                {
-                    workPackages.addAll(p.getWorkPackeges());
-                }
-
-                model.addAttribute("listWorkPackage", workPackages);
+                model.addAttribute("listWorkPackage", ((ScientificManager) result.get()).getWorkPackages());
 
                 return "pageScientificManager";
             } else {
@@ -416,17 +403,18 @@ public class AppController {
                     .filter(project -> project.getNameProject().equals(nameProject))
                     .findFirst().get().getScientificManager();
 
-            List<Project> projects = Administrator.getProjects().stream().
-                    filter(project -> project.getScientificManager().getId().equals(scientificManager.getId())).toList();
-
+            List<Project> projects = scientificManager.getProjects();
             repository.save(scientificManager);
 
+
             model.addAttribute("projects", projects);
-            model.addAttribute("username", scientificManager.getFirstName() + " " + scientificManager.getLastName());
-            model.addAttribute("password", scientificManager.getPassword());
+            model.addAttribute("person", scientificManager);
+            model.addAttribute("listWorkPackage", scientificManager.getWorkPackages());
+            //model.addAttribute("username", scientificManager.getFirstName() + " " + scientificManager.getLastName());
+            //model.addAttribute("password", scientificManager.getPassword());
 
 
-            return "projectsScientificManager";
+            return "pageScientificManager";
         }
         else {
             return "_error";

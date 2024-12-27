@@ -1,5 +1,9 @@
 package demo;
 import jakarta.persistence.Entity;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class ScientificManager extends Person{
 
@@ -20,5 +24,27 @@ public class ScientificManager extends Person{
     public int getFree_hours()
     {
         return free_hours;
+    }
+
+    public List<WorkPackage> getWorkPackages()
+    {
+        List<Project> projectSscientificManager = Administrator.getProjects().stream().
+                filter(p -> p.getScientificManager().getId().equals(this.getId())).toList();
+
+        List<WorkPackage> workPackages = new ArrayList<WorkPackage>();
+
+        for(Project p : projectSscientificManager)
+        {
+            workPackages.addAll(p.getWorkPackeges());
+        }
+
+        return workPackages;
+    }
+
+    public List<Project> getProjects()
+    {
+        return Administrator.getProjects().stream().
+                filter(p -> p.getScientificManager().getId().equals(this.getId())).toList();
+
     }
 }
