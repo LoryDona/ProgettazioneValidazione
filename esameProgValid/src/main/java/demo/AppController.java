@@ -189,6 +189,7 @@ public class AppController {
         String firstName = parts.length > 0 ? parts[0] : "";
         String lastName = parts.length > 1 ? parts[1] : "";
 
+
         for (Person p: repository.findAll()) {
             {
                 // Esiste già l'utente, non possono esserci 2 username uguali
@@ -332,6 +333,8 @@ public class AppController {
 
         model.addAttribute("projects", projectsScientificManager);
 
+
+
         return "projectsScientificManager";
 
     }
@@ -419,6 +422,9 @@ public class AppController {
             repository.save(scientificManager);
 
             model.addAttribute("projects", projects);
+            model.addAttribute("username", scientificManager.getFirstName() + " " + scientificManager.getLastName());
+            model.addAttribute("password", scientificManager.getPassword());
+
 
             return "projectsScientificManager";
         }
