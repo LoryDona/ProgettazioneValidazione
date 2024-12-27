@@ -43,6 +43,7 @@
         <th>Description</th>
         <th>Start date</th>
         <th>End date</th>
+        <th>Add task</th>
     </tr>
     </thead>
     <tbody>
@@ -52,6 +53,40 @@
         <td th:text="${w.getDescription()}"></td>
         <td th:text="${w.getStartDate()}"></td>
         <td th:text="${w.getEndDate()}"></td>
+        <td><a th:href="@{/createTask(NameWorkPackage=${w.getNameWorkPackage()}, ScientificManagerID = ${person.getId()})}">create task for this workPackage</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+
+<br>
+<h2>List Tasks of scientific manager</h2>
+<br>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Name task</th>
+        <th>Scientific researcher name</th>
+        <th>Researchers</th>
+        <th>State</th>
+        <th>Start date</th>
+        <th>End date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="t: ${listTasks}">
+        <td th:text="${t.getNameTask()}"> <b></b></td>
+        <td th:text="${t.getWorkPackageAssociation().getProjectAssociation().getScientificManager().getFirstName()}"></td>
+        <td>
+            <ul>
+                <li th:each="researcher : ${t.getResearchers()}" th:text="${researcher.getFirstName()}"></li>
+            </ul>
+        </td>
+        <td th:text="${t.getState()}"></td>
+        <td th:text="${t.getStartDate()}"></td>
+        <td th:text="${t.getEndDate()}"></td>
     </tr>
     </tbody>
 </table>
