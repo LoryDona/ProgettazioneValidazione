@@ -123,15 +123,7 @@ public class AppController {
     public String mostraPaginaCreateReport(Model model) {return "createReport";}
 
     private boolean presenzaProgetto(String nomeProgetto){
-        Administrator a=null;
-        for (Person p: repository.findAll()){
-            if (p instanceof Administrator){
-                a=(Administrator) p;
-                break;
-            }
-        }
-        System.out.println(""+a.toString());
-        for (Project p: a.getProjects()){
+        for (Project p: Administrator.getProjects()){
             if(p.getNameProject().equals(nomeProgetto)){return true;}
         }
         return false;
