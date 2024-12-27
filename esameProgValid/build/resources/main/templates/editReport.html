@@ -12,7 +12,7 @@
   <input type="hidden" name="id" value="10" th:value="${report.id}"> <br>
   Titolo:<input type="text" name="title"  th:value="${report.title}"><br>
   Risultati:<input type="text" name="results"  th:value="${report.results}"><br>
-  Ore:<input type="number" name="hours"  th:value="${report.hours}"><br>
+  Ore:<input type="number" name="hours" min="1" th:value="${report.hours}"><br>
   Attività:<input type="text" name="activities"  th:value="${report.activities}"><br>
   Firma:<input type="text" name="firma"  th:value="${report.firma}"><br>
   <!-- Pulsante per "Crea" con un nome diverso -->

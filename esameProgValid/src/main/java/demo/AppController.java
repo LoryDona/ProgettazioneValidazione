@@ -20,10 +20,11 @@ import java.io.IOException;
 @Controller
 public class AppController {
     private int contaFallimenti=0; //usato per controllare quante volte l'invio del report fallisce
-    Set<Report> setReport=new HashSet<>();
 
     @Autowired
     private PersonRepository repository;
+    @Autowired
+    private ReportRepository repositoryReport;
 
     @RequestMapping("/")
     public String index(){return "login";}
@@ -77,20 +78,22 @@ public class AppController {
     //visualizza la pagina con la lista dei report
     @RequestMapping("/invioReport")
     public String listaReport(Model model) {
-        model.addAttribute("reports", setReport);
+        Set<Report> bozze=new HashSet<>();
+        Set<Report> creati=new HashSet<>();
+        for (Report r: repositoryReport.findAll()) {
+            if (r.getIsBozza()){bozze.add(r);}
+            else{creati.add(r);}
+        }
+        model.addAttribute("reports", bozze);
+        model.addAttribute("reports2", creati);
         return "invioReport"; // La vista HTML
     }
 
     //pagina per modificare i report in stato di bozza
     @RequestMapping("/editReport")
     public String editReport(@RequestParam(name="id", required=true) Long id, Model model) {
-        Report rep=null;
-        for(Report r: setReport) {
-            if (r.getId().equals(id)) {
-                rep=r;
-            }
-        }
-        model.addAttribute("report", rep);
+        Optional<Report> rep=repositoryReport.findById(id);
+        model.addAttribute("report", rep.get());
         return "editReport";
     }
 
@@ -117,8 +120,21 @@ public class AppController {
     }
 
     @RequestMapping("/createReport")
-    public String mostraPaginaCreateReport(Model model) {
-        return "createReport"; // La vista HTML
+    public String mostraPaginaCreateReport(Model model) {return "createReport";}
+
+    private boolean presenzaProgetto(String nomeProgetto){
+        Administrator a=null;
+        for (Person p: repository.findAll()){
+            if (p instanceof Administrator){
+                a=(Administrator) p;
+                break;
+            }
+        }
+        System.out.println(""+a.toString());
+        for (Project p: a.getProjects()){
+            if(p.getNameProject().equals(nomeProgetto)){return true;}
+        }
+        return false;
     }
 
     //crea un report dal nulla
@@ -129,13 +145,14 @@ public class AppController {
             @RequestParam("hours") String hours,
             @RequestParam("activities") String activities,
             @RequestParam("firma") String firma,
+            @RequestParam("progetto") String progetto,
             @RequestParam("submitAction") String submitAction,
             Model model) {
 
         //se premo create salvo il report
         if (submitAction.equals("create")){
-            if (results.equals("") || hours.equals("") || activities.equals("") || Integer.parseInt(hours)<1 || title.equals("") || firma.equals("")) {
-                model.addAttribute("message", "Nessun campo può essere vuoto e le ore devono essere maggiori di 0");
+            if (results.equals("") || hours.equals("") || activities.equals("") || title.equals("") || firma.equals("") || !presenzaProgetto(progetto)) {
+                model.addAttribute("message", "Nessun campo può essere vuoto e il progetto deve essere esistente");
             }
             else{
                 try (FileWriter writer = new FileWriter(title+".txt")) {
@@ -144,16 +161,15 @@ public class AppController {
                     System.err.println("Errore durante il salvataggio: " + e.getMessage());
                     model.addAttribute("message", "Errore nel salvataggio");
                 }
-                setReport.add(new Report(title,results,hours,activities,firma));
+                repositoryReport.save(new Report(title,results,hours,activities,firma,progetto,false));
                 model.addAttribute("message", "Report Salvato");
             }
          }
         else{
-            if (title.equals(""))
-                model.addAttribute("message", "Scrivere almeno il nome per salvare in bozza");
+            if (title.equals("") || !presenzaProgetto(progetto))
+                model.addAttribute("message", "Scrivere almeno il nome del report e il nome di un progetto esistente per salvare in bozza");
             else{
-                setReport.remove(new Report(title,results,hours,activities,firma));//remove the old report
-                setReport.add(new Report(title,results,hours,activities,firma));
+                repositoryReport.save(new Report(title,results,hours,activities,firma,progetto,true));
                 model.addAttribute("message", "Report in bozza");
             }
         }
@@ -172,8 +188,8 @@ public class AppController {
             Model model){
         //se premo create salvo il report
         if (submitAction.equals("create")){
-            if (results.equals("") || hours.equals("") || activities.equals("") || Integer.parseInt(hours)<1 || title.equals("") || firma.equals("")) {
-                model.addAttribute("message", "Nessun campo può essere vuoto e le ore devono essere maggiori di 0");
+            if (results.equals("") || hours.equals("") || activities.equals("") || title.equals("") || firma.equals("")) {
+                model.addAttribute("message", "Nessun campo può essere vuoto");
             }
             else{
                 try (FileWriter writer = new FileWriter(title+".txt")) {
@@ -182,8 +198,9 @@ public class AppController {
                     System.err.println("Errore durante il salvataggio: " + e.getMessage());
                     model.addAttribute("message", "Errore nel salvataggio");
                 }
-                setReport.remove(new Report(title,results,hours,activities,firma));//remove the old report
-                setReport.add(new Report(title,results,hours,activities,firma));
+                Optional<Report> result = repositoryReport.findById(id);
+                repositoryReport.delete(result.get());
+                repositoryReport.save(new Report(title,results,hours,activities,firma,result.get().getProgetto(),false));
                 model.addAttribute("message", "Report Salvato");
             }
         }
@@ -191,8 +208,9 @@ public class AppController {
             if (title.equals(""))
                 model.addAttribute("message", "Scrivere almeno il nome per salvare in bozza");
             else{
-                setReport.remove(new Report(title,results,hours,activities,firma));//remove the old report
-                setReport.add(new Report(title,results,hours,activities,firma));
+                Optional<Report> result = repositoryReport.findById(id);
+                repositoryReport.delete(result.get());
+                repositoryReport.save(new Report(title,results,hours,activities,firma,result.get().getProgetto(),true));
                 model.addAttribute("message", "Report in bozza");
             }
         }
