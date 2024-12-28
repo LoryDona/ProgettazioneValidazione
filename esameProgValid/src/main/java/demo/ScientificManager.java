@@ -11,6 +11,8 @@ public class ScientificManager extends Person{
 
     private static List<WorkPackage> works = new ArrayList<WorkPackage>();
 
+    private List<Milestone> milestones = new ArrayList<>();
+
     private int free_hours;
 
     public ScientificManager(String firstName, String lastName, String password)
@@ -75,10 +77,12 @@ public class ScientificManager extends Person{
                         filter(w->w.getNameWorkPackage().equals(nameWorkPackage)).findFirst().get().equals(p.getNameProject())).findFirst().get();
 
         works = new ArrayList<>();
-        works.add(new WorkPackage(project, nameWorkPackage, startDate, endDate, description));
+        works.add(new WorkPackage(project, /*(Milestone) milestones,*/ nameWorkPackage, startDate, endDate, description));
     }
     public static List<WorkPackage> getWorkPackageList() {
         return works;
     }
+
+    // ************************Aggiunta metodi per Milestsone in html*************************++
 
 }

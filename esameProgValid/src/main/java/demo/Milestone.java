@@ -5,85 +5,72 @@ import java.util.List;
 import java.util.Date;
 
 public class Milestone {
-    /*
-        public enum StatusMilestone {
-            NOT_STARTED,
-            IN_PROGRESS,
-            COMPLETED,
-            LATE
-        }
-    */
-    public List<Researcher> researchers;
-    ScientificManager scientificManager;
-    private Project projectAssociation;
+    private String name;                      // Nome della Milestone
+    private String description;               // Descrizione della Milestone
+    private String state;                     // Stato della Milestone (es. not_started, in_progress, ecc.)
+    private Date startDate;                   // Data di inizio
+    private Date endDate;                     // Data di fine
+    private List<WorkPackage> workPackages;   // Lista dei WorkPackage associati
 
-    private String state;
-    private String nameMilestone;
-    private String descriptionMilestone;
-
-    public List<WorkPackage> workpackages = new ArrayList<WorkPackage>();
-
-    private Date startDate;
-    private Date endDate;
-
-    //   private StatusMilestone statusMilestone;
-
-
-    public Milestone(String nameMilestone, Date startDate, Date endDate, String descriptionMilestone, String state, List<WorkPackage> workPackages) {
-        this.nameMilestone = nameMilestone;
-        this.descriptionMilestone = descriptionMilestone;
+    // Costruttore
+    public Milestone(String name, Date startDate, Date endDate, String description, String state, List<WorkPackage> workPackages) {
+        this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.description = description;
+        this.state = state;
+        this.workPackages = workPackages;
     }
 
-
-
-    //  public StatusMilestone getStatusMilestone() { return statusMilestone; }
-    //  public void setStatusMilestone(StatusMilestone statusMilestone) { this.statusMilestone = statusMilestone; }
-    public String getState() { return state; }
-
-    public void setProjectAssociation(Project projectAssociation) {
-        this.projectAssociation = projectAssociation;
+    // Getter e Setter
+    public String getName() {
+        return name;
     }
 
-    public Project getProjectAssociation() {
-        return projectAssociation;
-    }
-
-
-    public void addWorkPackage(WorkPackage workPackage) { workpackages.add(workPackage); }
-
-    public List<WorkPackage> getWorkpackages() { return workpackages; }
-
-    public void setDescription(String descriptionMilestone)
-    {
-        this.descriptionMilestone = descriptionMilestone;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
-        return descriptionMilestone;
+        return description;
     }
 
-    public void setStartDate(Date endDate) {
-        this.startDate = startDate;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public Date getStartDate() {
         return startDate;
     }
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     public Date getEndDate() {
         return endDate;
     }
 
-    public void setNameMilestone(String nameMilestone) {
-        this.nameMilestone = nameMilestone;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
-    public String getNameMilestone() {
-        return nameMilestone;
+    public List<WorkPackage> getWorkPackages() {
+        return workPackages;
     }
+
+    public void setWorkPackages(List<WorkPackage> workPackages) {
+        this.workPackages = workPackages;
+    }
+
+    public void addWork(WorkPackage workPackage) { workPackages.add(workPackage);}
+
 }
