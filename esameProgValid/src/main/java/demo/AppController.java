@@ -623,6 +623,7 @@ public class AppController {
             model.addAttribute("person", project.getScientificManager());
             model.addAttribute("listWorkPackage", project.getScientificManager().getWorkPackges());
             model.addAttribute("listTasks", project.getScientificManager().getTasks());
+          //  model.addAttribute('listMilestone' project.getScientificManager().get
 
             return "pageScientificManager"; // Ritorna alla pagina principale
         } else {
