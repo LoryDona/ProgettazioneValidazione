@@ -1,34 +1,59 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <!DOCTYPE html>
-  <html lang="it">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu a Tendina con Pulsante</title>
-  </head>
-  <body>
-  <h1>Seleziona un Report</h1>
-  <form action="/submitReport" method="POST">
-    <!-- Campo Email -->
-    <label for="email">Inserisci la tua email:</label>
-    <br>
-    <input type="email" id="email" name="email" required>
-    <br><br>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Lista dei report</title>
+</head>
+<body>
 
-    <!-- Menu a Tendina -->
-    <label for="report">Seleziona un report:</label>
-    <br>
-    <select name="report" id="report" required>
-      <option value="reportA">Report A</option>
-      <option value="reportB">Report B</option>
-      <option value="reportC">Report C</option>
-    </select>
-    <br><br>
+<h1>Seleziona un report da modificare</h1>
+<table border="1">
+  <thead>
+  <tr>
+    <th>id</th>
+    <th>Name</th>
+    <th>Edit Report</th>
+    <th>Countersign</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="report: ${reports}">
+    <td th:text="${report.id}"> 1 </td>
+    <td th:text="${report.title}"> prova </td>
+    <td> <a href="editReport" th:href="@{editReport(id=${report.id})}"> edit </a></td>
+    <td> <a href="controfirma" th:href="@{controfirma(id=${report.id})}"> countersign </a></td>
+  </tr>
+  </tbody>
+</table>
 
-    <!-- Pulsante Invia -->
-    <button type="submit">Invia</button>
-  </form>
-  </body>
-  </html>
+<form action="submitReport" method="get">
+  <h1>Seleziona un report da inviare</h1>
+  <table border="1">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Name</th>
+      <th>Send Report</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="report: ${reports2}">
+      <td th:text="${report.id}">1</td>
+      <td th:text="${report.title}">prova</td>
+      <td>
+        <button type="submit" name="action" th:value="${report.id}">send</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <label for="email">Inserisci la tua email:</label>
+  <br>
+  <input type="email" id="email" name="email" required>
+  <br><br>
+</form>
+
+<a href="createReport"> Crea un nuovo report </a>
+</body>
+</html>
