@@ -7,6 +7,8 @@ import java.util.List;
 @Entity
 public class Researcher extends Person{
 
+    private int free_hours;
+
     public Researcher(String firstName, String lastName, String password) {
         super(firstName, lastName, password, "researcher");
     }
@@ -37,6 +39,14 @@ public class Researcher extends Person{
         }
 
         return tasks;
+    }
+
+    public int getFree_hours() {
+        return free_hours;
+    }
+
+    public void setFree_hours(int free_hours) {
+        this.free_hours = free_hours;
     }
 
     public Researcher(){};

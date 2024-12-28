@@ -25,6 +25,9 @@ public class AppController {
 
     @Autowired
     private PersonRepository repository;
+    @Autowired
+    private ReportRepository repositoryReport;
+
 
     @RequestMapping("/")
     public String index(){return "login";}
@@ -71,53 +74,6 @@ public class AppController {
     public String login(@RequestParam("emailRecupero") String emailRecupero, Model model) {
         // Messaggio da mostrare nella pagina
         String message = "Invio a "+emailRecupero+" avvenuto con successo";
-        model.addAttribute("message", message);
-        // Restituisci la vista con il messaggio
-        return "result";
-    }
-
-    @PostMapping("/createReport")
-    public String createReport(
-            @RequestParam("results") String results,
-            @RequestParam("hours") String hours,
-            @RequestParam("activities") String activities,
-            Model model) {
-
-        if (results.equals("") || hours.equals("") || activities.equals("")){
-            model.addAttribute("message", "Nessun campo può essere vuoto");
-        }
-        else{
-            try (FileWriter writer = new FileWriter("output.txt")) {
-                writer.write("Risultati:\n"+results+"\nOre: "+hours+"\nActivities:\n"+activities);
-            } catch (IOException e) {
-                System.err.println("Errore durante il salvataggio della stringa: " + e.getMessage());
-                model.addAttribute("message", "Errore nel salvataggio");
-            }
-            model.addAttribute("message", "Report Salvato");
-        }
-
-        return "result";
-    }
-
-    @PostMapping("/submitReport")
-    public String submitReport(
-            @RequestParam("email") String email,
-            @RequestParam("report") String reportName,
-            Model model) {
-        String message="";
-        float randomValue=(float) Math.random();//simula un errore di rete, se minore di 0,5 c'è un errore
-        if (randomValue > 0.5) {
-            message = "Report "+reportName+" inviato a " + email;
-            contaFallimenti=0;
-        }
-        else if (randomValue < 0.5 && contaFallimenti<3) {
-            message = "Errore nell'invio";
-            contaFallimenti++;
-        }
-        else{
-            message = "Controllare lo stato della rete";
-            contaFallimenti=0;
-        }
         model.addAttribute("message", message);
         // Restituisci la vista con il messaggio
         return "result";
@@ -250,7 +206,7 @@ public class AppController {
             }
         }
 
-        return "_error";
+        return "error_credential";
     }
 
         @RequestMapping("/listProjects")
@@ -373,6 +329,24 @@ public class AppController {
 
 
         return "pageScientificManager";
+    }
+
+    @RequestMapping("/setHoursResearcher")
+    public String setHoursResearcher(@RequestParam(name="ResearcherID", required=true) long researcherID,
+                           @RequestParam(name="freehours", required=true) int freehours,
+                           Model model) {
+
+        Researcher researcher = (Researcher) repository.findById(researcherID);
+        researcher.setFree_hours(freehours);
+
+        repository.save(researcher);
+
+        model.addAttribute("person", researcher);
+        model.addAttribute("message", "Set hours correctly");
+        model.addAttribute("listTasks", researcher.getTasks());
+
+
+        return "pageResearcher";
     }
 
     @RequestMapping("/createWorkPackage")
@@ -659,5 +633,148 @@ public class AppController {
     }
 
     // ******************************************************************************************************************************************************************************
+
+    //INIZIO PARTE SUI REPORT-----------------------------------------------------------------------
+    //visualizza la pagina con la lista dei report
+    @RequestMapping("/invioReport")
+    public String listaReport(Model model) {
+        Set<Report> bozze=new HashSet<>();
+        Set<Report> creati=new HashSet<>();
+        for (Report r: repositoryReport.findAll()) {
+            if (r.getIsBozza()){bozze.add(r);}
+            else{creati.add(r);}
+        }
+        model.addAttribute("reports", bozze);
+        model.addAttribute("reports2", creati);
+        return "invioReport"; // La vista HTML
+    }
+
+    //pagina per modificare i report in stato di bozza
+    @RequestMapping("/editReport")
+    public String editReport(@RequestParam(name="id", required=true) Long id, Model model) {
+        Optional<Report> rep=repositoryReport.findById(id);
+        model.addAttribute("report", rep.get());
+        return "editReport";
+    }
+
+    //invia un determinato report ad una mail specificata, simula anche un errore di rete
+    @RequestMapping("/submitReport")
+    public String submitReport(@RequestParam("email") String email, Model model) {
+        String message="";
+        float randomValue=(float) Math.random();//simula un errore di rete, se minore di 0,5 c'è un errore
+        if (randomValue > 0.5) {
+            message = "Report "+" inviato a " + email;
+            contaFallimenti=0;
+        }
+        else if (randomValue < 0.5 && contaFallimenti<3) {
+            message = "Errore nell'invio";
+            contaFallimenti++;
+        }
+        else{
+            message = "Controllare lo stato della rete";
+            contaFallimenti=0;
+        }
+        model.addAttribute("message", message);
+        // Restituisci la vista con il messaggio
+        return "result";
+    }
+
+
+    @RequestMapping("/createReport")
+    public String mostraPaginaCreateReport(Model model) {
+        // Crea una lista di stringhe per il menù a tendina
+        List<String> l = new ArrayList<>();
+        for (Project p: Administrator.getProjects()){
+            l.add(p.getNameProject());
+            System.out.println(p.getNameProject());
+        }
+        l.add("");
+        // Aggiungi la lista al modello
+        model.addAttribute("opzioniMenu", l);
+        // Restituisci il nome della vista che visualizzerà il menù
+        return "createReport";
+
+    }
+
+    //crea un report dal nulla
+    @PostMapping("/memoriseReport")
+    public String memoriseReport(
+            @RequestParam("title") String title,
+            @RequestParam("results") String results,
+            @RequestParam("hours") String hours,
+            @RequestParam("activities") String activities,
+            @RequestParam("firma") String firma,
+            @RequestParam("progetto") String progetto,
+            @RequestParam("submitAction") String submitAction,
+            Model model) {
+        if (title.equals("") || progetto.equals("")) {
+            model.addAttribute("message", "Scrivere almeno il nome del report e il nome di un progetto esistente per salvare in bozza");
+        }
+        else{
+            repositoryReport.save(new Report(title,results,hours,activities,firma,progetto,true,false));
+            model.addAttribute("message", "Report in bozza");
+        }
+        return "result";
+    }
+
+
+    @PostMapping("/updateReport")
+    public String updateReport(
+            @RequestParam(name="id", required=true) Long id,
+            @RequestParam(name="title", required=true) String title,
+            @RequestParam(name="results", required=true) String results,
+            @RequestParam(name="hours", required=true) String hours,
+            @RequestParam(name="activities", required=true) String activities,
+            @RequestParam(name="firma", required=true) String firma,
+            @RequestParam("submitAction") String submitAction,
+            Model model){
+        Optional<Report> result = repositoryReport.findById(id);
+        Report a=result.get();
+        //se premo create salvo il report
+        if (submitAction.equals("create")){
+            if (results.equals("") || hours.equals("") || activities.equals("") || title.equals("") || firma.equals("") || a.getControfirma()==false) {
+                model.addAttribute("message", "Nessun campo può essere vuoto e il report deve essere controfirmato");
+            }
+            else{
+                try (FileWriter writer = new FileWriter(title+".txt")) {
+                    writer.write(a.toString());
+                } catch (IOException e) {
+                    System.err.println("Errore durante il salvataggio: " + e.getMessage());
+                    model.addAttribute("message", "Errore nel salvataggio");
+                }
+                repositoryReport.delete(result.get());
+                repositoryReport.save(new Report(title,results,hours,activities,firma,result.get().getProgetto(),false,true));
+                model.addAttribute("message", "Report Salvato");
+            }
+        }
+        else{
+            if (title.equals(""))
+                model.addAttribute("message", "Scrivere almeno il nome per salvare in bozza");
+            else{
+                repositoryReport.delete(result.get());
+                repositoryReport.save(new Report(title,results,hours,activities,firma,result.get().getProgetto(),true,false));
+                model.addAttribute("message", "Report in bozza");
+            }
+        }
+        return "result";
+    }
+
+
+
+    //pagina per controfirmare i report in stato di bozza
+    @RequestMapping("/controfirma")
+    public String controFirma(@RequestParam(name="id", required=true) Long id, Model model) {
+        Optional<Report> result = repositoryReport.findById(id);
+        Report a=result.get();
+        repositoryReport.delete(a);
+        repositoryReport.save(new Report(a.getTitle(),a.getResults(),a.getHours(),a.getActivities(),a.getFirma(),result.get().getProgetto(),a.getIsBozza(),true));
+        model.addAttribute("message", "Il Report "+a.getTitle()+" è stato controfirmato");
+        return "result";
+    }
+
+    //Fine PARTE SUI REPORT---------------------------------------------------------------
+
+
+
 
 }
