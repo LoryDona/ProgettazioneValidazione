@@ -29,7 +29,7 @@ public class Milestone {
     //   private StatusMilestone statusMilestone;
 
 
-    public Milestone(String nameMilestone, Date startDate, Date endDate, String descriptionMilestone, String state, List<String> workPackages) {
+    public Milestone(String nameMilestone, Date startDate, Date endDate, String descriptionMilestone, String state, List<WorkPackage> workPackages) {
         this.nameMilestone = nameMilestone;
         this.descriptionMilestone = descriptionMilestone;
         this.startDate = startDate;

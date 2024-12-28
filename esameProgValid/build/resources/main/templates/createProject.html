@@ -9,23 +9,18 @@
 
 <form action="/createProject" method="post">
 
-  <!-- Nome del Progetto -->
   <div>
     <label for="nameProject">Nome del Progetto:</label>
     <input type="text" id="nameProject" name="nameProject" required />
   </div>
 
-  <!-- Amministratore -->
   <div>
     <label for="administrator">Amministratore:</label>
-    <!-- Campo di testo read-only che mostra il nome dell'amministratore -->
     <input type="text" id="administrator" name="administratorName" th:value="${administrator.firstName}" readonly />
 
-    <!-- Campo nascosto che invia l'ID dell'amministratore al server -->
     <input type="hidden" name="administrator.getId()" th:value="${administrator.getId()}" />
   </div>
 
-  <!-- Responsabile Scientifico -->
   <div>
     <label for="scientificManager">Responsabile Scientifico:</label>
     <select id="scientificManager" name="scientificManager.getId()" required>
@@ -36,7 +31,6 @@
     </select>
   </div>
 
-  <!-- Stato del Progetto -->
   <div>
     <label for="state">Stato del Progetto:</label>
     <select id="state" name="state" required>
@@ -48,19 +42,16 @@
     </select>
   </div>
 
-  <!-- Data di Inizio -->
   <div>
     <label for="startDate">Data di Inizio:</label>
     <input type="date" id="startDate" name="startDate" required />
   </div>
 
-  <!-- Data di Fine -->
   <div>
     <label for="endDate">Data di Fine:</label>
     <input type="date" id="endDate" name="endDate" required />
   </div>
 
-  <!-- Budget -->
   <div>
     <label for="budget">Budget (€):</label>
     <input type="number" id="budget" name="budget" min="0" step="0.01" required />
@@ -71,7 +62,6 @@
     <input type="number" id="workingHours" name="workingHours" min="1" step="1" required />
   </div>
 
-  <!-- Pulsante di Invio -->
   <div>
     <button type="submit">Crea Progetto</button>
   </div>

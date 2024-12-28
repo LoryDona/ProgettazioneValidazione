@@ -218,6 +218,7 @@ public class AppController {
         String firstName = parts.length > 0 ? parts[0] : "";
         String lastName = parts.length > 1 ? parts[1] : "";
 
+
         for (Person p: repository.findAll()) {
             {
                 // Esiste già l'utente, non possono esserci 2 username uguali
@@ -238,11 +239,14 @@ public class AppController {
                 return "pageAdministrator";
             } else if (result.get() instanceof ScientificManager) {
                 model.addAttribute("person", (ScientificManager) result.get());
+                model.addAttribute("listWorkPackage", ((ScientificManager) result.get()).getWorkPackges());
+                model.addAttribute("listTasks", ((ScientificManager) result.get()).getTasks());
 
                 return "pageScientificManager";
             } else {
                 model.addAttribute("person", (Researcher) result.get());
-                return "pageResearcher"; // Da implementare ancora
+                model.addAttribute("listTasks", ((Researcher) result.get()).getTasks());
+                return "pageResearcher";
             }
         }
 
@@ -347,6 +351,8 @@ public class AppController {
 
         model.addAttribute("projects", projectsScientificManager);
 
+
+
         return "projectsScientificManager";
 
     }
@@ -363,9 +369,31 @@ public class AppController {
 
         model.addAttribute("person", scientificManager);
         model.addAttribute("message", "Set hours correctly");
+        model.addAttribute("listTasks", scientificManager.getTasks());
+
 
         return "pageScientificManager";
     }
+
+    //***************SET HOURS PER RESEARCHER**********************************
+    @RequestMapping("/setHourResearcher")
+    public String setHor(@RequestParam(name="researchedID", required=true) long researcherID,
+                           @RequestParam(name="freehours", required=true) int freehours,
+                           Model model) {
+
+        Researcher researcher = (Researcher) repository.findById(researcherID);
+        researcher.setFree_hours(freehours);
+
+        repository.save(researcher);
+
+        model.addAttribute("person", researcher);
+        model.addAttribute("message", "Set hours correctly");
+
+
+
+        return "pageResearcher";
+    }
+    //**************++****************++**************************************
 
     @RequestMapping("/createWorkPackage")
     public String createWorkPackage(@RequestParam(name="NameProject", required=true) String projectName,
@@ -412,7 +440,6 @@ public class AppController {
                 return "errorDate";
             }
 
-            System.out.println("Numero package:" + optionalProject.get().getWorkPackeges().stream().count());
 
             Optional<WorkPackage> optionalWorkPackageDuplicate = optionalProject.get().getWorkPackeges().stream()
                     .filter(workPackage -> workPackage.getNameWorkPackage().equals(nameWorkPackage)).findFirst();
@@ -423,26 +450,94 @@ public class AppController {
             }
 
             // Aggiungi il workPackage all'interno del task
-            optionalProject.get().addPackage(new WorkPackage(nameWorkPackage, Date.from(start.atStartOfDay(ZoneId.systemDefault()).toInstant()),Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant()), description));
+            optionalProject.get().addPackage(new WorkPackage(optionalProject.get(), nameWorkPackage, Date.from(start.atStartOfDay(ZoneId.systemDefault()).toInstant()),Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant()), description));
 
             ScientificManager scientificManager  = Administrator.getProjects().stream()
                     .filter(project -> project.getNameProject().equals(nameProject))
                     .findFirst().get().getScientificManager();
 
-            List<Project> projects = Administrator.getProjects().stream().
-                    filter(project -> project.getScientificManager().getId().equals(scientificManager.getId())).toList();
-
+            List<Project> projects = scientificManager.getProjects();
             repository.save(scientificManager);
 
-            model.addAttribute("projects", projects);
 
-            return "projectsScientificManager";
+            model.addAttribute("projects", projects);
+            model.addAttribute("person", scientificManager);
+            model.addAttribute("listWorkPackage", scientificManager.getWorkPackges());
+            model.addAttribute("listTasks", scientificManager.getTasks());
+
+            //model.addAttribute("username", scientificManager.getFirstName() + " " + scientificManager.getLastName());
+            //model.addAttribute("password", scientificManager.getPassword());
+
+
+            return "pageScientificManager";
         }
         else {
             return "_error";
         }
     }
 
+    @GetMapping("/createTask")
+    public String createTask(
+            @RequestParam("NameWorkPackage") String nameWorkPackage,
+            @RequestParam("ScientificManagerID") Long scientificManagerId,
+            Model model) {
+
+        ScientificManager scientificManager = ((ScientificManager)repository.findById(scientificManagerId).get());
+        List<Person> researchers = repository.findByRole("researcher");
+
+        WorkPackage workPackage = scientificManager.getWorkPackges().stream().
+                filter(w -> w.getNameWorkPackage().equals(nameWorkPackage)).findFirst().get();
+
+
+        model.addAttribute("workPackage", workPackage);
+        model.addAttribute("scientificManager", scientificManager);
+        model.addAttribute("researchers", researchers);
+
+        return "insertTask";
+
+    }
+
+    @PostMapping("/addTask")
+    public String addTask(
+            @RequestParam("nameTask") String nameTask,
+            @RequestParam("Researcher") List<Long> researcherIds,
+            @RequestParam("state") String state,
+            @RequestParam("startDate") LocalDate startDate,
+            @RequestParam("endDate") LocalDate endDate,
+            @RequestParam("IDScientificManager") Long IDScientificManager,
+            @RequestParam("NameWorkPackage") String NameWorkPackage,
+            Model model) {
+
+        ScientificManager scientificManager = ((ScientificManager) repository.findById(IDScientificManager).get());
+
+        WorkPackage workPackage = scientificManager.getWorkPackges().stream().
+                filter(w -> w.getNameWorkPackage().equals(NameWorkPackage)).findFirst().get();
+
+        List<Researcher> researchers = new ArrayList<>();
+
+        for(Task t : workPackage.getTasks())
+        {
+            if(t.getNameTask().equals(nameTask))
+            {
+                return "errorDuplicateNameTask";
+            }
+        }
+
+        for(Long id : researcherIds)
+        {
+            researchers.add((Researcher) repository.findById(id).get());
+        }
+
+        workPackage.addTask(new Task(nameTask, workPackage, researchers, state, Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())));
+
+
+
+        model.addAttribute("person", scientificManager);
+        model.addAttribute("listWorkPackage", scientificManager.getWorkPackges());
+        model.addAttribute("listTasks", scientificManager.getTasks());
+
+        return "pageScientificManager";
+    }
 
 // ***********************************************************************************************************************************************
 
@@ -483,7 +578,7 @@ public class AppController {
             @RequestParam("endDate") String endDate,
             @RequestParam(name = "state", required = true) String state,
             @RequestParam("nameProject") String nameProject,
-            //  @RequestParam("workPackageIds") List<WorkPackage> workPackageIds,
+            @RequestParam("workPackageIds") List<WorkPackage> workPackageIds,
             Model model
     ) {
 
@@ -557,7 +652,7 @@ public class AppController {
 
  */
             // Aggiunta di Milestone
-            optionalProject.get().addMilestone(new Milestone(nameMilestone, Date.from(parsedStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(parsedEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), descriptionMilestone, state, workPackageNames));
+            optionalProject.get().addMilestone(new Milestone(nameMilestone, Date.from(parsedStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(parsedEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), descriptionMilestone, state, workPackageIds));
 
             ScientificManager scientificManager  = Administrator.getProjects().stream()
                     .filter(project -> project.getNameProject().equals(nameProject))
@@ -569,8 +664,13 @@ public class AppController {
             repository.save(scientificManager);
 
             model.addAttribute("projects", projects);
+            model.addAttribute("person",  scientificManager);
+            model.addAttribute("listWorkPackage", scientificManager.getWorkPackges());
+            model.addAttribute("listTasks", scientificManager.getTasks());
 
-            return "projectsScientificManager";
+            return "pageScientificManager";
+
+            //return "projectsScientificManager";
         }
         else {
             return "errorDate";

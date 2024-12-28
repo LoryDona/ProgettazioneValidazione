@@ -34,12 +34,23 @@
         <label for="workPackage">Work Package:</label>
         <select id="workPackage" name="workPackages" multiple>
             <option value="" disabled selected>Seleziona un Work Package</option>
-            <th:block th:each="workPackage : ${workPackages}">
-                <option th:value="${workPackage.nameWorkPackage}" th:text="${workPackage.nameWorkPackage}"></option>
+            <th:block th:each="workPackage : ${listWorkPackage}">
+                <option th:value="${workPackage.getNameWorkPackage()}" th:text="${workPackage.getNameWorkPackage()}"></option>
             </th:block>
 
         </select>
     </div>
+
+    <!--
+    <tr th:each="w: ${listWorkPackage}">
+        <td th:text="${w.getNameWorkPackage()}"> <b></b></td>
+        <td th:text="${w.getProjectAssociation().getNameProject()}"></td>
+        <td th:text="${w.getDescription()}"></td>
+        <td th:text="${w.getStartDate()}"></td>
+        <td th:text="${w.getEndDate()}"></td>
+        <td><a th:href="@{/createTask(NameWorkPackage=${w.getNameWorkPackage()}, ScientificManagerID = ${person.getId()})}">create task for this workPackage</a></td>
+    </tr>
+    -->
     <div>
         <label for="startDate">Start Date:</label>
         <input type="date" id="startDate" name="startDate" required />
