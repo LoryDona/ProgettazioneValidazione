@@ -7,15 +7,30 @@
 </head>
 <body>
 <h1>Inserisci i dati</h1>
-<form action="/createReport" method="post">
+<form action="/memoriseReport" method="post">
+  <p>Titolo del report:</p>
+  <input type="text" name="title">
   <p>Risultati ottenuti:</p>
   <textarea name="results" rows="4" cols="50"></textarea>
   <p>Rendicontazione delle ore lavorative:</p>
-  <input type="number" name="hours">
+  <input type="number" name="hours" min="1">
   <p>Attività svolte durante il periodo di riferimento:</p>
   <textarea name="activities" rows="4" cols="50"></textarea>
+  <br>
+  <label for="menu">Progetto associato:</label>
+  <select id="menu" name="progetto">
+    <!-- Itera sulla lista di opzioni passata dal controller -->
+    <option th:each="opzione : ${opzioniMenu}" th:text="${opzione}" th:value="${opzione}"></option>
+  </select>
+
+  <p>Firma:</p>
+  <input type="text" name="firma">
   <br><br>
-  <button type="submit">Crea</button>
+
+  <!-- Pulsante per "Bozza"-->
+  <button type="submit" name="submitAction" value="bozza">Bozza</button>
+
 </form>
+<a href="invioReport"> Torna alla lista dei report </a>
 </body>
 </html>

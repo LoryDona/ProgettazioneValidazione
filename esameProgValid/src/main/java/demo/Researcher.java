@@ -8,6 +8,8 @@ import java.util.List;
 public class Researcher extends Person{
     private int free_hours;
 
+    private int free_hours;
+
     public Researcher(String firstName, String lastName, String password) {
         super(firstName, lastName, password, "researcher");
     }
@@ -40,6 +42,7 @@ public class Researcher extends Person{
         return tasks;
     }
 
+<<<<<<< HEAD
     public void setFree_hours(int hours)
     {
         free_hours = hours;
@@ -50,5 +53,15 @@ public class Researcher extends Person{
         return free_hours;
     }
 
+=======
+    public int getFree_hours() {
+        return free_hours;
+    }
+
+    public void setFree_hours(int free_hours) {
+        this.free_hours = free_hours;
+    }
+
+>>>>>>> 8e16ecde8b1f88759ce6454b9d73ad82665c6f95
     public Researcher(){};
 }
