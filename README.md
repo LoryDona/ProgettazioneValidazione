@@ -101,7 +101,7 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 
 #### 9) Controllo delle Deviazioni nelle Ore Lavorative
 
-**Assunzioni iniziali: ** Il sistema deve consentire al responsabile scientifico di controllare lo stato di avanzamento delle milestone. Il responsabile scientifico può verificare se le milestone sono state completate entro i tempi previsti e se le scadenze sono state rispettate.
+**Assunzioni iniziali:** Il sistema deve consentire al responsabile scientifico di controllare lo stato di avanzamento delle milestone. Il responsabile scientifico può verificare se le milestone sono state completate entro i tempi previsti e se le scadenze sono state rispettate.
 
 **Normale**: Il sistema fornirà un’interfaccia che mostrerà la lista delle milestone, così sarà possibile monitorarle. 
 
