@@ -128,7 +128,40 @@
 </table>
 
 <br>
-
+<!-- Sezione List Milestones -->
+<div id="listMilestones">
+    <h3>List Milestones</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Work Packages</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Ciclo per ogni Milestone -->
+        <c:forEach var="milestone" items="${milestones}">
+            <tr>
+                <td>${milestone.name}</td>
+                <td>${milestone.description}</td>
+                <td>${milestone.startDate}</td>
+                <td>${milestone.endDate}</td>
+                <td>
+                    <ul>
+                        <!-- Ciclo per ogni WorkPackage associato alla Milestone -->
+                        <c:forEach var="workPackage" items="${milestone.workPackages}">
+                            <li>${workPackage.nameWorkPackage}</li>
+                        </c:forEach>
+                    </ul>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
 <br>
 <h2>List Tasks of scientific manager</h2>
 <br>
