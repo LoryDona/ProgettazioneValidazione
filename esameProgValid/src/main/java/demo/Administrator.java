@@ -20,7 +20,7 @@ public class Administrator extends Person{
     // l'amministratore aggiunge un progetto nuovo con associato il responsabile scientifico
     public void addProject(String nameProject, ScientificManager scientificManager, String state, Date startDate, Date endDate, int budget)
     {
-        projects = new ArrayList<>();
+        //projects = new ArrayList<>();
         projects.add(new Project(nameProject, this, scientificManager, state, startDate, endDate, budget));
     }
 
