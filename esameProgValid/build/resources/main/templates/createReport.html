@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inserimento Dati</title>
+</head>
+<body>
+<h1>Inserisci i dati</h1>
+<form action="/createReport" method="post">
+  <p>Risultati ottenuti:</p>
+  <textarea name="results" rows="4" cols="50"></textarea>
+  <p>Rendicontazione delle ore lavorative:</p>
+  <input type="number" name="hours">
+  <p>Attività svolte durante il periodo di riferimento:</p>
+  <textarea name="activities" rows="4" cols="50"></textarea>
+  <br><br>
+  <button type="submit">Crea</button>
+</form>
+</body>
+</html>

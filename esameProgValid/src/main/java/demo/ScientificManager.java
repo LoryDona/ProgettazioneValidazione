@@ -2,10 +2,14 @@ package demo;
 import jakarta.persistence.Entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class ScientificManager extends Person{
+
+    private static List<WorkPackage> works = new ArrayList<WorkPackage>();
 
     private int free_hours;
 
@@ -26,7 +30,7 @@ public class ScientificManager extends Person{
         return free_hours;
     }
 
-    public List<WorkPackage> getWorkPackages()
+    public List<WorkPackage> getWorkPackges()
     {
         List<Project> projectSscientificManager = Administrator.getProjects().stream().
                 filter(p -> p.getScientificManager().getId().equals(this.getId())).toList();
@@ -45,7 +49,7 @@ public class ScientificManager extends Person{
     public List<Task> getTasks()
     {
 
-        List<WorkPackage> workPackages = this.getWorkPackages();
+        List<WorkPackage> workPackages = this.getWorkPackges();
         List<Task> Tasks = new ArrayList<Task>();
 
         for(WorkPackage w : workPackages)
@@ -62,4 +66,19 @@ public class ScientificManager extends Person{
                 filter(p -> p.getScientificManager().getId().equals(this.getId())).toList();
 
     }
+
+
+    public void addWorkPackage(String nameWorkPackage, Date startDate, Date endDate, String description) {;
+
+        Project project = Administrator.getProjects().stream().
+                filter(p -> p.getWorkPackeges().stream().
+                        filter(w->w.getNameWorkPackage().equals(nameWorkPackage)).findFirst().get().equals(p.getNameProject())).findFirst().get();
+
+        works = new ArrayList<>();
+        works.add(new WorkPackage(project, nameWorkPackage, startDate, endDate, description));
+    }
+    public static List<WorkPackage> getWorkPackageList() {
+        return works;
+    }
+
 }

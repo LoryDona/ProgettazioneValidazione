@@ -16,6 +16,7 @@ public class Project {
     private int budget;
 
     private List<WorkPackage> workPackeges = new ArrayList<WorkPackage>();
+    private List<Milestone> milestones = new ArrayList<>();
 
 
 
@@ -70,4 +71,13 @@ public class Project {
     public List<WorkPackage> getWorkPackeges() {
         return workPackeges;
     }
+
+    public void addMilestone(Milestone milestone) { milestones.add(milestone); }
+    public List<Milestone> getMilestones() { return milestones; }
+
+   /* public boolean isMilestoneAvailable(Date newStartDate, Date newEndDate) {
+        for (Milestone milestone : milestones) {
+            if((milestone.getStartDate().equals(newStartDate) || milestone.getEndDate().equals(newEndDate)))
+        }
+    }   */
 }

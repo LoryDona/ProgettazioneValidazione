@@ -14,6 +14,7 @@
         <th>Administrator</th>
         <th>ScientificManager</th>
         <th>Add work package</th>
+        <th>Add milestone</th>
     </tr>
     </thead>
     <tbody>
@@ -22,6 +23,7 @@
         <td th:text="${project.administrator.firstName}"> </td>
         <td th:text="${project.ScientificManager.firstName}"> </td>
         <td><a th:href="@{/createWorkPackage(NameProject=${project.nameProject})}">create work package for this project</a></td>
+        <td><a th:href="@{/createMilestone(NameProject=${project.nameProject})}">create milestone</a></td>
     </tr>
     </tbody>
 </table>
