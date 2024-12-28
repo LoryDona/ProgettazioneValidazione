@@ -120,13 +120,19 @@ public class AppController {
     }
 
     @RequestMapping("/createReport")
-    public String mostraPaginaCreateReport(Model model) {return "createReport";}
-
-    private boolean presenzaProgetto(String nomeProgetto){
+    public String mostraPaginaCreateReport(Model model) {
+        // Crea una lista di stringhe per il menù a tendina
+        List<String> l = new ArrayList<>();
         for (Project p: Administrator.getProjects()){
-            if(p.getNameProject().equals(nomeProgetto)){return true;}
+            l.add(p.getNameProject());
+            System.out.println(p.getNameProject());
         }
-        return false;
+        l.add("");
+        // Aggiungi la lista al modello
+        model.addAttribute("opzioniMenu", l);
+        // Restituisci il nome della vista che visualizzerà il menù
+        return "createReport";
+
     }
 
     //crea un report dal nulla
@@ -140,30 +146,12 @@ public class AppController {
             @RequestParam("progetto") String progetto,
             @RequestParam("submitAction") String submitAction,
             Model model) {
-
-        //se premo create salvo il report
-        if (submitAction.equals("create")){
-            if (results.equals("") || hours.equals("") || activities.equals("") || title.equals("") || firma.equals("") || !presenzaProgetto(progetto)) {
-                model.addAttribute("message", "Nessun campo può essere vuoto e il progetto deve essere esistente");
-            }
-            else{
-                try (FileWriter writer = new FileWriter(title+".txt")) {
-                    writer.write("Risultati:\n"+results+"\nOre: "+hours+"\nActivities:\n"+activities+"\nFirma: "+firma);
-                } catch (IOException e) {
-                    System.err.println("Errore durante il salvataggio: " + e.getMessage());
-                    model.addAttribute("message", "Errore nel salvataggio");
-                }
-                repositoryReport.save(new Report(title,results,hours,activities,firma,progetto,false));
-                model.addAttribute("message", "Report Salvato");
-            }
-         }
+        if (title.equals("") || progetto.equals("")) {
+            model.addAttribute("message", "Scrivere almeno il nome del report e il nome di un progetto esistente per salvare in bozza");
+        }
         else{
-            if (title.equals("") || !presenzaProgetto(progetto))
-                model.addAttribute("message", "Scrivere almeno il nome del report e il nome di un progetto esistente per salvare in bozza");
-            else{
-                repositoryReport.save(new Report(title,results,hours,activities,firma,progetto,true));
-                model.addAttribute("message", "Report in bozza");
-            }
+            repositoryReport.save(new Report(title,results,hours,activities,firma,progetto,true,false));
+            model.addAttribute("message", "Report in bozza");
         }
         return "result";
     }
@@ -178,21 +166,22 @@ public class AppController {
             @RequestParam(name="firma", required=true) String firma,
             @RequestParam("submitAction") String submitAction,
             Model model){
+        Optional<Report> result = repositoryReport.findById(id);
+        Report a=result.get();
         //se premo create salvo il report
         if (submitAction.equals("create")){
-            if (results.equals("") || hours.equals("") || activities.equals("") || title.equals("") || firma.equals("")) {
-                model.addAttribute("message", "Nessun campo può essere vuoto");
+            if (results.equals("") || hours.equals("") || activities.equals("") || title.equals("") || firma.equals("") || a.getControfirma()==false) {
+                model.addAttribute("message", "Nessun campo può essere vuoto e il report deve essere controfirmato");
             }
             else{
                 try (FileWriter writer = new FileWriter(title+".txt")) {
-                    writer.write("Risultati:\n"+results+"\nOre: "+hours+"\nActivities:\n"+activities+"\nFirma: "+firma);
+                    writer.write(a.toString());
                 } catch (IOException e) {
                     System.err.println("Errore durante il salvataggio: " + e.getMessage());
                     model.addAttribute("message", "Errore nel salvataggio");
                 }
-                Optional<Report> result = repositoryReport.findById(id);
                 repositoryReport.delete(result.get());
-                repositoryReport.save(new Report(title,results,hours,activities,firma,result.get().getProgetto(),false));
+                repositoryReport.save(new Report(title,results,hours,activities,firma,result.get().getProgetto(),false,true));
                 model.addAttribute("message", "Report Salvato");
             }
         }
@@ -200,12 +189,22 @@ public class AppController {
             if (title.equals(""))
                 model.addAttribute("message", "Scrivere almeno il nome per salvare in bozza");
             else{
-                Optional<Report> result = repositoryReport.findById(id);
                 repositoryReport.delete(result.get());
-                repositoryReport.save(new Report(title,results,hours,activities,firma,result.get().getProgetto(),true));
+                repositoryReport.save(new Report(title,results,hours,activities,firma,result.get().getProgetto(),true,false));
                 model.addAttribute("message", "Report in bozza");
             }
         }
+        return "result";
+    }
+
+    //pagina per controfirmare i report in stato di bozza
+    @RequestMapping("/controfirma")
+    public String controFirma(@RequestParam(name="id", required=true) Long id, Model model) {
+        Optional<Report> result = repositoryReport.findById(id);
+        Report a=result.get();
+        repositoryReport.delete(a);
+        repositoryReport.save(new Report(a.getTitle(),a.getResults(),a.getHours(),a.getActivities(),a.getFirma(),result.get().getProgetto(),a.getIsBozza(),true));
+        model.addAttribute("message", "Il Report "+a.getTitle()+" è stato controfirmato");
         return "result";
     }
 

@@ -16,16 +16,18 @@
   <input type="number" name="hours" min="1">
   <p>Attività svolte durante il periodo di riferimento:</p>
   <textarea name="activities" rows="4" cols="50"></textarea>
-  <p>Progetto associato:</p>
-  <input type="text" name="progetto">
+  <br>
+  <label for="menu">Progetto associato:</label>
+  <select id="menu" name="progetto">
+    <!-- Itera sulla lista di opzioni passata dal controller -->
+    <option th:each="opzione : ${opzioniMenu}" th:text="${opzione}" th:value="${opzione}"></option>
+  </select>
+
   <p>Firma:</p>
   <input type="text" name="firma">
   <br><br>
 
-  <!-- Pulsante per "Crea" con un nome diverso -->
-  <button type="submit" name="submitAction" value="create">Crea</button>
-
-  <!-- Pulsante per "Bozza" con un nome diverso -->
+  <!-- Pulsante per "Bozza"-->
   <button type="submit" name="submitAction" value="bozza">Bozza</button>
 
 </form>

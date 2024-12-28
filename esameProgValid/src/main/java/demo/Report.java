@@ -17,10 +17,11 @@ public class Report {
     private String firma;
     private String progetto;
     private boolean isbozza;
+    private boolean controfirma;
 
     protected Report(){}
 
-    public Report(String tit, String res, String h, String act,String f, String prog,boolean bozza) {
+    public Report(String tit, String res, String h, String act,String f, String prog,boolean bozza,boolean cont) {
         title=tit;
         results=res;
         hours=h;
@@ -28,6 +29,7 @@ public class Report {
         firma=f;
         progetto=prog;
         isbozza=bozza;
+        controfirma=cont;
     }
     public int hashCode(){return Long.hashCode(id);}
     public boolean equals(Report a){return a.getId()==id;}
@@ -46,11 +48,12 @@ public class Report {
         return progetto;
     }
     public void setIsBozza(boolean bozza){isbozza=bozza;}
+    public boolean getControfirma() {return controfirma;}
 
 
 
     public String toString(){
-        return "Risultati:\n"+results+"\nOre: "+hours+"\nActivities:\n"+activities+"\nFirma: "+firma;
+        return "Risultati:\n"+results+"\nOre: "+hours+"\nActivities:\n"+activities+"\nFirma: "+firma+"\nProgetto: "+progetto;
     }
 
 }
