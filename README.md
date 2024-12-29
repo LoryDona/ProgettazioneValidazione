@@ -82,9 +82,9 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 
 **Assunzioni iniziali:** Se l'utente non è autenticato, il sistema deve reindirizzarlo alla pagina di login. La gestione delle credenziali di accesso è delegata all'amministrativo.
 
-**Normale:** L’utente si registra al sistema inserendo il proprio nome, password, indirizzo email e il ruolo, poi potrà entrare nel sistema.
+**Normale:** L’utente accede al sistema inserendo il proprio username e la propria password. L'utente deve essere stato precedentemente registrato.
 
-**Cosa può andare storto:** Dimentica la password, per risolvere accede alla pagina di login e seleziona "Recupera Password" in caso di smarrimento della password, in tal caso verrà inviata una mail all’utente in cui si da una password provvisoria che poi andrà cambiata.
+**Cosa può andare storto:** L'utente dimentica la password, per risolvere dovrà accedere alla pagina di login e selezionare  "Recupera Password", verrà quindi inviata una mail all’utente in cui si fornirà una password provvisoria che poi andrà cambiata. Se l'utente dovesse inserire dei dati errati, il sistema negherà l'accesso all'utente.
 
 #### 8) Posticipazione delle Milestone di Progetto
 
@@ -99,14 +99,14 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 
 **Stato del sistema al completamento**: La milestone è stata posticipata con successo.
 
-#### 9) Controllo delle Deviazioni nelle Ore Lavorative
+#### 9) Registrazione Nuovo Utente
 
-**Assunzioni iniziali:** Il sistema deve consentire al responsabile scientifico di controllare lo stato di avanzamento delle milestone. Il responsabile scientifico può verificare se le milestone sono state completate entro i tempi previsti e se le scadenze sono state rispettate.
+**Assunzioni iniziali:** Il sistema deve consentire agli utenti di registrarsi creando un profilo personale che, a seconda del ruolo di quest'ultimi, fornirà  determinati privilegi.
 
-**Normale**: Il sistema fornirà un’interfaccia che mostrerà la lista delle milestone, così sarà possibile monitorarle. 
+**Normale**: L’utente si registra al sistema inserendo il proprio nome, password, indirizzo email e il ruolo, poi potrà entrare nel sistema.
 
-**Cosa** **può** **andare** **storto**:  
+**Cosa** **può** **andare** **storto**:  L'utente che si sta tentando di creare esiste già, il sistema dovrà quindi gestire tale errore avvertendo l'utente che sta tentando di creare un profilo già esistente.
 
 **Altre** **attività**:
 
-**Stato** **del** **sistema** **al** **completamento**: La lista delle milestone viene mostrata all'utente.
+**Stato** **del** **sistema** **al** **completamento**: Il nuovo utente è stato registrato nel sistema.
