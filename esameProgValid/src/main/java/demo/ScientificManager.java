@@ -74,7 +74,7 @@ public class ScientificManager extends Person{
                 filter(p -> p.getWorkPackeges().stream().
                         filter(w->w.getNameWorkPackage().equals(nameWorkPackage)).findFirst().get().equals(p.getNameProject())).findFirst().get();
 
-        works = new ArrayList<>();
+        //works = new ArrayList<>();
         works.add(new WorkPackage(project, nameWorkPackage, startDate, endDate, description));
     }
     public static List<WorkPackage> getWorkPackageList() {
