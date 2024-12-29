@@ -13,6 +13,7 @@ public class ScientificManager extends Person{
 
     private int free_hours;
 
+    private static List<Milestone> milestones = new ArrayList<Milestone>();
     public ScientificManager(String firstName, String lastName, String password)
     {
         super(firstName, lastName, password, "scientificManager");
@@ -43,6 +44,21 @@ public class ScientificManager extends Person{
         }
 
         return workPackages;
+    }
+
+    public List<Milestone> getWorkMilestones()
+    {
+        List<Project> projectSscientificManager = Administrator.getProjects().stream().
+                filter(p -> p.getScientificManager().getId().equals(this.getId())).toList();
+
+        List<Milestone> milestones = new ArrayList<Milestone>();
+
+        for(Project p : projectSscientificManager)
+        {
+            milestones.addAll(p.getMilestones());
+        }
+
+        return milestones;
     }
 
 
