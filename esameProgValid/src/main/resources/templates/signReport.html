@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Lista dei report</title>
+</head>
+<body>
+
+<h1>Seleziona un report da controfirmare</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>Name</th>
+        <th>Signed</th>
+        <th>Countersign</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="report: ${reports}">
+        <td th:text="${report.id}"> 1 </td>
+        <td th:text="${report.title}"> prova </td>
+        <td th:text="${report.controfirma}"> false </td>
+        <td> <a href="controfirma" th:href="@{controfirma(id=${report.id})}"> countersign </a></td>
+    </tr>
+    </tbody>
+</table>
+<a href="javascript:history.back()">Go Back</a>
+<br>
+<a href="/"> Go to the login page </a>
+</body>
+</html>

@@ -24,13 +24,16 @@
   </select>
 
   <p>Firma:</p>
-  <input type="text" name="firma">
+  <input type="text" name="firma" th:value="${person.firstName}">
   <br><br>
 
   <!-- Pulsante per "Bozza"-->
   <button type="submit" name="submitAction" value="bozza">Bozza</button>
 
 </form>
-<a href="invioReport"> Torna alla lista dei report </a>
+<br>
+<a href="javascript:history.back()">Pagina precedente</a>
+<br>
+<a href="/"> Torna al login </a>
 </body>
 </html>

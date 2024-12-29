@@ -7,12 +7,8 @@
 </head>
 <body>
 <h1>Risultato</h1>
-
-<!-- Visualizza il messaggio -->
 <p th:text="${message}"></p>
-
-<!-- Mostra il link solo se il messaggio non contiene "login" -->
-<a th:if="${message != null and not(#strings.containsIgnoreCase(message, ' avvenuto con successo'))}" href="invioReport">Torna alla lista dei report</a>
+<a href="signReport">Torna alla lista dei report</a>
 <br>
 <a href="/">Torna alla pagina iniziale</a>
 </body>
