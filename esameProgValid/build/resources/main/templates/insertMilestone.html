@@ -7,17 +7,19 @@
 <body>
 <form th:action="@{/CreateMilestonePage}" method="post">
 
+    <!-- Nome della Milestone -->
     <div>
         <label for="nameMilestone">Name Milestone:</label>
         <input type="text" id="nameMilestone" name="nameMilestone" required>
     </div>
 
+    <!-- Descrizione della Milestone -->
     <div>
         <label for="descriptionMilestone">Description:</label>
         <textarea id="descriptionMilestone" name="descriptionMilestone" required></textarea>
     </div>
 
-    <!-- stato della Milestone -->
+    <!-- Stato della Milestone -->
     <div>
         <label for="state">Stato della Milestone:</label>
         <select id="state" name="state" required>
@@ -29,29 +31,33 @@
         </select>
     </div>
 
-    <!-- Seleziona WorkPackage -->
+    <!-- Selezione dei WorkPackage -->
     <div>
-        <label for="workPackage">Work Package:</label>
-        <select id="workPackage" name="workPackages" multiple>
-            <option value="" disabled selected>Seleziona un Work Package</option>
-            <th:block th:each="workPackage : ${workPackages}">
-                <option th:value="${workPackage.nameWorkPackage}" th:text="${workPackage.nameWorkPackage}"></option>
+        <label for="workPackages">Work Package:</label>
+        <select id="workPackages" name="workPackageNames" multiple required>
+            <option value="" disabled selected>Seleziona uno o più Work Package</option>
+            <th:block th:each="wp : ${listWorkPackage}">
+                <option th:value="${wp.nameWorkPackage}" th:text="${wp.nameWorkPackage}"></option>
             </th:block>
-
         </select>
     </div>
+
+    <!-- Data di inizio -->
     <div>
         <label for="startDate">Start Date:</label>
         <input type="date" id="startDate" name="startDate" required />
     </div>
 
+    <!-- Data di fine -->
     <div>
         <label for="endDate">End Date:</label>
         <input type="date" id="endDate" name="endDate" required />
     </div>
 
-    <input type="hidden" name="nameProject" th:value="${project.getNameProject()}" />
+    <!-- Nome del progetto (invisibile all'utente) -->
+    <input type="hidden" name="nameProject" th:value="${project.nameProject}" />
 
+    <!-- Pulsante per creare la Milestone -->
     <div>
         <button type="submit">Create Milestone</button>
     </div>

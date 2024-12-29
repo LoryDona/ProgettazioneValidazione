@@ -331,8 +331,14 @@ public class AppController {
         return "pageScientificManager";
     }
 
+<<<<<<< HEAD
+    //***************SET HOURS PER RESEARCHER**********************************
+    @RequestMapping("/setHourResearcher")
+    public String setHor(@RequestParam(name="researchedID", required=true) long researcherID,
+=======
     @RequestMapping("/setHoursResearcher")
     public String setHoursResearcher(@RequestParam(name="ResearcherID", required=true) long researcherID,
+>>>>>>> 8e16ecde8b1f88759ce6454b9d73ad82665c6f95
                            @RequestParam(name="freehours", required=true) int freehours,
                            Model model) {
 
@@ -343,11 +349,19 @@ public class AppController {
 
         model.addAttribute("person", researcher);
         model.addAttribute("message", "Set hours correctly");
+<<<<<<< HEAD
+
+=======
         model.addAttribute("listTasks", researcher.getTasks());
+>>>>>>> 8e16ecde8b1f88759ce6454b9d73ad82665c6f95
 
 
         return "pageResearcher";
     }
+<<<<<<< HEAD
+    //**************++****************++**************************************
+=======
+>>>>>>> 8e16ecde8b1f88759ce6454b9d73ad82665c6f95
 
     @RequestMapping("/createWorkPackage")
     public String createWorkPackage(@RequestParam(name="NameProject", required=true) String projectName,
@@ -497,32 +511,24 @@ public class AppController {
 
     @RequestMapping("/createMilestone")
     public String createMilestone(
-            @RequestParam(name="NameProject", required=true) String projectName,
-            @RequestParam(name="workPackageNames", required=false) List<WorkPackage> workPackageNames,  // Solo i nomi dei work package
+            @RequestParam(name = "NameProject", required = true) String projectName,
             Model model) {
 
-        // Recupera il progetto
-        Project project = Administrator.getProjects().stream()
-                .filter(pro -> projectName.equals(pro.getNameProject()))
-                .findFirst()
-                .orElse(null);
+        // Recupera il progetto in base al nome
+        Optional<Project> optionalProject = Administrator.getProjects().stream()
+                .filter(project -> projectName.equals(project.getNameProject()))
+                .findFirst();
 
-        //Recupera i workpackage
-        WorkPackage works = ScientificManager.getWorkPackageList().stream()
-                .filter(pro -> workPackageNames.equals(pro.getNameWorkPackage()))
-                .findFirst()
-                .orElse(null);
-
-        if (project != null) {
+        if (optionalProject.isPresent()) {
+            Project project = optionalProject.get();
+            // Aggiungi al modello il progetto e i WorkPackage associati
             model.addAttribute("project", project);
-            model.addAttribute("workPackages", project.getWorkPackeges());
-            return "insertMilestone";  // Restituisci la vista per l'inserimento della milestone
+            model.addAttribute("listWorkPackage", project.getWorkPackeges());
+            return "insertMilestone"; // Nome della vista Thymeleaf
         } else {
-            return "errorPage";  // Se il progetto non viene trovato, mostra una pagina di errore
+            return "errorPage"; // Se il progetto non viene trovato, mostra un errore
         }
     }
-
-
 
     @PostMapping("/CreateMilestonePage")
     public String createMilestone(
@@ -532,104 +538,100 @@ public class AppController {
             @RequestParam("endDate") String endDate,
             @RequestParam(name = "state", required = true) String state,
             @RequestParam("nameProject") String nameProject,
-            //  @RequestParam("workPackageIds") List<WorkPackage> workPackageIds,
-            Model model
-    ) {
+            @RequestParam(name = "workPackageNames", required = false) List<String> workPackageNames, // Riceve solo i nomi
+            Model model) {
 
-
+        // Parsing delle date
         LocalDate parsedStartDate = LocalDate.parse(startDate);
         LocalDate parsedEndDate = LocalDate.parse(endDate);
 
+        // Recupera il progetto in base al nome
         Optional<Project> optionalProject = Administrator.getProjects().stream()
                 .filter(project -> nameProject.equals(project.getNameProject()))
                 .findFirst();
 
-        if(optionalProject.isPresent()) {
+        if (optionalProject.isPresent()) {
+            Project project = optionalProject.get();
 
-            if(parsedStartDate.isAfter(parsedEndDate))
-            {
+            // Controlla se la startDate è dopo l'endDate
+            if (parsedStartDate.isAfter(parsedEndDate)) {
                 return "errorDate";
             }
-            List<String> workPackageNames = optionalProject.get().getWorkPackeges()
-                    .stream()
-                    .map(WorkPackage::getNameWorkPackage) // Estrai il nome di ogni WorkPackage
-                    .collect(Collectors.toList());
 
-            Project proj = optionalProject.get(); //Per estrarre il valore del progetto da option
-
-
-            //Check se c'è collisione con un altra millestone
-            for (Milestone existingMilestone : proj.getMilestones()) {
-                LocalDate existingStartDate = existingMilestone.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                LocalDate existingEndDate = existingMilestone.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                if ((existingMilestone.getStartDate().equals(parsedStartDate) || existingMilestone.getEndDate().equals(parsedEndDate) ||
-                        (existingStartDate.isBefore(parsedStartDate) && existingEndDate.isAfter(parsedEndDate)))) {
-                    return "errorCollisionMilestone";
-                }
+            // Controllo collisione con altre Milestone
+            if (isCollisionWithOtherMilestones(project, parsedStartDate, parsedEndDate)) {
+                return "errorCollisionMilestone";
             }
-            /*
-            //Controllo se esiste un altra Milestone che termini lo stesso giorno
-            for (Milestone existingMilestone : proj.getMilestones()) {
-                if ((existingMilestone.getEndDate().equals(parsedEndDate) )) {
-                    return "_error";
-                }
-            }
-            */
 
-            //Controllo che EndDate non sia in un giorno festivo
-            List<MonthDay> holidays = List.of(
-                    MonthDay.of(1, 1),  // Capodanno
-                    MonthDay.of(1, 6),  // Epifania
-                    MonthDay.of(4, 25), // Festa della Liberazione
-                    MonthDay.of(5, 1),  // Festa del Lavoro
-                    MonthDay.of(6, 2),  // Festa della Repubblica
-                    MonthDay.of(11, 1), // Ognissanti
-                    MonthDay.of(12, 8), // Immacolata
-                    MonthDay.of(12, 25) // Natale
-            );
-
-            // Estrai MonthDay da endDate
-            MonthDay endMonthDay = MonthDay.from(parsedEndDate);
-
-            // Verifica se la endDate cade in una festività
-            if (holidays.contains(endMonthDay)) {
+            // Controllo se l'endDate cade in un giorno festivo
+            if (isHoliday(parsedEndDate)) {
                 return "errorHolidayEndDate";
             }
-/*
-            List<WorkPackage> workPackages = new ArrayList<>();
-            for (Integer workPackageId : workPackageIds) {
-                Optional<WorkPackage> workPackage = proj.getWorkPackeges().stream()
-                        .filter(wp -> wp.getNameWorkPackage().equals(workPackageId))
-                        .findFirst();
-                workPackage.ifPresent(workPackages::add);  // Aggiungi il WorkPackage se trovato
+
+            // Recupera i WorkPackage in base ai nomi selezionati
+            List<WorkPackage> selectedWorkPackages = project.getWorkPackeges().stream()
+                    .filter(wp -> workPackageNames.contains(wp.getNameWorkPackage()))
+                    .collect(Collectors.toList());
+
+            // Aggiungi la nuova Milestone al progetto
+            Milestone newMilestone = new Milestone(
+                    nameMilestone,
+                    Date.from(parsedStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                    Date.from(parsedEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                    descriptionMilestone,
+                    state,
+                    selectedWorkPackages
+            );
+
+            project.addMilestone(newMilestone);
+
+            // Salva il progetto e aggiorna il modello
+            repository.save(project.getScientificManager());
+            model.addAttribute("projects", getProjectsForScientificManager(project.getScientificManager()));
+            model.addAttribute("person", project.getScientificManager());
+            model.addAttribute("listWorkPackage", project.getScientificManager().getWorkPackges());
+            model.addAttribute("listTasks", project.getScientificManager().getTasks());
+          //  model.addAttribute('listMilestone' project.getScientificManager().get
+
+            return "pageScientificManager"; // Ritorna alla pagina principale
+        } else {
+            return "errorDate"; // Se il progetto non viene trovato, mostra un errore
+        }
+    }
+
+    // Metodo di utilità: Verifica collisioni con altre Milestone
+    private boolean isCollisionWithOtherMilestones(Project project, LocalDate startDate, LocalDate endDate) {
+        for (Milestone existingMilestone : project.getMilestones()) {
+            LocalDate existingStart = existingMilestone.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate existingEnd = existingMilestone.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            if ((startDate.isBefore(existingEnd) && endDate.isAfter(existingStart)) ||
+                    startDate.equals(existingStart) || endDate.equals(existingEnd)) {
+                return true;
             }
-
- */
-            // Aggiunta di Milestone
-            optionalProject.get().addMilestone(new Milestone(nameMilestone, Date.from(parsedStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(parsedEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), descriptionMilestone, state, workPackageNames));
-
-            ScientificManager scientificManager  = Administrator.getProjects().stream()
-                    .filter(project -> project.getNameProject().equals(nameProject))
-                    .findFirst().get().getScientificManager();
-
-            List<Project> projects = Administrator.getProjects().stream().
-                    filter(project -> project.getScientificManager().getId().equals(scientificManager.getId())).toList();
-
-            repository.save(scientificManager);
-
-            model.addAttribute("projects", projects);
-            model.addAttribute("person",  scientificManager);
-            model.addAttribute("listWorkPackage", scientificManager.getWorkPackges());
-            model.addAttribute("listTasks", scientificManager.getTasks());
-
-            return "pageScientificManager";
-
-            //return "projectsScientificManager";
         }
-        else {
-            return "errorDate";
-        }
+        return false;
+    }
 
+    // Metodo di utilità: Verifica se una data cade in un giorno festivo
+    private boolean isHoliday(LocalDate date) {
+        List<MonthDay> holidays = List.of(
+                MonthDay.of(1, 1),  // Capodanno
+                MonthDay.of(1, 6),  // Epifania
+                MonthDay.of(4, 25), // Festa della Liberazione
+                MonthDay.of(5, 1),  // Festa del Lavoro
+                MonthDay.of(6, 2),  // Festa della Repubblica
+                MonthDay.of(11, 1), // Ognissanti
+                MonthDay.of(12, 8), // Immacolata
+                MonthDay.of(12, 25) // Natale
+        );
+        return holidays.contains(MonthDay.from(date));
+    }
+
+    // Metodo di utilità: Recupera i progetti per un responsabile scientifico
+    private List<Project> getProjectsForScientificManager(ScientificManager manager) {
+        return Administrator.getProjects().stream()
+                .filter(project -> project.getScientificManager().getId().equals(manager.getId()))
+                .collect(Collectors.toList());
     }
 
     // ******************************************************************************************************************************************************************************

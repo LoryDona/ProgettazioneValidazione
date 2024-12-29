@@ -6,6 +6,7 @@ import java.util.List;
 
 @Entity
 public class Researcher extends Person{
+    private int free_hours;
 
     private int free_hours;
 
@@ -41,6 +42,18 @@ public class Researcher extends Person{
         return tasks;
     }
 
+<<<<<<< HEAD
+    public void setFree_hours(int hours)
+    {
+        free_hours = hours;
+    }
+
+    public int getFree_hours()
+    {
+        return free_hours;
+    }
+
+=======
     public int getFree_hours() {
         return free_hours;
     }
@@ -49,5 +62,6 @@ public class Researcher extends Person{
         this.free_hours = free_hours;
     }
 
+>>>>>>> 8e16ecde8b1f88759ce6454b9d73ad82665c6f95
     public Researcher(){};
 }
