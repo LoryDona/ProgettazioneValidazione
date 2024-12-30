@@ -654,6 +654,10 @@ public class AppController {
     @RequestMapping("/editReport")
     public String editReport(@RequestParam(name="id", required=true) Long id, Model model) {
         Optional<Report> rep=repositoryReport.findById(id);
+        if (!rep.isPresent()){
+            model.addAttribute("message", "Errore, ricaricare la pagina");
+            return "result";
+        }
         model.addAttribute("report", rep.get());
         return "editReport";
     }
@@ -778,6 +782,10 @@ public class AppController {
     @RequestMapping("/controfirma")
     public String controFirma(@RequestParam(name="id", required=true) Long id, Model model) {
         Optional<Report> result = repositoryReport.findById(id);
+        if (!result.isPresent()){
+            model.addAttribute("message", "Errore, ricaricare la pagina");
+            return "resultSign";
+        }
         Report a=result.get();
         repositoryReport.delete(a);
         repositoryReport.save(new Report(a.getTitle(),a.getResults(),a.getHours(),a.getActivities(),a.getFirma(),result.get().getProgetto(),a.getIsBozza(),true));

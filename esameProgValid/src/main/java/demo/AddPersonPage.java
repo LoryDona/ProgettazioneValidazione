@@ -3,6 +3,7 @@ package demo;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 
 // pageobject per la pagina input.html
 public class AddPersonPage extends PageObject {
@@ -11,13 +12,19 @@ public class AddPersonPage extends PageObject {
     @FindBy(tagName = "h1")
     private WebElement heading;
 
-    @FindBy(name = "firstname")
-    private WebElement firstNameField;
+    @FindBy(name = "username")
+    private WebElement username;
 
-    @FindBy(name = "lastname")
-    private WebElement lastNameField;
+    @FindBy(name = "password")
+    private WebElement password;
 
-    @FindBy(xpath = "//input[@type='submit']")
+    @FindBy(name = "mail")
+    private WebElement mail;
+
+    @FindBy(name = "role")
+    private WebElement role;
+
+    @FindBy(xpath = "//button[text()='Crea']")
     private WebElement submitButton;
 
     public AddPersonPage(WebDriver driver) {
@@ -28,13 +35,16 @@ public class AddPersonPage extends PageObject {
         return getText(heading);
     }
 
-    public void fillPersonDetails(String firstName, String lastName) {
-        typeText(firstNameField, firstName);
-        typeText(lastNameField, lastName);
+    public void fillPersonDetails(String user, String pass, String ma, String rol) {
+        typeText(username, user);
+        typeText(password, pass);
+        typeText(mail, ma);
+        Select dropdown = new Select(role);
+        dropdown.selectByVisibleText(rol);
     }
 
-    public PeopleListPage submitForm() {
+    public LoginPage submitForm() {
         click(submitButton);
-        return new PeopleListPage(driver);//ritorna la pagina iniziale
+        return new LoginPage(driver);//ritorna la pagina iniziale
     }
 }
