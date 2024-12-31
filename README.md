@@ -11,7 +11,7 @@
 
 
 ## <a id="scaricare-il-progetto"></a> Scaricare il progetto
-Per scaricare il progetto è necessario clonare la repository tramite il comando 'git clone https://github.com/FarinaChristian/ProgettazioneValidazione.git'. Dopodichè è necessario eseguire il comando `./gradlew build` per scaricare le dipendenze e compilare il progetto. Per eseguire il progetto è necessario eseguire il comando `./gradlew bootRun`, che avvierà il server sulla porta `8080`.
+Per scaricare il progetto è necessario clonare la repository tramite il comando `git clone https://github.com/FarinaChristian/ProgettazioneValidazione.git`. Dopodichè è necessario eseguire il comando `./gradlew build` per scaricare le dipendenze e compilare il progetto. Per eseguire il progetto è necessario eseguire il comando `./gradlew bootRun`, che avvierà il server sulla porta `8080`.
 
 ---
 ## <a id="scenari"></a> Scenari
