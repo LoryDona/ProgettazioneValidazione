@@ -1,7 +1,15 @@
 ## Progetto Corso Progettazione e Validazione di Sistemi Software 2024/2025
-> Progetto per il corso di Ingegneria del Software 
-> dell'Università degli Studi di Verona.
+> Progetto per il corso di Ingegneria del Software dell'Università degli Studi di Verona.
 
+---
+
+
+## <a id="scaricare-il-progetto"></a> Scaricare il progetto
+Per scaricare il progetto è necessario clonare la repository tramite il comando `git clone https://github.com/FarinaChristian/ProgettazioneValidazione.git.
+Dopodiché è necessario eseguire il comando `./gradlew build` per scaricare le dipendenze e compilare il progetto.
+Per eseguireil progetto è necessario eseguire il comando `./gradlew bootRun`, che avvierà il server sulla porta `8080`.
+
+---
 ### Lista degli scenari
 
 #### 1) Creazione di Progetti e Allocazione del Responsabile
