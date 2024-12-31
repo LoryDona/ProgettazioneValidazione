@@ -188,7 +188,6 @@ public class AppController {
             }
         }
 
-
         if(result != null && result.isPresent()) {
             if (result.get() instanceof Administrator) {
                 model.addAttribute("person", (Administrator) result.get());

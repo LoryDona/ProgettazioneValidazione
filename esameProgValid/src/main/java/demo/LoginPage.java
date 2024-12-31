@@ -12,6 +12,15 @@ import java.util.List;
 public class LoginPage extends PageObject {
 
     //definisco gli elementi della pagina, (presi dal test di esempio fornito)
+    @FindBy(name = "username")
+    private WebElement username;
+
+    @FindBy(name = "password")
+    private WebElement pass;
+
+    @FindBy(xpath = "//button[text()='Accedi']")
+    private WebElement accedi;
+
     @FindBy(linkText = "Create user")
     private WebElement addNewPersonLink;
 
@@ -27,8 +36,20 @@ public class LoginPage extends PageObject {
     @FindBy(xpath = "//button[text()='Recupera Password']")
     private WebElement submitButton;
 
+
     public LoginPage(WebDriver driver) {
         super(driver);
+    }
+
+    //metodo per inserire password e username
+    public void login(String u,String p) {
+        typeText(username, u);
+        typeText(pass, p);
+    }
+
+    public AdministratorPage clickAccedi() {
+        click(accedi);
+        return new AdministratorPage(driver);// navigo alla pagina dove vedo la lista delle persone
     }
 
     public LoginPage clickPassword() {
