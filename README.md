@@ -1,5 +1,5 @@
-# Progetto Corso Progettazione e Validazione di Sistemi Software 2024/2025
-> Progetto per il corso di Ingegneria del Software dell'Università degli Studi di Verona.
+# Sistema di Gestione dei Report Accademici
+> Progetto per il corso di Progettazione e Validazione di Sistemi Software 2024/2025 dell'Università degli Studi di Verona.
 
 ---
 
