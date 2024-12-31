@@ -1,6 +1,12 @@
 # 🖥️ Sistema di Gestione dei Report Accademici🖥️ 
 > Progetto per il corso di Progettazione e Validazione di Sistemi Software 2024/2025 dell'Università degli Studi di Verona.
 
+## Indice
+1. [🛠️ Scaricare il progetto](#scaricare-il-progetto)
+2. [🎯 Scenari](#scenari)
+3. [📋 Test](#test)
+4. [👨‍💻 Autori](#autori)
+   
 ---
 
 
@@ -10,7 +16,7 @@ Dopodiché è necessario eseguire il comando `./gradlew build` per scaricare le 
 Per eseguireil progetto è necessario eseguire il comando `./gradlew bootRun`, che avvierà il server sulla porta `8080`.
 
 ---
-### Lista degli scenari
+## <a id="scenari"></a> Scenari
 
 #### 1) Creazione di Progetti e Allocazione del Responsabile
 
@@ -24,6 +30,8 @@ Per eseguireil progetto è necessario eseguire il comando `./gradlew bootRun`, c
 
 **Stato del sistema al completamento:** Al responsabile scientifico sarà assegnato il progetto appena creato dall’amministrativo.
 
+---
+
 #### 2) Aggiunta di Task e Assegnazione ai Ricercatori
 
 **Assunzioni iniziali:** Il responsabile scientifico può aggiungere nuovi task ai work package esistenti e assegnarli ai ricercatori disponibili.
@@ -35,6 +43,8 @@ Per eseguireil progetto è necessario eseguire il comando `./gradlew bootRun`, c
 **Altre attività:** Il responsabile scientifico può aggiungere anche i work package.
 
 **Stato del sistema al completamento:** I work package esistenti sono stati aggiunti nuovi task. I nuovi task sono stati assegnati ai ricercatori disponibili.
+
+---
 
 #### 3) Aggiunta di Work Package
 
@@ -48,6 +58,8 @@ Per eseguireil progetto è necessario eseguire il comando `./gradlew bootRun`, c
 
 **Stato del sistema al completamento:** Il work package è stato aggiunto.
 
+---
+
 #### 4) Aggiunta delle Milestone di Progetto
 
 **Assunzioni iniziali:** Il responsabile scientifico può aggiungere le milestone del progetto. La creazione di una milestone richiede la presenza di almeno un ricercatore associato al progetto.
@@ -60,6 +72,8 @@ Per eseguireil progetto è necessario eseguire il comando `./gradlew bootRun`, c
 
 **Stato del sistema al completamento:** La milestone è stata aggiunta.
 
+---
+
 #### 5) Notifiche per Problemi di Invio del Report
 
 **Assunzioni iniziali:** Gli utenti riceveranno notifiche in caso di errori o problemi di rete durante l’invio di report all’amministrativo.
@@ -71,6 +85,8 @@ Per eseguireil progetto è necessario eseguire il comando `./gradlew bootRun`, c
 **Altre attività:**
 
 **Stato del sistema al completamento:** Il report risulta inviato oppure il messaggio che suggerisce di controllare la rete viene visualizzato.
+
+---
 
 #### 6) Creazione dei report
 
@@ -88,6 +104,8 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 
 **Cosa può andare storto:** Inserimento errato o incompleto dei dati da parte degli utenti (ricercatori, responsabili scientifici o amministrativi). Il sistema deve garantire che alcuni campi siano obbligatori.
 
+---
+
 #### 7) Autenticazione Recupero credenziali da parte di un utente
 
 **Assunzioni iniziali:** Se l'utente non è autenticato, il sistema deve reindirizzarlo alla pagina di login. La gestione delle credenziali di accesso è delegata all'amministrativo.
@@ -95,6 +113,8 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 **Normale:** L’utente accede al sistema inserendo il proprio username e la propria password. L'utente deve essere stato precedentemente registrato.
 
 **Cosa può andare storto:** L'utente dimentica la password, per risolvere dovrà accedere alla pagina di login e selezionare  "Recupera Password", verrà quindi inviata una mail all’utente in cui si fornirà una password provvisoria che poi andrà cambiata. Se l'utente dovesse inserire dei dati errati, il sistema negherà l'accesso all'utente.
+
+---
 
 #### 8) Posticipazione delle Milestone di Progetto
 
@@ -108,6 +128,8 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 
 **Stato del sistema al completamento**: La milestone è stata posticipata con successo.
 
+---
+
 #### 9) Registrazione Nuovo Utente
 
 **Assunzioni iniziali:** Il sistema deve consentire agli utenti di registrarsi creando un profilo personale che, a seconda del ruolo di quest'ultimi, fornirà  determinati privilegi.
@@ -119,3 +141,10 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 **Altre** **attività**:
 
 **Stato** **del** **sistema** **al** **completamento**: Il nuovo utente è stato registrato nel sistema.
+
+---
+
+## <a id="autori"></a> Autori
+- [Mario](https://github.com/Marjo1996)
+- [Christian Farina](https://github.com/FarinaChristian)
+- [Lorenzo Junior Donatiello](https://github.com/LoryDona)
