@@ -1,4 +1,4 @@
-# Sistema di Gestione dei Report Accademici
+# 🖥️ Sistema di Gestione dei Report Accademici🖥️ 
 > Progetto per il corso di Progettazione e Validazione di Sistemi Software 2024/2025 dell'Università degli Studi di Verona.
 
 ---
