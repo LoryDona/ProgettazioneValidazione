@@ -1,4 +1,6 @@
 ## Progetto Corso Progettazione e Validazione di Sistemi Software 2024/2025
+> Progetto per il corso di Ingegneria del Software 
+> dell'Università degli Studi di Verona.
 
 ### Lista degli scenari
 
