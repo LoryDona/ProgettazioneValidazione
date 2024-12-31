@@ -10,6 +10,7 @@ import java.util.Optional;
 public class ScientificManager extends Person{
 
     private static List<WorkPackage> works = new ArrayList<WorkPackage>();
+    private static List<Milestone> miles = new ArrayList<Milestone>();
 
     private int free_hours;
 
@@ -43,6 +44,18 @@ public class ScientificManager extends Person{
         }
 
         return workPackages;
+    }
+
+    public List<Milestone> getMilestones()
+    {
+        List<Project> projScientificManager = Administrator.getProjects().stream().
+                filter(p -> p.getScientificManager().getId().equals(this.getId())).toList();
+        List<Milestone> milestones = new ArrayList<Milestone>();
+
+        for(Project p : projScientificManager){
+            milestones.addAll(p.getMilestones());
+        }
+        return milestones;
     }
 
 

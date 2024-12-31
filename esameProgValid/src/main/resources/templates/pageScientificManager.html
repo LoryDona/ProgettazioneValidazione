@@ -128,40 +128,8 @@
 </table>
 
 <br>
-<!-- Sezione List Milestones -->
-<div id="listMilestones">
-    <h3>List Milestones</h3>
-    <table>
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Work Packages</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Ciclo per ogni Milestone -->
-        <c:forEach var="milestone" items="${milestones}">
-            <tr>
-                <td>${milestone.name}</td>
-                <td>${milestone.description}</td>
-                <td>${milestone.startDate}</td>
-                <td>${milestone.endDate}</td>
-                <td>
-                    <ul>
-                        <!-- Ciclo per ogni WorkPackage associato alla Milestone -->
-                        <c:forEach var="workPackage" items="${milestone.workPackages}">
-                            <li>${workPackage.nameWorkPackage}</li>
-                        </c:forEach>
-                    </ul>
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-</div>
+
+
 <br>
 <h2>List Tasks of scientific manager</h2>
 <br>
@@ -196,6 +164,33 @@
 <br>
 
 <a href="/"> Go to the login page </a>
+
+<br>
+<br>
+
+<h2>List Milestone</h2>
+<br>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Name Milestone</th>
+        <th>Project association name</th>
+        <th>End date</th>
+        <th>Modificare End Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="l: ${listMilestone}">
+        <td th:text="${l.getName()}"> <b></b></td>
+        <td th:text="${l.getProjectAssociation().getNameProject()}"></td>
+        <td th:text="${#dates.format(l.getEndDate(), 'dd-MM-yyyy')}"></td>
+
+        <!--   <td th:text="${l.getEndDate()}"></td>   -->
+        <td><a th:href="@{/postponeMilestone(milestoneName=${l.getName()}, projectName=${l.getProjectAssociation().getNameProject()})}">
+            Postpone</a></td>
+    </tr>
+    </tbody>
+</table>
 
 <br>
 
