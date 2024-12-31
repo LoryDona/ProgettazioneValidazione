@@ -92,8 +92,7 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 
 **Normale**: Introdurre un’interfaccia per la posticipazione delle milestone con opzioni di modifica per la data.
 
-**Cosa può andare storto:** Una milestone potrebbe essere posticipata in una data in cui, per diverse ragioni, non può essere messa (eventuali collisioni con altre milestone oppure giorni festivi). Il sistema deve implementare un sistema di verifica della disponibilità dei giorni e notificare l’eventuale errore all’utente. Essendo che la Milestone richiede la presenza di almeno un ricercatore associato al progetto, sarà necessario implementare anche un messaggio d’errore che avverta l’assenza di ricercatori se tale situazione si verifica.
-
+**Cosa può andare storto:** Una milestone potrebbe essere posticipata in una data in cui, per diverse ragioni, non può essere messa (eventuali collisioni con altre milestone oppure giorni festivi). Il sistema deve implementare un sistema di verifica della disponibilità dei giorni e notificare l’eventuale errore all’utente. Essendo un metodo di posticipa e non di modifica della data, sarà necessario implementare anche un messaggio d'errore che avverta l'anticipo dell'End Date se tale situazione si verifica. 
 
 **Altre attività:**
 
