@@ -18,7 +18,7 @@ Dopodichè è necessario eseguire il comando `./gradlew build` per scaricare le 
 ---
 ## <a id="scenari"></a> Scenari
 
-#### 1) Creazione di Progetti e Allocazione del Responsabile
+#### 1) 💼 Creazione di Progetti e Allocazione del Responsabile
 
 **Assunzioni iniziali:** Un amministrativo può creare un nuovo progetto e assegnare un responsabile scientifico che avrà accesso alla gestione delle componenti interne (come work package e task).
 
@@ -32,7 +32,7 @@ Dopodichè è necessario eseguire il comando `./gradlew build` per scaricare le 
 
 ---
 
-#### 2) Aggiunta di Task e Assegnazione ai Ricercatori
+#### 2)📋 Aggiunta di Task e Assegnazione ai Ricercatori
 
 **Assunzioni iniziali:** Il responsabile scientifico può aggiungere nuovi task ai work package esistenti e assegnarli ai ricercatori disponibili.
 
@@ -46,7 +46,7 @@ Dopodichè è necessario eseguire il comando `./gradlew build` per scaricare le 
 
 ---
 
-#### 3) Aggiunta di Work Package
+#### 3) 📦 Aggiunta di Work Package
 
 **Assunzioni iniziali:** Un responsabile scientifico deve avere la possibilità di aggiungere nuovi work package. Non è richiesta l'approvazione dell'amministrativo per questa operazione. La creazione di un nuovo work package non richiede la presenza dei ricercatori.
 
@@ -60,7 +60,7 @@ Dopodichè è necessario eseguire il comando `./gradlew build` per scaricare le 
 
 ---
 
-#### 4) Aggiunta delle Milestone di Progetto
+#### 4) 📅 Aggiunta delle Milestone di Progetto
 
 **Assunzioni iniziali:** Il responsabile scientifico può aggiungere le milestone del progetto. La creazione di una milestone richiede la presenza di almeno un ricercatore associato al progetto.
 
@@ -74,7 +74,7 @@ Dopodichè è necessario eseguire il comando `./gradlew build` per scaricare le 
 
 ---
 
-#### 5) Notifiche per Problemi di Invio del Report
+#### 5) ⚠️ Notifiche per Problemi di Invio del Report
 
 **Assunzioni iniziali:** Gli utenti riceveranno notifiche in caso di errori o problemi di rete durante l’invio di report all’amministrativo.
 
@@ -88,7 +88,7 @@ Dopodichè è necessario eseguire il comando `./gradlew build` per scaricare le 
 
 ---
 
-#### 6) Creazione dei report
+#### 6) 📊 Creazione dei report
 
 **Assunzioni iniziali:** Generazione di Report: Il sistema deve generare report e garantire la conservazione dei report firmati per almeno 10 anni.
 
@@ -106,7 +106,7 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 
 ---
 
-#### 7) Autenticazione Recupero credenziali da parte di un utente
+#### 7) 🔒 Autenticazione Recupero credenziali da parte di un utente
 
 **Assunzioni iniziali:** Se l'utente non è autenticato, il sistema deve reindirizzarlo alla pagina di login. La gestione delle credenziali di accesso è delegata all'amministrativo.
 
@@ -116,7 +116,7 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 
 ---
 
-#### 8) Posticipazione delle Milestone di Progetto
+#### 8) ⏳ Posticipazione delle Milestone di Progetto
 
 **Assunzioni iniziali:** Il responsabile scientifico può posticipare le milestone del progetto in caso di ritardo. La posticipa di una milestone richiede la continua presenza di almeno un ricercatore associato al progetto.
 
@@ -130,7 +130,7 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 
 ---
 
-#### 9) Registrazione Nuovo Utente
+#### 9) ✍️ Registrazione Nuovo Utente
 
 **Assunzioni iniziali:** Il sistema deve consentire agli utenti di registrarsi creando un profilo personale che, a seconda del ruolo di quest'ultimi, fornirà  determinati privilegi.
 
