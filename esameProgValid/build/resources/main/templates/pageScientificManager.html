@@ -31,76 +31,7 @@
 
 <h2 th:text="${message}"></h2>
 
-<br><!DOCTYPE html>
-<html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 <br>
-<h2>List Tasks of researcher</h2>
-<br>
-
-<h1 th:text="${person.getFirstName()}"></h1>
-<h1 th:text="${person.getLastName()}"></h1>
-
-<table border="1">
-    <thead>
-    <tr>
-        <th>Name task</th>
-        <th>Scientific researcher name</th>
-        <th>Researchers</th>
-        <th>State</th>
-        <th>Start date</th>
-        <th>End date</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="t: ${listTasks}">
-        <td th:text="${t.getNameTask()}"> <b></b></td>
-        <td th:text="${t.getWorkPackageAssociation().getProjectAssociation().getScientificManager().getFirstName()}"></td>
-        <td>
-            <ul>
-                <li th:each="researcher : ${t.getResearchers()}" th:text="${researcher.getFirstName()}"></li>
-            </ul>
-        </td>
-        <td th:text="${t.getState()}"></td>
-        <td th:text="${t.getStartDate()}"></td>
-        <td th:text="${t.getEndDate()}"></td>
-    </tr>
-    </tbody>
-</table>
-
-<br>
-
-<br>
-
-<h1>Set Free Hours</h1>
-<form th:action="@{/setHourResearcher}" method="post">
-    <div>
-        <label for="workingHours">Set free hours:</label>
-        <input type="number" id="workingHours" name="freehours" min="0" step="1" th:value="${person.free_hours}" />
-    </div>
-
-    <input type="hidden" name="ResearcherID" th:value="${person.id}" />
-    <div>
-        <button type="submit">Set Free Hours</button>
-    </div>
-</form>
-
-<br>
-
-<a href="/"> Go to the login page </a>
-
-<br>
-
-<h2 th:text="${message}"></h2>
-
-
-</body>
-</html>
 <h2>List work packages</h2>
 <br>
 
@@ -128,40 +59,7 @@
 </table>
 
 <br>
-<!-- Sezione List Milestones -->
-<div id="listMilestones">
-    <h3>List Milestones</h3>
-    <table>
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Work Packages</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Ciclo per ogni Milestone -->
-        <c:forEach var="milestone" items="${milestones}">
-            <tr>
-                <td>${milestone.name}</td>
-                <td>${milestone.description}</td>
-                <td>${milestone.startDate}</td>
-                <td>${milestone.endDate}</td>
-                <td>
-                    <ul>
-                        <!-- Ciclo per ogni WorkPackage associato alla Milestone -->
-                        <c:forEach var="workPackage" items="${milestone.workPackages}">
-                            <li>${workPackage.nameWorkPackage}</li>
-                        </c:forEach>
-                    </ul>
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-</div>
+
 <br>
 <h2>List Tasks of scientific manager</h2>
 <br>
@@ -194,7 +92,10 @@
 </table>
 
 <br>
-
+<a th:href="@{/createReport(ID=${person.getId()})}">Create report</a>
+<br>
+<a href="invioReport"> See reports</a>
+<br>
 <a href="/"> Go to the login page </a>
 
 <br>
