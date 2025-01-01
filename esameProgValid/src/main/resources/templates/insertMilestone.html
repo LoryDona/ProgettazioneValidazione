@@ -3,9 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Create New Milestone</title>
+    <script>
+        function validateForm() {
+            // Ottieni il campo dei WorkPackage
+            var workPackageSelect = document.getElementById("workPackages");
+
+            // Controlla se è selezionato almeno un work package che non è vuoto
+            var selectedOptions = Array.from(workPackageSelect.selectedOptions);
+            var isValid = selectedOptions.some(option => option.value !== "");  // Verifica che almeno una opzione abbia un valore diverso da ""
+
+            if (!isValid) {
+                // Mostra un alert se non è selezionato alcun work package valido
+                alert("Per favore, seleziona almeno un Work Package. Se non esistono prima creane uno!");
+                return false;  // Impedisce l'invio del form
+            }
+            return true;  // Permette l'invio del form
+        }
+    </script>
 </head>
 <body>
-<form th:action="@{/CreateMilestonePage}" method="post">
+<h1>Insert Milestone</h1>
+<form th:action="@{/CreateMilestonePage}" method="post" onsubmit="return validateForm()">
 
     <div>
         <label for="nameMilestone">Name Milestone:</label>
@@ -55,7 +73,8 @@
     <div>
         <button type="submit">Create Milestone</button>
     </div>
-
+    <br>
+    <a href="javascript:history.back()">Go Back</a>
 </form>
 </body>
 </html>
