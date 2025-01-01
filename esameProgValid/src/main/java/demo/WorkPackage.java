@@ -15,14 +15,22 @@ public class WorkPackage {
 
     private Date endDate;
 
-    public WorkPackage(Project projectAssociation, String nameWorkPackage, Date startDate, Date endDate, String description)
+    private Milestone milestoneAssociation;
+
+    public WorkPackage(Project projectAssociation, /* Milestone milestoneAssociation,*/ String nameWorkPackage, Date startDate, Date endDate, String description)
     {
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
         this.nameWorkPackage = nameWorkPackage;
         this.projectAssociation = projectAssociation;
+     //   this.milestoneAssociation = milestoneAssociation;
     }
+
+    public void setMilestoneAssociation(Milestone milestoneAssociation) {
+        this.milestoneAssociation = milestoneAssociation;
+    }
+    public Milestone getMilestoneAssociation() { return milestoneAssociation; }
 
     public void setProjectAssociation(Project projectAssociation) {
         this.projectAssociation = projectAssociation;

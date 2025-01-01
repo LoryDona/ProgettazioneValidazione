@@ -7,13 +7,11 @@
 <body>
 <form th:action="@{/CreateMilestonePage}" method="post">
 
-    <!-- Nome della Milestone -->
     <div>
         <label for="nameMilestone">Name Milestone:</label>
         <input type="text" id="nameMilestone" name="nameMilestone" required>
     </div>
 
-    <!-- Descrizione della Milestone -->
     <div>
         <label for="descriptionMilestone">Description:</label>
         <textarea id="descriptionMilestone" name="descriptionMilestone" required></textarea>
@@ -32,6 +30,19 @@
     </div>
 
     <!-- Selezione dei WorkPackage -->
+    <!-- Seleziona WorkPackage
+    <div>
+        <label for="workPackages">Work Package:</label>
+        <select id="workPackages" name="workPackageNames" multiple required>
+            <option value="" disabled selected>Seleziona uno o più Work Package</option>
+            <th:block th:each="wp : ${listWorkPackage}">
+                <option th:value="${wp.nameWorkPackage}" th:text="${wp.nameWorkPackage}"></option>
+            </th:block>
+
+        </select>
+    </div>
+-->
+    <!-- Selezione dei WorkPackage -->
     <div>
         <label for="workPackages">Work Package:</label>
         <select id="workPackages" name="workPackageNames" multiple required>
@@ -43,6 +54,16 @@
     </div>
 
     <!-- Data di inizio -->
+<!--
+    <tr th:each="w: ${listWorkPackage}">
+        <td th:text="${w.getNameWorkPackage()}"> <b></b></td>
+        <td th:text="${w.getProjectAssociation().getNameProject()}"></td>
+        <td th:text="${w.getDescription()}"></td>
+        <td th:text="${w.getStartDate()}"></td>
+        <td th:text="${w.getEndDate()}"></td>
+        <td><a th:href="@{/createTask(NameWorkPackage=${w.getNameWorkPackage()}, ScientificManagerID = ${person.getId()})}">create task for this workPackage</a></td>
+    </tr>
+-->
     <div>
         <label for="startDate">Start Date:</label>
         <input type="date" id="startDate" name="startDate" required />
