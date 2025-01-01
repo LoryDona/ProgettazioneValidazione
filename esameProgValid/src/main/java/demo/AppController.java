@@ -509,7 +509,7 @@ public class AppController {
             @RequestParam("startDate") LocalDate startDate,
             @RequestParam("endDate") LocalDate endDate,
             @RequestParam("IDScientificManager") Long IDScientificManager,
-            @RequestParam("WorkPackageName") String NameWorkPackage,
+            @RequestParam("NameWorkPackage") String NameWorkPackage,
             Model model) {
 
         ScientificManager scientificManager = ((ScientificManager) repository.findById(IDScientificManager).get());

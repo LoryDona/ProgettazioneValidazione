@@ -62,7 +62,7 @@ public class SystemTest extends BaseTest {
         driver.get("http://localhost:8080/");
         // faccio il login come amministratore
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("a","a");
+        loginPage.login("a a","a");
         // vado alla pagina dell'amministratore
         loginPage.clickAccedi();
 

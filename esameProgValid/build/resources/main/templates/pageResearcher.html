@@ -45,24 +45,22 @@
 <br>
 
 <h1>Set Free Hours</h1>
-<<<<<<< HEAD
-<form th:action="@{/setHourResearcher}" method="post">
-=======
 <form th:action="@{/setHoursResearcher}" method="post">
->>>>>>> 8e16ecde8b1f88759ce6454b9d73ad82665c6f95
     <div>
         <label for="workingHours">Set free hours:</label>
         <input type="number" id="workingHours" name="freehours" min="0" step="1" th:value="${person.free_hours}" />
     </div>
 
-    <input type="hidden" name="researcherID" th:value="${person.id}" />
+    <input type="hidden" name="ResearcherID" th:value="${person.id}" />
     <div>
         <button type="submit">Set Free Hours</button>
     </div>
 </form>
 
+<a th:href="@{/createReport(ID=${person.getId()})}">Create report</a>
 <br>
-
+<a href="invioReport"> See reports</a>
+<br>
 <a href="/"> Go to the login page </a>
 
 <br>
