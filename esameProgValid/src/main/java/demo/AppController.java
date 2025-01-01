@@ -840,7 +840,88 @@ public String createMilestone(
 
     //Fine PARTE SUI REPORT---------------------------------------------------------------
 
+    //************************METODO PER POSTICIPARE MILESTONE
+    @RequestMapping("/postponeMilestone")
+    public String showPostponeMilestonePage(
+            @RequestParam(name = "milestoneName", required = true) String milestoneName,
+            Model model) {
 
+        // Recupera il progetto e la Milestone in base al Name
+        Optional<Milestone> optionalMilestone = Administrator.getProjects().stream()
+                .flatMap(project -> project.getMilestones().stream())  // Scorre tutte le Milestone di tutti i progetti
+                .filter(milestone -> milestone.getName().equals(milestoneName))
+                .findFirst();
+
+        if (optionalMilestone.isPresent()) {
+            Milestone milestone = optionalMilestone.get();
+            model.addAttribute("milestone", milestone);  // Aggiungi la Milestone al modello
+            return "postponeMilestone";  // Nome della vista Thymeleaf
+        } else {
+            return "errorPage";  // Se la Milestone non viene trovata, mostra una pagina di errore
+        }
+    }
+
+    @PostMapping("/postponeMilestonePage")
+    public String postponeMilestone(
+            @RequestParam("milestoneName") String milestoneName,
+            @RequestParam("newEndDate") String newEndDateStr,
+            Model model) {
+
+        // Parsing della nuova data di fine
+        LocalDate newEndDate = LocalDate.parse(newEndDateStr);
+
+        // Trova il progetto e la Milestone corrispondente
+        Optional<Milestone> optionalMilestone = Administrator.getProjects().stream()
+                .flatMap(project -> project.getMilestones().stream())  // Scorre tutte le Milestone di tutti i progetti
+                .filter(milestone -> milestone.getName().equals(milestoneName))
+                .findFirst();
+
+        if (optionalMilestone.isPresent()) {
+            Milestone milestone = optionalMilestone.get();
+
+            // Controlla se la nuova data di fine è prima della data di inizio
+            if (newEndDate.isBefore(milestone.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate())) {
+                return "errorDate";  // Se la nuova data di fine è prima della data di inizio, restituisci un errore
+            }
+
+            //Controlla se la nuova data di fine è prima della vecchia data di fine
+            LocalDate oldEndDate = milestone.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            if (!newEndDate.isAfter(oldEndDate)) {
+                return "errorPostponeMilestone"; // Vai alla pagina di errore se la nuova data non è successiva
+            }
+
+            // Controlla se la nuova data di fine collida con altre Milestone
+            if (isCollisionWithOtherMilestones(milestone.getProjectAssociation(), milestone.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), newEndDate, milestone)) {
+                return "errorCollisionMilestone";  // Se c'è una collisione, restituisci un errore
+            }
+
+
+            // Controlla se la nuova data di fine è un giorno festivo
+            if (isHoliday(newEndDate)) {
+                return "errorHolidayEndDate";  // Se è un giorno festivo, restituisci un errore
+            }
+
+            // Aggiorna la data di fine della Milestone
+            milestone.setEndDate(Date.from(newEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
+            // Salva il progetto e aggiorna il modello
+            repository.save(milestone.getProjectAssociation().getScientificManager());
+            model.addAttribute("projects", getProjectsForScientificManager(milestone.getProjectAssociation().getScientificManager()));
+            model.addAttribute("person", milestone.getProjectAssociation().getScientificManager());
+            model.addAttribute("listWorkPackage", milestone.getProjectAssociation().getScientificManager().getWorkPackges());
+            model.addAttribute("listTasks", milestone.getProjectAssociation().getScientificManager().getTasks());
+            model.addAttribute("listMilestone", milestone.getProjectAssociation().getScientificManager().getMilestones());
+
+            return "pageScientificManager";  // Ritorna alla pagina principale del responsabile scientifico
+        } else {
+            return "errorPage";  // Se la Milestone non viene trovata, mostra una pagina di errore
+        }
+    }
+
+
+
+
+    //**************************************************************************
 
 
 }
