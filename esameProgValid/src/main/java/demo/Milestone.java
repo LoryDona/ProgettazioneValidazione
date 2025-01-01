@@ -11,15 +11,25 @@ public class Milestone {
     private Date startDate;                   // Data di inizio
     private Date endDate;                     // Data di fine
     private List<WorkPackage> workPackages;   // Lista dei WorkPackage associati
+    private Project projectAssociation;
 
     // Costruttore
-    public Milestone(String name, Date startDate, Date endDate, String description, String state, List<WorkPackage> workPackages) {
+    public Milestone(Project projectAssociation, String name, Date startDate, Date endDate, String description, String state, List<WorkPackage> workPackages) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
         this.state = state;
         this.workPackages = workPackages;
+        this.projectAssociation = projectAssociation;
+    }
+
+    public void setProjectAssociation(Project projectAssociation) {
+        this.projectAssociation = projectAssociation;
+    }
+
+    public Project getProjectAssociation() {
+        return projectAssociation;
     }
 
     // Getter e Setter

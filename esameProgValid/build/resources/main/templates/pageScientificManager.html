@@ -60,6 +60,8 @@
 
 <br>
 
+
+
 <br>
 <h2>List Tasks of scientific manager</h2>
 <br>
@@ -97,6 +99,33 @@
 <a href="invioReport"> See reports</a>
 <br>
 <a href="/"> Go to the login page </a>
+
+<br>
+<br>
+
+<h2>List Milestone</h2>
+<br>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Name Milestone</th>
+        <th>Project association name</th>
+        <th>End date</th>
+        <th>Modificare End Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="l: ${listMilestone}">
+        <td th:text="${l.getName()}"> <b></b></td>
+        <td th:text="${l.getProjectAssociation().getNameProject()}"></td>
+        <td th:text="${#dates.format(l.getEndDate(), 'dd-MM-yyyy')}"></td>
+
+        <!--   <td th:text="${l.getEndDate()}"></td>   -->
+        <td><a th:href="@{/postponeMilestone(milestoneName=${l.getName()}, projectName=${l.getProjectAssociation().getNameProject()})}">
+            Postpone</a></td>
+    </tr>
+    </tbody>
+</table>
 
 <br>
 

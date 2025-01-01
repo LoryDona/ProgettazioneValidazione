@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Postpone Milestone</title>
+</head>
+<body>
+<h1>Postpone Milestone</h1>
+<form th:action="@{/postponeMilestonePage}" method="post">
+    <!-- Nome della Milestone (solo visualizzazione) -->
+    <div>
+        <label for="milestoneName">Milestone Name:</label>
+        <input type="text" id="milestoneName" name="milestoneName" th:value="${milestone.name}" readonly />
+    </div>
+
+
+    <!-- Nuova Data di Fine -->
+    <div>
+        <label for="newEndDate">New End Date:</label>
+        <input type="date" id="newEndDate" name="newEndDate" required />
+    </div>
+
+
+
+    <div>
+        <button type="submit">Update End Date</button>
+    </div>
+</form>
+</body>
+</html>

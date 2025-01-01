@@ -594,7 +594,7 @@ public String createMilestone(
             }
 
             // Controllo collisione con altre Milestone
-            if (isCollisionWithOtherMilestones(project, parsedStartDate, parsedEndDate)) {
+            if (isCollisionWithOtherMilestones(project, parsedStartDate, parsedEndDate,null)) {
                 return "errorCollisionMilestone";
             }
 
@@ -610,6 +610,7 @@ public String createMilestone(
 
             // Aggiungi la nuova Milestone al progetto
             Milestone newMilestone = new Milestone(
+                    optionalProject.get(),
                     nameMilestone,
                     Date.from(parsedStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),
                     Date.from(parsedEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),
@@ -626,6 +627,7 @@ public String createMilestone(
             model.addAttribute("person", project.getScientificManager());
             model.addAttribute("listWorkPackage", project.getScientificManager().getWorkPackges());
             model.addAttribute("listTasks", project.getScientificManager().getTasks());
+            model.addAttribute("listMilestone", project.getScientificManager().getMilestones());
 
             return "pageScientificManager"; // Ritorna alla pagina principale
         } else {
@@ -634,17 +636,25 @@ public String createMilestone(
     }
 
     // Metodo di utilità: Verifica collisioni con altre Milestone
-    private boolean isCollisionWithOtherMilestones(Project project, LocalDate startDate, LocalDate endDate) {
+    private boolean isCollisionWithOtherMilestones(Project project, LocalDate startDate, LocalDate endDate, Milestone currentMilestone) {
         for (Milestone existingMilestone : project.getMilestones()) {
+            // Escludi la Milestone corrente solo se non è null
+            if (currentMilestone != null && existingMilestone.equals(currentMilestone)) {
+                continue;
+            }
+
             LocalDate existingStart = existingMilestone.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate existingEnd = existingMilestone.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            if ((startDate.isBefore(existingEnd) && endDate.isAfter(existingStart)) ||
-                    startDate.equals(existingStart) || endDate.equals(existingEnd)) {
-                return true;
+
+            // Verifica se c'è sovrapposizione
+            if ((startDate.isBefore(existingEnd) && endDate.isAfter(existingStart))) {
+                return true;  // Collisione trovata
             }
         }
-        return false;
+        return false;  // Nessuna collisione
     }
+
+
 
     // Metodo di utilità: Verifica se una data cade in un giorno festivo
     private boolean isHoliday(LocalDate date) {
