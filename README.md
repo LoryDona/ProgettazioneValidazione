@@ -1,8 +1,24 @@
-## Progetto Corso Progettazione e Validazione di Sistemi Software 2024/2025
+# 🖥️ Sistema di Gestione dei Report Accademici🖥️ 
+> Progetto per il corso di Progettazione e Validazione di Sistemi Software 2024/2025 dell'Università degli Studi di Verona.
 
-### Lista degli scenari
+## Indice
+1. [🛠️ Scaricare il progetto](#scaricare-il-progetto)
+2. [🎯 Scenari](#scenari)
+3. [📋 Test](#test)
+4. [👨‍💻 Autori](#autori)
+   
+---
 
-#### 1) Creazione di Progetti e Allocazione del Responsabile
+
+## <a id="scaricare-il-progetto"></a> Scaricare il progetto
+Per scaricare il progetto è necessario clonare la repository tramite il comando
+`git clone https://github.com/FarinaChristian/ProgettazioneValidazione.git`.
+Dopodichè è necessario eseguire il comando `./gradlew build` per scaricare le dipendenze e compilare il progetto. Per eseguire il progetto è necessario eseguire il comando `./gradlew bootRun`, che avvierà il server sulla porta `8080`.
+
+---
+## <a id="scenari"></a> Scenari
+
+#### 1) 💼 Creazione di Progetti e Allocazione del Responsabile
 
 **Assunzioni iniziali:** Un amministrativo può creare un nuovo progetto e assegnare un responsabile scientifico che avrà accesso alla gestione delle componenti interne (come work package e task).
 
@@ -14,7 +30,9 @@
 
 **Stato del sistema al completamento:** Al responsabile scientifico sarà assegnato il progetto appena creato dall’amministrativo.
 
-#### 2) Aggiunta di Task e Assegnazione ai Ricercatori
+---
+
+#### 2)📋 Aggiunta di Task e Assegnazione ai Ricercatori
 
 **Assunzioni iniziali:** Il responsabile scientifico può aggiungere nuovi task ai work package esistenti e assegnarli ai ricercatori disponibili.
 
@@ -26,7 +44,9 @@
 
 **Stato del sistema al completamento:** I work package esistenti sono stati aggiunti nuovi task. I nuovi task sono stati assegnati ai ricercatori disponibili.
 
-#### 3) Aggiunta di Work Package
+---
+
+#### 3) 📦 Aggiunta di Work Package
 
 **Assunzioni iniziali:** Un responsabile scientifico deve avere la possibilità di aggiungere nuovi work package. Non è richiesta l'approvazione dell'amministrativo per questa operazione. La creazione di un nuovo work package non richiede la presenza dei ricercatori.
 
@@ -38,7 +58,9 @@
 
 **Stato del sistema al completamento:** Il work package è stato aggiunto.
 
-#### 4) Aggiunta delle Milestone di Progetto
+---
+
+#### 4) 📅 Aggiunta delle Milestone di Progetto
 
 **Assunzioni iniziali:** Il responsabile scientifico può aggiungere le milestone del progetto. La creazione di una milestone richiede la presenza di almeno un ricercatore associato al progetto.
 
@@ -50,7 +72,9 @@
 
 **Stato del sistema al completamento:** La milestone è stata aggiunta.
 
-#### 5) Notifiche per Problemi di Invio del Report
+---
+
+#### 5) ⚠️ Notifiche per Problemi di Invio del Report
 
 **Assunzioni iniziali:** Gli utenti riceveranno notifiche in caso di errori o problemi di rete durante l’invio di report all’amministrativo.
 
@@ -62,7 +86,9 @@
 
 **Stato del sistema al completamento:** Il report risulta inviato oppure il messaggio che suggerisce di controllare la rete viene visualizzato.
 
-#### 6) Creazione dei report
+---
+
+#### 6) 📊 Creazione dei report
 
 **Assunzioni iniziali:** Generazione di Report: Il sistema deve generare report e garantire la conservazione dei report firmati per almeno 10 anni.
 
@@ -78,7 +104,9 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 
 **Cosa può andare storto:** Inserimento errato o incompleto dei dati da parte degli utenti (ricercatori, responsabili scientifici o amministrativi). Il sistema deve garantire che alcuni campi siano obbligatori.
 
-#### 7) Autenticazione Recupero credenziali da parte di un utente
+---
+
+#### 7) 🔒 Autenticazione Recupero credenziali da parte di un utente
 
 **Assunzioni iniziali:** Se l'utente non è autenticato, il sistema deve reindirizzarlo alla pagina di login. La gestione delle credenziali di accesso è delegata all'amministrativo.
 
@@ -86,20 +114,23 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 
 **Cosa può andare storto:** L'utente dimentica la password, per risolvere dovrà accedere alla pagina di login e selezionare  "Recupera Password", verrà quindi inviata una mail all’utente in cui si fornirà una password provvisoria che poi andrà cambiata. Se l'utente dovesse inserire dei dati errati, il sistema negherà l'accesso all'utente.
 
-#### 8) Posticipazione delle Milestone di Progetto
+---
+
+#### 8) ⏳ Posticipazione delle Milestone di Progetto
 
 **Assunzioni iniziali:** Il responsabile scientifico può posticipare le milestone del progetto in caso di ritardo. La posticipa di una milestone richiede la continua presenza di almeno un ricercatore associato al progetto.
 
 **Normale**: Introdurre un’interfaccia per la posticipazione delle milestone con opzioni di modifica per la data.
 
-**Cosa può andare storto:** Una milestone potrebbe essere posticipata in una data in cui, per diverse ragioni, non può essere messa (eventuali collisioni con altre milestone oppure giorni festivi). Il sistema deve implementare un sistema di verifica della disponibilità dei giorni e notificare l’eventuale errore all’utente. Essendo che la Milestone richiede la presenza di almeno un ricercatore associato al progetto, sarà necessario implementare anche un messaggio d’errore che avverta l’assenza di ricercatori se tale situazione si verifica.
-
+**Cosa può andare storto:** Una milestone potrebbe essere posticipata in una data in cui, per diverse ragioni, non può essere messa (eventuali collisioni con altre milestone oppure giorni festivi). Il sistema deve implementare un sistema di verifica della disponibilità dei giorni e notificare l’eventuale errore all’utente. Essendo un metodo di posticipa e non di modifica della data, sarà necessario implementare anche un messaggio d'errore che avverta l'anticipo dell'End Date se tale situazione si verifica. 
 
 **Altre attività:**
 
 **Stato del sistema al completamento**: La milestone è stata posticipata con successo.
 
-#### 9) Registrazione Nuovo Utente
+---
+
+#### 9) ✍️ Registrazione Nuovo Utente
 
 **Assunzioni iniziali:** Il sistema deve consentire agli utenti di registrarsi creando un profilo personale che, a seconda del ruolo di quest'ultimi, fornirà  determinati privilegi.
 
@@ -110,3 +141,10 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 **Altre** **attività**:
 
 **Stato** **del** **sistema** **al** **completamento**: Il nuovo utente è stato registrato nel sistema.
+
+---
+
+## <a id="autori"></a> Autori
+- [Mario](https://github.com/Marjo1996)
+- [Christian Farina](https://github.com/FarinaChristian)
+- [Lorenzo Junior Donatiello](https://github.com/LoryDona)

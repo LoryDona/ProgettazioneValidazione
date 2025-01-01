@@ -22,7 +22,6 @@
     </script>
 </head>
 <body>
-<h1>Insert Milestone</h1>
 <form th:action="@{/CreateMilestonePage}" method="post" onsubmit="return validateForm()">
 
     <div>
@@ -47,7 +46,7 @@
         </select>
     </div>
 
-    <!-- Seleziona WorkPackage -->
+    <!-- Seleziona WorkPackage
     <div>
         <label for="workPackage">Work Package:</label>
         <select id="workPackage" name="workPackages" multiple>
@@ -58,6 +57,28 @@
 
         </select>
     </div>
+-->
+    <!-- Selezione dei WorkPackage -->
+    <div>
+        <label for="workPackages">Work Package:</label>
+        <select id="workPackages" name="workPackageNames" multiple required>
+            <option value="" disabled selected>Seleziona uno o più Work Package</option>
+            <th:block th:each="wp : ${listWorkPackage}">
+                <option th:value="${wp.nameWorkPackage}" th:text="${wp.nameWorkPackage}"></option>
+            </th:block>
+        </select>
+    </div>
+
+<!--
+    <tr th:each="w: ${listWorkPackage}">
+        <td th:text="${w.getNameWorkPackage()}"> <b></b></td>
+        <td th:text="${w.getProjectAssociation().getNameProject()}"></td>
+        <td th:text="${w.getDescription()}"></td>
+        <td th:text="${w.getStartDate()}"></td>
+        <td th:text="${w.getEndDate()}"></td>
+        <td><a th:href="@{/createTask(NameWorkPackage=${w.getNameWorkPackage()}, ScientificManagerID = ${person.getId()})}">create task for this workPackage</a></td>
+    </tr>
+-->
     <div>
         <label for="startDate">Start Date:</label>
         <input type="date" id="startDate" name="startDate" required />

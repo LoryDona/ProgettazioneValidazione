@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Date;
 
 public class Milestone {
-
     private String name;                      // Nome della Milestone
     private String description;               // Descrizione della Milestone
     private String state;                     // Stato della Milestone (es. not_started, in_progress, ecc.)
@@ -81,4 +80,7 @@ public class Milestone {
     public void setWorkPackages(List<WorkPackage> workPackages) {
         this.workPackages = workPackages;
     }
+
+    public void addWork(WorkPackage workPackage) { workPackages.add(workPackage);}
+
 }
