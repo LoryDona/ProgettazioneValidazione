@@ -46,7 +46,7 @@ public class ScientificManager extends Person{
         return workPackages;
     }
 
-    public List<Milestone>  getMilestones()
+    public List<Milestone> getMilestones()
     {
         List<Project> projScientificManager = Administrator.getProjects().stream().
                 filter(p -> p.getScientificManager().getId().equals(this.getId())).toList();
