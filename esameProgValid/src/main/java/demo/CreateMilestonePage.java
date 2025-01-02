@@ -1,4 +1,4 @@
-/*
+
 package demo;
 
 
@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class InsertMilestonePage extends PageObject {
+public class CreateMilestonePage extends PageObject {
 
     @FindBy(tagName = "h1")
     private WebElement msgInsertMilestone;
@@ -35,7 +35,7 @@ public class InsertMilestonePage extends PageObject {
     @FindBy(linkText = "Go Back")
     private WebElement backMilestoneButton;
 
-    public InsertMilestonePage(WebDriver driver) {
+    public CreateMilestonePage(WebDriver driver) {
         super(driver);
     }
 
@@ -43,7 +43,6 @@ public class InsertMilestonePage extends PageObject {
     public String confirmHeader() {
         return msgInsertMilestone.getText();
     }
-
     // Metodo per inserire dati nel form
     public void fillMilestoneForm(String name, String description, String status, String workPackage, String startDate, String endDate) {
         nameMilestone.sendKeys(name);
@@ -67,5 +66,5 @@ public class InsertMilestonePage extends PageObject {
 
     }
 }
- */
+
 
