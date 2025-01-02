@@ -8,7 +8,7 @@ import org.openqa.selenium.By;
 public class CreateTaskPage extends PageObject {
 
     @FindBy(tagName = "h1")
-    private WebElement msgInsertTask;
+    private WebElement msgCreateUser;
 
     @FindBy(id = "nameTask")
     private WebElement nameTask;
@@ -34,7 +34,7 @@ public class CreateTaskPage extends PageObject {
 
     // Metodo per confermare il titolo della pagina
     public String confirmHeader() {
-        return msgInsertTask.getText();
+        return msgCreateUser.getText();
     }
 
     public void setTaskName(String taskName) {

@@ -11,6 +11,9 @@ public class ReportListPage extends PageObject{
     @FindBy(name = "email")
     private WebElement emailRecupero;
 
+    @FindBy(linkText = " Go to the login page ")
+    private WebElement backLoginButton;
+
     public ReportListPage(WebDriver driver) {
         super(driver);
     }
@@ -24,4 +27,9 @@ public class ReportListPage extends PageObject{
         return new ResultPage(driver);// navigo alla pagina dove vedo la lista delle persone
     }
 
+    // Metodo per tornare al Login
+    public LoginPage backLogin() {
+        backLoginButton.click();
+        return new LoginPage(driver);
+    }
 }

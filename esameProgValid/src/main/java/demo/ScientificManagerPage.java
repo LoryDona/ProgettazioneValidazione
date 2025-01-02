@@ -60,14 +60,13 @@ public class ScientificManagerPage extends PageObject{
         freehours.submit();
     }
 
-/* *************++  DA FARE LA SUA PAGEOBJECT   **********************
+
     //Crea report
     public CreateReportPage clickCreateReports() {
         CreateReports.click();
         return new CreateReportPage(driver);
     }
- ********************************************************++
- */
+
     public ReportListPage clickSeeReports() {
         click(seeReports);
         return new ReportListPage(driver);//ritorna la pagina iniziale

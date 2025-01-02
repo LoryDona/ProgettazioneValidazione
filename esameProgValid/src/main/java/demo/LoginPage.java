@@ -56,6 +56,10 @@ public class LoginPage extends PageObject {
         click(accedi);
         return new ScientificManagerPage(driver);
     }
+    public ResearcherPage clickAccediResearcher() {
+        click(accedi);
+        return new ResearcherPage(driver);
+    }
 
     public LoginPage clickPassword() {
         click(password);

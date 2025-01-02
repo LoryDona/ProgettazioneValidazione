@@ -63,7 +63,6 @@ public class CreateMilestonePage extends PageObject {
     public ListProjectScientificManagerPage backMilestone() {
         backMilestoneButton.click();
         return new ListProjectScientificManagerPage(driver);
-
     }
 }
 

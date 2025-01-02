@@ -9,8 +9,14 @@ public class AdministratorPage extends PageObject{
     @FindBy(linkText = "Create project")
     private WebElement createProject;
 
-    @FindBy(linkText = "List projects")
+    @FindBy(linkText = " List projects ")
     private WebElement listprojects;
+
+    @FindBy(linkText = " See reports")
+    private WebElement seeReports;
+
+    @FindBy(linkText = " Go to the login page ")
+    private WebElement backLoginButton;
 
 
     public AdministratorPage(WebDriver driver) {super(driver);}
@@ -23,5 +29,15 @@ public class AdministratorPage extends PageObject{
     public ProjectListPage clickListProjects() {
         click(listprojects);
         return new ProjectListPage(driver);// navigo alla pagina per creare il progetto
+    }
+
+    public ReportListPage clickSeeReports() {
+        click(seeReports);
+        return new ReportListPage(driver);//ritorna la pagina iniziale
+    }
+    // Metodo per tornare al Login
+    public LoginPage backLogin() {
+        backLoginButton.click();
+        return new LoginPage(driver);
     }
 }
