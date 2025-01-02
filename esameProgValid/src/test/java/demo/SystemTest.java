@@ -5,12 +5,25 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class SystemTest extends BaseTest {
 
     @Autowired
     private PersonRepository repository;
+    @Autowired
+    private ReportRepository reportRepository;
+
+    @Before
+    public void clean(){//pulisco le strutture prima di ogni test
+        Administrator.getProjects().clear();
+        repository.deleteAll();
+        reportRepository.deleteAll();
+    }
 
     @Test
     public void testPasswordForgot() {
@@ -80,6 +93,39 @@ public class SystemTest extends BaseTest {
         ProjectListPage projectListPage = new ProjectListPage(driver);
         assertEquals("Just two lines expected", 2, projectListPage.getTableRowCount());
         assertEquals("First name should be 'prova'", "prova", projectListPage.getFirstRowFirstName());
+    }
+
+    @Test
+    public void testSendReport() {
+        //creo i due utenti
+        Administrator a=new Administrator("a","a","a");
+        ScientificManager b=new ScientificManager("b","b","b");
+        b.setFree_hours(2);
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = dateFormat.parse("2025-01-01");
+            Date endDate = dateFormat.parse("2025-12-31");
+            // Aggiunta di un progetto
+            a.addProject("p", b, "In Pianificazione", startDate, endDate, 1);
+        } catch (Exception e) {e.printStackTrace();}
+        repository.save(a);
+        repository.save(b);
+        reportRepository.save(new Report("r", "res", "1","a","b", "p",false,true));
+
+        driver.get("http://localhost:8080/");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("b b","b");//entro come resonsabile scientifico
+        loginPage.clickAccediManager();
+
+        ScientificManagerPage manager = new ScientificManagerPage(driver);
+        manager.clickSeeReports();
+        ReportListPage reports=new ReportListPage(driver);
+        reports.writEmail("prova@prova");
+        reports.clickSend();
+        ResultPage resultPage = new ResultPage(driver);
+        String actualMessage = resultPage.getMessageText();
+        boolean isValidMessage = actualMessage.equals("Report inviato a prova@prova") || actualMessage.equals("Errore nell'invio");
+        assertTrue("Result message expected to be 'Report inviato a prova@prova' or 'Errore', but was: " + actualMessage, isValidMessage);
     }
 }
 
