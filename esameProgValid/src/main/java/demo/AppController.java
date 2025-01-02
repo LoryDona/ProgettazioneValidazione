@@ -167,38 +167,6 @@ public class AppController {
         return "redirect:/list";
     }
 
-    @RequestMapping("/edit")
-    public String edit(
-            @RequestParam(name="id", required=true) Long id,
-            Model model) {
-        Optional<Person> result = repository.findById(id);
-        if (result.isPresent()) {
-            Person person = result.get();
-            model.addAttribute("person", person);
-            return "edit";
-        }
-        else
-            return "notfound";
-    }
-
-    @RequestMapping("/update")
-    public String update(
-            @RequestParam(name="id", required=true) Long id,
-            @RequestParam(name="firstname", required=true) String firstname,
-            @RequestParam(name="lastname", required=true) String lastname,
-            @RequestParam(name="password", required=true) String password,
-            Model model) {
-        Optional<Person> result = repository.findById(id);
-        if (result.isPresent()) {
-            String role = result.get().getRole();
-            repository.delete(result.get());
-            Person person = new Person(firstname,lastname, password, role);
-            repository.save(person);
-            return "redirect:/list";
-        }
-        else
-            return "notfound";
-    }
 
    @RequestMapping("/delete")
     public String delete(

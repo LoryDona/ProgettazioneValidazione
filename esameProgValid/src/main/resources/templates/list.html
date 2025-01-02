@@ -14,7 +14,6 @@
         <th>Lastname</th>
         <th>Role</th>
         <th>show</th>
-        <th>edit</th>
         <th>delete</th>
     </tr>
     </thead>
@@ -25,7 +24,6 @@
         <td th:text="${person.lastName}"> Smith </td>
         <td th:text="${person.role}"> administrator </td>
         <td> <a href="read?id=10" th:href="@{read(id=${person.id})}"> show </a></td>
-        <td> <a href="edit?id=10" th:href="@{edit(id=${person.id})}"> edit </a></td>
         <td> <a href="delete?id=10" th:href="@{delete(id=${person.id})}"> delete </a></td>
     </tr>
     </tbody>
