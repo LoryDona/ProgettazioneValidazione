@@ -52,6 +52,11 @@ public class LoginPage extends PageObject {
         return new AdministratorPage(driver);// navigo alla pagina dove vedo la lista delle persone
     }
 
+    public ScientificManagerPage clickAccediManager() {
+        click(accedi);
+        return new ScientificManagerPage(driver);
+    }
+
     public LoginPage clickPassword() {
         click(password);
         return new LoginPage(driver);// navigo alla pagina dove vedo la lista delle persone
