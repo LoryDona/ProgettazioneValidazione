@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 public class ScientificManagerPage extends PageObject{
 
     @FindBy(linkText = "List projects")
@@ -13,6 +15,25 @@ public class ScientificManagerPage extends PageObject{
     @FindBy(id = "workingHours")
     private WebElement freehours;
 
+    //Tabella per Work Package
+    @FindBy(xpath = "//table[1]//tr")
+    private List<WebElement> tableRowsWp;
+    @FindBy(xpath = "/html/body/table[1]/tbody/tr/td[1]")
+    private WebElement firstRowFirstNameWp;
+
+    //Tabella per Task
+    @FindBy(xpath = "//table[2]//tr")
+    private List<WebElement> tableRowsT;
+    @FindBy(xpath = "/html/body/table[2]/tbody/tr/td[1]")
+    private WebElement firstRowFirstNameT;
+    @FindBy(xpath = "/html/body/table[1]/tbody/tr/td[6]/a")
+    private WebElement firstRowCreateTask;
+
+    //Tabella per Milestone
+    @FindBy(xpath = "//table[3]//tr")
+    private List<WebElement> tableRowsMil;
+    @FindBy(xpath = "/html/body/table[3]/tbody/tr/td[1]")
+    private WebElement firstRowFirstNameMil;
 
     @FindBy(linkText = "Create report")
     private WebElement CreateReports;
@@ -31,6 +52,23 @@ public class ScientificManagerPage extends PageObject{
         listProjectsButton.click();
         return new ListProjectScientificManagerPage(driver);
     }
+
+    //Tabella Work Package
+    public int getTableRowCountWp() { return tableRowsWp.size(); }
+    public String getFirstRowFirstNameWp() {
+        return getText(firstRowFirstNameWp);
+    }
+    //Tabella Task
+    public int getTableRowCountT() { return tableRowsT.size(); }
+    public String getFirstRowFirstNameT() {
+        return getText(firstRowFirstNameT);
+    }
+    //Tabella Milestone
+    public int getTableRowCountMil() { return tableRowsMil.size(); }
+    public String getFirstRowFirstNameMil() {
+        return getText(firstRowFirstNameMil);
+    }
+
 
     // Per i task
     public CreateTaskPage createTaskForWorkPackage(String workPackageName) {

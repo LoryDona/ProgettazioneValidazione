@@ -127,5 +127,154 @@ public class SystemTest extends BaseTest {
         boolean isValidMessage = actualMessage.equals("Report inviato a prova@prova") || actualMessage.equals("Errore nell'invio");
         assertTrue("Result message expected to be 'Report inviato a prova@prova' or 'Errore', but was: " + actualMessage, isValidMessage);
     }
-}
 
+    @Test
+    public void createWorkPackage() {
+        //creo i due utenti
+        Administrator a=new Administrator("a","a","a");
+        ScientificManager b=new ScientificManager("b","b","b");
+        b.setFree_hours(2);
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = dateFormat.parse("2025-01-01");
+            Date endDate = dateFormat.parse("2025-12-31");
+            // Aggiunta di un progetto
+            a.addProject("p", b, "In Pianificazione", startDate, endDate, 1);
+        } catch (Exception e) {e.printStackTrace();}
+        repository.save(a);
+        repository.save(b);
+        // pagina principale
+        driver.get("http://localhost:8080/");
+
+        //faccio il login come Scientific Manager
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("b b","b");
+        // vado alla pagina dello scientific Manager
+        loginPage.clickAccedi();
+        ScientificManagerPage manager = new ScientificManagerPage(driver);
+        manager.listProjects();
+
+        //vado alla  lista progetti dello scientific manager
+        ListProjectScientificManagerPage listProjects=new ListProjectScientificManagerPage(driver);
+        listProjects.createWorkPackage();
+
+        //vado alla pagine per creare work package
+        CreateWorkPackagePage createWorkPackage=new CreateWorkPackagePage(driver);
+        createWorkPackage.fillWorkPackageForm("provaWP", "provaWP", "", "2025-01-01", "2025-01-02");
+        createWorkPackage.createWorkPackage();
+        //Controllo dalla lista che sia effettivamente presente il nuovo wp
+        manager = new ScientificManagerPage(driver);
+        assertEquals("Just two lines expected", 2, manager.getTableRowCountWp());
+        assertEquals("First name should be 'provaWP'", "provaWP", manager.getFirstRowFirstNameWp());
+    }
+
+    @Test
+    public void createTask() {
+        //creo i due utenti
+        Administrator a=new Administrator("a","a","a");
+        ScientificManager b=new ScientificManager("b","b","b");
+        Researcher c = new Researcher("c","c","c");
+        b.setFree_hours(2);
+        c.setFree_hours(2);
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = dateFormat.parse("2025-01-01");
+            Date endDate = dateFormat.parse("2025-12-31");
+            // Aggiunta di un progetto
+            a.addProject("p", b, "In Pianificazione", startDate, endDate, 1);
+            //    repository.save(a);
+            //    b.addWorkPackage("wp", startDate, endDate, "dWP");
+        } catch (Exception e) {e.printStackTrace();}
+        repository.save(a);
+        repository.save(b);
+        repository.save(c);
+        // pagina principale
+        driver.get("http://localhost:8080/");
+
+        //faccio il login come Scientific Manager
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("b b","b");
+        // vado alla pagina dello scientific Manager
+        loginPage.clickAccedi();
+        ScientificManagerPage manager = new ScientificManagerPage(driver);
+        manager.listProjects();
+
+//************************************************      SI PUO' MINIMIZZARE LA CREAZIONE WP
+        //vado alla  lista progetti dello scientific manager
+        ListProjectScientificManagerPage listProjects=new ListProjectScientificManagerPage(driver);
+        listProjects.createWorkPackage();
+
+        //vado alla pagine per creare work package
+        CreateWorkPackagePage createWorkPackage=new CreateWorkPackagePage(driver);
+        createWorkPackage.fillWorkPackageForm("provaWP", "provaWP", "", "2025-01-01", "2025-12-31");
+        createWorkPackage.createWorkPackage();
+        manager = new ScientificManagerPage(driver);
+//*********************************************************************+
+
+        //vado alla pagina per creare Task
+        manager.createTaskForWorkPackage("provaWP");
+        CreateTaskPage createTask = new CreateTaskPage(driver);
+        createTask.fillTaskForm("provaT", new String[]{"c"}, "In Pianificazione", "2025-01-01","2025-01-02");
+        createTask.createTask();
+
+
+        manager = new ScientificManagerPage(driver);
+        assertEquals("Just two lines expected", 2, manager.getTableRowCountT());
+        assertEquals("First name should be 'provaT'", "provaT", manager.getFirstRowFirstNameT());
+    }
+
+    @Test
+    public void createMilestone() {
+        //creo i due utenti
+        Administrator a=new Administrator("a","a","a");
+        ScientificManager b=new ScientificManager("b","b","b");
+        b.setFree_hours(2);
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = dateFormat.parse("2025-01-01");
+            Date endDate = dateFormat.parse("2025-12-31");
+            // Aggiunta di un progetto
+            a.addProject("p", b, "In Pianificazione", startDate, endDate, 1);
+        //    repository.save(a);
+        //    b.addWorkPackage("wp", startDate, endDate, "dWP");
+        } catch (Exception e) {e.printStackTrace();}
+        repository.save(a);
+        repository.save(b);
+        // pagina principale
+        driver.get("http://localhost:8080/");
+
+        //faccio il login come Scientific Manager
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("b b","b");
+        // vado alla pagina dello scientific Manager
+        loginPage.clickAccedi();
+        ScientificManagerPage manager = new ScientificManagerPage(driver);
+        manager.listProjects();
+
+//************************************************      SI PUO' MINIMIZZARE LA CREAZIONE WP
+        //vado alla  lista progetti dello scientific manager
+        ListProjectScientificManagerPage listProjects=new ListProjectScientificManagerPage(driver);
+        listProjects.createWorkPackage();
+
+        //vado alla pagine per creare work package
+        CreateWorkPackagePage createWorkPackage=new CreateWorkPackagePage(driver);
+        createWorkPackage.fillWorkPackageForm("provaWP", "provaWP", "", "2025-01-01", "2025-01-02");
+        createWorkPackage.createWorkPackage();
+        manager = new ScientificManagerPage(driver);
+        manager.listProjects();
+//*********************************************************************+
+
+        //vado alla  lista progetti dello scientific manager
+        listProjects=new ListProjectScientificManagerPage(driver);
+        listProjects.createMilestonePage();
+
+        //vado alla pagine per creare Milestone
+        CreateMilestonePage createMilestone=new CreateMilestonePage(driver);
+        createMilestone.fillMilestoneForm("provaMil", "dMil", "Da Iniziare", "provaWP", "2025-01-01","2025-12-31");
+        createMilestone.createMilestone();
+        //Controllo dalla lista che sia effettivamente presente il nuovo Mil
+        manager = new ScientificManagerPage(driver);
+        assertEquals("Just two lines expected", 2, manager.getTableRowCountMil());
+        assertEquals("First name should be 'provaMil'", "provaMil", manager.getFirstRowFirstNameMil());
+    }
+}
