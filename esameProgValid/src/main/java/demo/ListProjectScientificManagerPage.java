@@ -15,7 +15,7 @@ public class ListProjectScientificManagerPage extends PageObject{
     @FindBy(linkText = "Go Back")
     private WebElement backScientifickManagerButton;
 
-    @FindBy(linkText = " Go to the login page ")
+    @FindBy(linkText = "Go to the login page")
     private WebElement backLoginButton;
 
     public ListProjectScientificManagerPage(WebDriver driver) {

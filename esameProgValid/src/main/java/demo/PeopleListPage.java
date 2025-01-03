@@ -11,7 +11,7 @@ public class PeopleListPage extends PageObject{
     @FindBy(tagName = "h1")
     private WebElement heading;
 
-    @FindBy(linkText = " Go to the login page ")
+    @FindBy(linkText = "Go to the login page")
     private WebElement backLoginButton;
 
     @FindBy(xpath = "//table//tr")

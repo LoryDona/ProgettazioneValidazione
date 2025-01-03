@@ -11,7 +11,7 @@ public class ReportListPage extends PageObject{
     @FindBy(name = "email")
     private WebElement emailRecupero;
 
-    @FindBy(linkText = " Go to the login page ")
+    @FindBy(linkText = "Go to the login page")
     private WebElement backLoginButton;
 
     public ReportListPage(WebDriver driver) {

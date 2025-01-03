@@ -20,7 +20,7 @@ public class ResearcherPage extends PageObject{
     @FindBy(linkText = "See reports")
     private WebElement seeReports;
 
-    @FindBy(linkText = " Go to the login page ")
+    @FindBy(linkText = "Go to the login page")
     private WebElement backLoginButton;
 
     public ResearcherPage(WebDriver driver) {

@@ -9,13 +9,13 @@ public class AdministratorPage extends PageObject{
     @FindBy(linkText = "Create project")
     private WebElement createProject;
 
-    @FindBy(linkText = " List projects ")
+    @FindBy(linkText = "List projects")
     private WebElement listprojects;
 
-    @FindBy(linkText = " See reports")
+    @FindBy(linkText = "See reports")
     private WebElement seeReports;
 
-    @FindBy(linkText = " Go to the login page ")
+    @FindBy(linkText = "Go to the login page")
     private WebElement backLoginButton;
 
 

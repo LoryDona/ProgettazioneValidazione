@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class ScientificManagerPage extends PageObject{
 
-    @FindBy(linkText = " List projects ")
+    @FindBy(linkText = "List projects")
     private WebElement  listProjectsButton;
 
     @FindBy(id = "workingHours")
@@ -20,7 +20,7 @@ public class ScientificManagerPage extends PageObject{
     @FindBy(linkText = "See reports")
     private WebElement seeReports;
 
-    @FindBy(linkText = " Go to the login page ")
+    @FindBy(linkText = "Go to the login page")
     private WebElement backLoginButton;
 
     public ScientificManagerPage(WebDriver driver) {

@@ -16,7 +16,7 @@ public class ProjectListPage extends PageObject{
     @FindBy(linkText = "Go Back")
     private WebElement backAdministratorButton;
 
-    @FindBy(linkText = " Go to the login page ")
+    @FindBy(linkText = "Go to the login page")
     private WebElement backLoginButton;
 
     public ProjectListPage(WebDriver driver) {super(driver);}

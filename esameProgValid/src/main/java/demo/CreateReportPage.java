@@ -9,7 +9,7 @@ public class CreateReportPage extends PageObject{
     @FindBy(tagName = "h1")
     private WebElement msgInsertReport;
 
-    @FindBy(linkText = " Torna al login ")
+    @FindBy(linkText = "Torna al login")
     private WebElement backLoginButton;
 
     @FindBy(name = "title")
