@@ -114,7 +114,7 @@ public class SystemTest extends BaseTest {
 
         driver.get("http://localhost:8080/");
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("b b","b");//entro come resonsabile scientifico
+        loginPage.login("b b","b");//entro come responsabile scientifico
         loginPage.clickAccediManager();
 
         ScientificManagerPage manager = new ScientificManagerPage(driver);
@@ -124,6 +124,7 @@ public class SystemTest extends BaseTest {
         reports.clickSend();
         ResultPage resultPage = new ResultPage(driver);
         String actualMessage = resultPage.getMessageText();
+        //può restituirmi due messaggi a seconda di come è andata la simulazione dell'errore di rete
         boolean isValidMessage = actualMessage.equals("Report inviato a prova@prova") || actualMessage.equals("Errore nell'invio");
         assertTrue("Result message expected to be 'Report inviato a prova@prova' or 'Errore', but was: " + actualMessage, isValidMessage);
     }
@@ -214,7 +215,7 @@ public class SystemTest extends BaseTest {
         //vado alla pagina per creare Task
         manager.createTaskForWorkPackage("provaWP");
         CreateTaskPage createTask = new CreateTaskPage(driver);
-        createTask.fillTaskForm("provaT", new String[]{"c"}, "In Pianificazione", "2025-01-01","2025-01-02");
+        createTask.fillTaskForm("provaT", "c", "In Pianificazione", "2025-01-01","2025-01-02");
         createTask.createTask();
 
 
@@ -276,5 +277,36 @@ public class SystemTest extends BaseTest {
         manager = new ScientificManagerPage(driver);
         assertEquals("Just two lines expected", 2, manager.getTableRowCountMil());
         assertEquals("First name should be 'provaMil'", "provaMil", manager.getFirstRowFirstNameMil());
+    }
+
+    @Test
+    public void testCreateReport(){
+        //creo i due utenti
+        Administrator a=new Administrator("a","a","a");
+        ScientificManager b=new ScientificManager("b","b","b");
+        b.setFree_hours(2);
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = dateFormat.parse("2025-01-01");
+            Date endDate = dateFormat.parse("2025-12-31");
+            // Aggiunta di un progetto
+            a.addProject("p", b, "In Pianificazione", startDate, endDate, 1);
+        } catch (Exception e) {e.printStackTrace();}
+        repository.save(a);
+        repository.save(b);
+
+        driver.get("http://localhost:8080/");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("b b","b");//entro come responsabile scientifico
+        loginPage.clickAccediManager();
+
+        ScientificManagerPage manager = new ScientificManagerPage(driver);
+        manager.clickCreateReports();
+        CreateReportPage createReportPage=new CreateReportPage(driver);
+        createReportPage.fillReportDetails("t","r","1","a","p");
+        createReportPage.clickBozzaReport();
+        MemoriseReportPage result= new MemoriseReportPage(driver);
+        assertEquals("Result message expected:", "Report in bozza", result.getMessageText());
+
     }
 }

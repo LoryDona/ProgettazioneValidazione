@@ -3,6 +3,7 @@ package demo;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 
 public class CreateReportPage extends PageObject{
 
@@ -37,6 +38,18 @@ public class CreateReportPage extends PageObject{
         super(driver);
     }
 
+
+    public void fillReportDetails(String tit, String res, String h, String act,String prog) {
+        setTitle(tit);
+        setResults(res);
+        setHours(Integer.parseInt(h));
+        setActivities(act);
+        // Seleziona i ricercatori
+        Select dropdown2 = new Select(projectSelect);
+        dropdown2.selectByVisibleText(prog);
+    }
+
+
     // Metodo per impostare il titolo del report
     public void setTitle(String title) {
         titleInput.clear();
@@ -61,22 +74,10 @@ public class CreateReportPage extends PageObject{
         activitiesTextArea.sendKeys(activities);
     }
 
-    // Metodo per selezionare un progetto
-    public void selectProject(String project) {
-        projectSelect.sendKeys(project);
-    }
-
-    // Metodo per impostare la firma
-    public void setSignature(String signature) {
-        signatureInput.clear();
-        signatureInput.sendKeys(signature);
-    }
-
-    public MemoriseReportPage bozzaReport() {
-        bozzaButton.click();
+    public MemoriseReportPage clickBozzaReport() {
+        click(bozzaButton);
         return new MemoriseReportPage(driver);
     }
-
 
     // Metodo per tornare al Login
     public LoginPage backLogin() {

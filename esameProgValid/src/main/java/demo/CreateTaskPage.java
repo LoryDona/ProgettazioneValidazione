@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Select;
 
 public class CreateTaskPage extends PageObject {
 
@@ -25,7 +26,7 @@ public class CreateTaskPage extends PageObject {
     @FindBy(id = "endDate")
     private WebElement endDateTask;
 
-    @FindBy(xpath = "//button[text()='Create Task']")
+    @FindBy(xpath = "//button[text()='Crea Task']")
     private WebElement createTaskButton;
 
     public CreateTaskPage(WebDriver driver) {
@@ -37,12 +38,13 @@ public class CreateTaskPage extends PageObject {
         return msgCreateUser.getText();
     }
 
-    public void fillTaskForm(String taskName, String[] researcherIds, String status, String startDate, String endDate) {
+    public void fillTaskForm(String taskName, String researcherIds, String status, String startDate, String endDate) {
         // Imposta il nome del task
         setTaskName(taskName);
 
         // Seleziona i ricercatori
-        selectResearchers(researcherIds);
+        Select dropdown = new Select(researcherSelect);
+        dropdown.selectByVisibleText(researcherIds);
 
         // Imposta lo stato
         setStatus(status);

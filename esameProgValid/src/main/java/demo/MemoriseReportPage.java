@@ -8,6 +8,9 @@ public class MemoriseReportPage extends PageObject {
     @FindBy(tagName = "h1")
     private WebElement msgResult;
 
+    @FindBy(tagName = "p")
+    private WebElement messaggio;
+
     @FindBy(linkText = "Go Back")
     private WebElement backReportButton;
 
@@ -21,6 +24,10 @@ public class MemoriseReportPage extends PageObject {
     public CreateReportPage createReport() {
         backReportButton.click();
         return new CreateReportPage(driver);
+    }
+
+    public String getMessageText() {
+        return getText(messaggio);
     }
 
     // Metodo per tornare al Login
