@@ -34,6 +34,10 @@ public class ScientificManagerPage extends PageObject{
     private List<WebElement> tableRowsMil;
     @FindBy(xpath = "/html/body/table[3]/tbody/tr/td[1]")
     private WebElement firstRowFirstNameMil;
+    @FindBy(xpath = "/html/body/table[3]/tbody/tr/td[3]")
+    private WebElement firstRowDateMil;
+    @FindBy(xpath = "/html/body/table[3]/tbody/tr/td[4]")
+    private WebElement postMil;
 
     @FindBy(linkText = "Create report")
     private WebElement CreateReports;
@@ -67,6 +71,9 @@ public class ScientificManagerPage extends PageObject{
     public int getTableRowCountMil() { return tableRowsMil.size(); }
     public String getFirstRowFirstNameMil() {
         return getText(firstRowFirstNameMil);
+    }
+    public String getFirstRowDateMil() {
+        return getText(firstRowDateMil);
     }
 
 
@@ -113,5 +120,10 @@ public class ScientificManagerPage extends PageObject{
     public LoginPage backLogin() {
         backLoginButton.click();
         return new LoginPage(driver);
+    }
+
+    public PostponeMilestonePage postMilestone() {
+        postMil.click();
+        return new PostponeMilestonePage(driver);
     }
 }

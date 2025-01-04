@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="demo.SystemTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2025-01-03T15:00:45" hostname="LAPTOP-T34436OL" time="27.56">
+<testsuite name="demo.SystemTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2025-01-04T17:02:31" hostname="LAPTOP-T34436OL" time="15.68">
   <properties/>
-  <testcase name="createTask" classname="demo.SystemTest" time="27.56">
-    <failure message="org.openqa.selenium.NoSuchElementException: Unable to locate element: //select[@id='Researcher']/option[@value='c']&#10;For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception&#10;Build info: version: '4.14.1', revision: '03f8ede370'&#10;System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.2'&#10;Driver info: org.openqa.selenium.firefox.FirefoxDriver&#10;Command: [c019a111-fa67-43f7-89e5-a5d899b2135e, findElement {using=xpath, value=//select[@id='Researcher']/option[@value='c']}]&#10;Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 133.0.3, moz:accessibilityChecks: false, moz:buildID: 20241209150345, moz:geckodriverVersion: 0.35.0, moz:headless: false, moz:platformVersion: 10.0, moz:processID: 11392, moz:profile: C:\Users\Lorenzo\AppData\Lo..., moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (Windows NT 10....}&#10;Session ID: c019a111-fa67-43f7-89e5-a5d899b2135e" type="org.openqa.selenium.NoSuchElementException">org.openqa.selenium.NoSuchElementException: Unable to locate element: //select[@id='Researcher']/option[@value='c']
+  <testcase name="postponeMilestone" classname="demo.SystemTest" time="15.68">
+    <failure message="org.openqa.selenium.NoSuchElementException: Unable to locate element: //td[text()='provaMil']/following-sibling::td/a[text()='Postpone']&#10;For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception&#10;Build info: version: '4.14.1', revision: '03f8ede370'&#10;System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.2'&#10;Driver info: org.openqa.selenium.firefox.FirefoxDriver&#10;Command: [659f6ae0-72f4-45dd-b13c-3f870670dc7e, findElement {using=xpath, value=//td[text()='provaMil']/following-sibling::td/a[text()='Postpone']}]&#10;Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 133.0.3, moz:accessibilityChecks: false, moz:buildID: 20241209150345, moz:geckodriverVersion: 0.35.0, moz:headless: false, moz:platformVersion: 10.0, moz:processID: 3756, moz:profile: C:\Users\Lorenzo\AppData\Lo..., moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (Windows NT 10....}&#10;Session ID: 659f6ae0-72f4-45dd-b13c-3f870670dc7e" type="org.openqa.selenium.NoSuchElementException">org.openqa.selenium.NoSuchElementException: Unable to locate element: //td[text()='provaMil']/following-sibling::td/a[text()='Postpone']
 For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
 Build info: version: '4.14.1', revision: '03f8ede370'
 System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.2'
 Driver info: org.openqa.selenium.firefox.FirefoxDriver
-Command: [c019a111-fa67-43f7-89e5-a5d899b2135e, findElement {using=xpath, value=//select[@id='Researcher']/option[@value='c']}]
-Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 133.0.3, moz:accessibilityChecks: false, moz:buildID: 20241209150345, moz:geckodriverVersion: 0.35.0, moz:headless: false, moz:platformVersion: 10.0, moz:processID: 11392, moz:profile: C:\Users\Lorenzo\AppData\Lo..., moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (Windows NT 10....}
-Session ID: c019a111-fa67-43f7-89e5-a5d899b2135e
+Command: [659f6ae0-72f4-45dd-b13c-3f870670dc7e, findElement {using=xpath, value=//td[text()='provaMil']/following-sibling::td/a[text()='Postpone']}]
+Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 133.0.3, moz:accessibilityChecks: false, moz:buildID: 20241209150345, moz:geckodriverVersion: 0.35.0, moz:headless: false, moz:platformVersion: 10.0, moz:processID: 3756, moz:profile: C:\Users\Lorenzo\AppData\Lo..., moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (Windows NT 10....}
+Session ID: 659f6ae0-72f4-45dd-b13c-3f870670dc7e
 	at java.base@17.0.2/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
 	at java.base@17.0.2/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
 	at java.base@17.0.2/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
@@ -26,9 +26,8 @@ Session ID: c019a111-fa67-43f7-89e5-a5d899b2135e
 	at app//org.openqa.selenium.remote.ElementLocation.findElement(ElementLocation.java:59)
 	at app//org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:359)
 	at app//org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:353)
-	at app//demo.CreateTaskPage.selectResearchers(CreateTaskPage.java:75)
-	at app//demo.CreateTaskPage.fillTaskForm(CreateTaskPage.java:45)
-	at app//demo.SystemTest.createTask(SystemTest.java:217)
+	at app//demo.ScientificManagerPage.postponeMilestone(ScientificManagerPage.java:90)
+	at app//demo.SystemTest.postponeMilestone(SystemTest.java:366)
 	at java.base@17.0.2/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base@17.0.2/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 	at java.base@17.0.2/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -81,8 +80,8 @@ Session ID: c019a111-fa67-43f7-89e5-a5d899b2135e
 	at app//worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <system-out><![CDATA[16:00:38.634 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [demo.SystemTest]: SystemTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-16:00:38.836 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration demo.ServingWebContentApplication for test class demo.SystemTest
+  <system-out><![CDATA[18:02:25.228 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [demo.SystemTest]: SystemTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+18:02:25.398 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration demo.ServingWebContentApplication for test class demo.SystemTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -92,32 +91,32 @@ Session ID: c019a111-fa67-43f7-89e5-a5d899b2135e
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.0)
 
-2025-01-03T16:00:39.344+01:00  INFO 26496 --- [    Test worker] demo.SystemTest                          : Starting SystemTest using Java 17.0.2 with PID 26496 (started by Lorenzo in C:\Users\Lorenzo\Desktop\Ingegneria\ProgettazioneValidazione\esameProgValid)
-2025-01-03T16:00:39.347+01:00  INFO 26496 --- [    Test worker] demo.SystemTest                          : No active profile set, falling back to 1 default profile: "default"
-2025-01-03T16:00:40.273+01:00  INFO 26496 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-01-03T16:00:40.372+01:00  INFO 26496 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 82 ms. Found 2 JPA repository interfaces.
-2025-01-03T16:00:41.193+01:00  INFO 26496 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2025-01-03T16:00:41.210+01:00  INFO 26496 --- [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2025-01-03T16:00:41.210+01:00  INFO 26496 --- [    Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
-2025-01-03T16:00:41.323+01:00  INFO 26496 --- [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2025-01-03T16:00:41.325+01:00  INFO 26496 --- [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1946 ms
-2025-01-03T16:00:41.528+01:00  INFO 26496 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2025-01-03T16:00:41.789+01:00  INFO 26496 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:0a4ac6c9-f2ad-49bd-92e1-82590cd63bbf user=SA
-2025-01-03T16:00:41.792+01:00  INFO 26496 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-01-03T16:00:41.862+01:00  INFO 26496 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-01-03T16:00:41.961+01:00  INFO 26496 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
-2025-01-03T16:00:42.031+01:00  INFO 26496 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-01-03T16:00:42.443+01:00  INFO 26496 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-01-03T16:00:43.760+01:00  INFO 26496 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-01-03T16:00:43.804+01:00  INFO 26496 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-01-03T16:00:44.332+01:00  WARN 26496 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-01-03T16:00:45.284+01:00  INFO 26496 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
-2025-01-03T16:00:45.298+01:00  INFO 26496 --- [    Test worker] demo.SystemTest                          : Started SystemTest in 6.251 seconds (process running for 7.664)
-2025-01-03T16:00:45.977+01:00  INFO 26496 --- [    Test worker] i.g.bonigarcia.wdm.WebDriverManager      : Using geckodriver 0.35.0 (resolved driver for Firefox 133)
-2025-01-03T16:00:46.001+01:00  INFO 26496 --- [    Test worker] i.g.bonigarcia.wdm.WebDriverManager      : Exporting webdriver.gecko.driver as C:\Users\Lorenzo\.cache\selenium\geckodriver\win64\0.35.0\geckodriver.exe
-2025-01-03T16:00:50.118+01:00  INFO 26496 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-01-03T16:00:50.118+01:00  INFO 26496 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2025-01-03T16:00:50.121+01:00  INFO 26496 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2025-01-04T18:02:25.897+01:00  INFO 15524 --- [    Test worker] demo.SystemTest                          : Starting SystemTest using Java 17.0.2 with PID 15524 (started by Lorenzo in C:\Users\Lorenzo\Desktop\Ingegneria\ProgettazioneValidazione\esameProgValid)
+2025-01-04T18:02:25.899+01:00  INFO 15524 --- [    Test worker] demo.SystemTest                          : No active profile set, falling back to 1 default profile: "default"
+2025-01-04T18:02:26.778+01:00  INFO 15524 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-04T18:02:26.864+01:00  INFO 15524 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 71 ms. Found 2 JPA repository interfaces.
+2025-01-04T18:02:27.666+01:00  INFO 15524 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-01-04T18:02:27.686+01:00  INFO 15524 --- [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-01-04T18:02:27.686+01:00  INFO 15524 --- [    Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-01-04T18:02:27.793+01:00  INFO 15524 --- [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-01-04T18:02:27.795+01:00  INFO 15524 --- [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1868 ms
+2025-01-04T18:02:27.988+01:00  INFO 15524 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-01-04T18:02:28.260+01:00  INFO 15524 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:95781748-eb38-47cb-a962-d19e2d1e87dc user=SA
+2025-01-04T18:02:28.263+01:00  INFO 15524 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-01-04T18:02:28.329+01:00  INFO 15524 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-01-04T18:02:28.417+01:00  INFO 15524 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-01-04T18:02:28.485+01:00  INFO 15524 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-01-04T18:02:28.877+01:00  INFO 15524 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-04T18:02:30.055+01:00  INFO 15524 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-04T18:02:30.093+01:00  INFO 15524 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-04T18:02:30.578+01:00  WARN 15524 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-01-04T18:02:31.458+01:00  INFO 15524 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2025-01-04T18:02:31.468+01:00  INFO 15524 --- [    Test worker] demo.SystemTest                          : Started SystemTest in 5.867 seconds (process running for 7.2)
+2025-01-04T18:02:32.184+01:00  INFO 15524 --- [    Test worker] i.g.bonigarcia.wdm.WebDriverManager      : Using geckodriver 0.35.0 (resolved driver for Firefox 133)
+2025-01-04T18:02:32.212+01:00  INFO 15524 --- [    Test worker] i.g.bonigarcia.wdm.WebDriverManager      : Exporting webdriver.gecko.driver as C:\Users\Lorenzo\.cache\selenium\geckodriver\win64\0.35.0\geckodriver.exe
+2025-01-04T18:02:36.071+01:00  INFO 15524 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-01-04T18:02:36.076+01:00  INFO 15524 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-01-04T18:02:36.078+01:00  INFO 15524 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

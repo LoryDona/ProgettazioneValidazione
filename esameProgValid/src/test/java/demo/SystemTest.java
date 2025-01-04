@@ -309,4 +309,69 @@ public class SystemTest extends BaseTest {
         assertEquals("Result message expected:", "Report in bozza", result.getMessageText());
 
     }
+
+    @Test
+    public void postponeMilestone() {
+        //creo i due utenti
+        Administrator a=new Administrator("a","a","a");
+        ScientificManager b=new ScientificManager("b","b","b");
+        b.setFree_hours(2);
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = dateFormat.parse("2025-01-01");
+            Date endDate = dateFormat.parse("2025-12-31");
+            // Aggiunta di un progetto
+            a.addProject("p", b, "In Pianificazione", startDate, endDate, 1);
+            //    repository.save(a);
+            //    b.addWorkPackage("wp", startDate, endDate, "dWP");
+        } catch (Exception e) {e.printStackTrace();}
+        repository.save(a);
+        repository.save(b);
+        // pagina principale
+        driver.get("http://localhost:8080/");
+
+        //faccio il login come Scientific Manager
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("b b","b");
+        // vado alla pagina dello scientific Manager
+        loginPage.clickAccedi();
+        ScientificManagerPage manager = new ScientificManagerPage(driver);
+        manager.listProjects();
+
+//************************************************      SI PUO' MINIMIZZARE LA CREAZIONE WP
+        //vado alla  lista progetti dello scientific manager
+        ListProjectScientificManagerPage listProjects=new ListProjectScientificManagerPage(driver);
+        listProjects.createWorkPackage();
+
+        //vado alla pagine per creare work package
+        CreateWorkPackagePage createWorkPackage=new CreateWorkPackagePage(driver);
+        createWorkPackage.fillWorkPackageForm("provaWP", "provaWP", "", "2025-01-01", "2025-01-02");
+        createWorkPackage.createWorkPackage();
+        manager = new ScientificManagerPage(driver);
+        manager.listProjects();
+//*********************************************************************+
+//************************************************      SI PUO' MINIMIZZARE LA CREAZIONE MIL
+        //vado alla  lista progetti dello scientific manager
+        listProjects=new ListProjectScientificManagerPage(driver);
+        listProjects.createMilestonePage();
+
+        //vado alla pagine per creare Milestone
+        CreateMilestonePage createMilestone=new CreateMilestonePage(driver);
+        createMilestone.fillMilestoneForm("provaMil", "dMil", "Da Iniziare", "provaWP", "2025-01-01","2025-06-10");
+        createMilestone.createMilestone();
+        manager = new ScientificManagerPage(driver);
+//***********************************************************************************
+
+        //vado alla pagina per posporre Milestone
+        manager.postponeMilestone("provaMil");
+     //   manager.postMilestone();
+        PostponeMilestonePage postponeMilestone=new PostponeMilestonePage(driver);
+        postponeMilestone.fillPostForm("2025-10-10");
+        postponeMilestone.updateEndDate();
+
+        manager = new ScientificManagerPage(driver);
+        assertEquals("Just two lines expected", 2, manager.getTableRowCountMil());
+        assertEquals("New End Date should be '10-10-2025'", "10-10-2025", manager.getFirstRowDateMil());
+
+    }
 }
