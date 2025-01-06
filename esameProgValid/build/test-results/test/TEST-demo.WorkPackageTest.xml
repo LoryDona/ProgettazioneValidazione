@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demo.WorkPackageTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2025-01-06T21:24:52" hostname="marjo" time="1.116">
+  <properties/>
+  <testcase name="Test del metodo addTask" classname="demo.WorkPackageTest" time="1.051"/>
+  <testcase name="Test dei getter e setter per endDate" classname="demo.WorkPackageTest" time="0.011"/>
+  <testcase name="Test del metodo getTasks quando non ci sono task" classname="demo.WorkPackageTest" time="0.002"/>
+  <testcase name="Test dei getter e setter per projectAssociation" classname="demo.WorkPackageTest" time="0.005"/>
+  <testcase name="Test del costruttore con parametri" classname="demo.WorkPackageTest" time="0.007"/>
+  <testcase name="Test dei getter e setter per milestoneAssociation" classname="demo.WorkPackageTest" time="0.003"/>
+  <testcase name="Test dei getter e setter per nameWorkPackage" classname="demo.WorkPackageTest" time="0.004"/>
+  <testcase name="Test dei getter e setter per startDate" classname="demo.WorkPackageTest" time="0.003"/>
+  <testcase name="Test dei getter e setter per description" classname="demo.WorkPackageTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
