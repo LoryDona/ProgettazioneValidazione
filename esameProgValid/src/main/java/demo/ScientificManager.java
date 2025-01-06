@@ -19,7 +19,9 @@ public class ScientificManager extends Person{
         super(firstName, lastName, password, "scientificManager");
     }
 
-    public ScientificManager(){};
+    public ScientificManager(){
+        super(null,null,null,"scientificManager");
+    };
 
     public void setFree_hours(int hours)
     {

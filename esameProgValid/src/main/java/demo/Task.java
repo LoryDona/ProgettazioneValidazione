@@ -69,4 +69,8 @@ public class Task {
     public String getNameTask() {
         return nameTask;
     }
+
+    public void setNameTask(String nameTask) {
+        this.nameTask = nameTask;
+    }
 }

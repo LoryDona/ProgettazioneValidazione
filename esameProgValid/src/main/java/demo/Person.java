@@ -56,4 +56,7 @@ public class Person {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

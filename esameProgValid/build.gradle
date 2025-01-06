@@ -12,6 +12,15 @@ repositories {
 }
 
 dependencies {
+
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    runtimeOnly 'com.h2database:h2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.rest-assured:rest-assured:5.3.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+
+
     implementation 'com.sun.mail:javax.mail:1.6.2'
     //spring
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -27,5 +36,9 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     testImplementation 'junit:junit:4.12'
+
+    test {
+        useJUnitPlatform()
+    }
 }
 

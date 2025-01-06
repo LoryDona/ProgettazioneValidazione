@@ -15,7 +15,9 @@ public class Administrator extends Person{
         super(firstName, lastName, password, "administrator");
     }
 
-    public Administrator(){};
+    public Administrator(){
+        super(null, null, null, "administrator");
+    };
 
     // l'amministratore aggiunge un progetto nuovo con associato il responsabile scientifico
     public void addProject(String nameProject, ScientificManager scientificManager, String state, Date startDate, Date endDate, int budget)

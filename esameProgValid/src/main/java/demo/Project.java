@@ -25,6 +25,10 @@ public class Project {
         this.nameProject = nameProject;
         this.scientificManager = scientificManager;
         this.administrator = administrator;
+        this.state = state;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.budget = budget;
     }
 
     public Project(){};
