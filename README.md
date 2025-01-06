@@ -3,10 +3,10 @@
 
 ## Indice
 1. [🛠️ Scaricare il progetto](#scaricare-il-progetto)
-2. [🎯 Scenari](#scenari)
-3. [📋 Test](#test)
-4. [👨‍💻 Autori](#autori)
-   
+2. [:black_nib:Requisiti](#requisiti)
+3. [🎯 Scenari](#scenari)
+4. [📋 Test](#test)
+5. [👨‍💻 Autori](#autori)
 ---
 
 
@@ -16,6 +16,44 @@ Per scaricare il progetto è necessario clonare la repository tramite il comando
 Dopodichè è necessario eseguire il comando `./gradlew build` per scaricare le dipendenze e compilare il progetto. Per eseguire il progetto è necessario eseguire il comando `./gradlew bootRun`, che avvierà il server sulla porta `8080`.
 
 ---
+## <a id="requisiti"></a> Requisiti
+
+#### Registrazione di un utente
+
+L'applicazione deve dare la possibilità agli utenti di registrarsi.
+
+#### Autenticazione
+
+Gli utenti registrati devono avere la possibilità di autenticarsi per usufruire del sistema.
+
+#### Aggiunta di Progetti
+
+Il sistema deve consentire all'amministrativo di aggiungere nuovi progetti.
+
+#### Salvataggio del Report
+
+Il sistema deve dare la possibilità di salvare i report in stato di bozza (salvataggio in un file .txt nella cartella del progetto).
+
+#### Conferma dell'Invio dei Report
+
+Il sistema deve fornire un sistema di notifiche e avvisi per informare gli utenti di eventuali errori o problemi di rete nell'invio dei report.
+
+#### Aggiunta di Work Package
+
+Il sistema deve consentire al responsabile scientifico di aggiungere nuovi work package.
+
+#### Aggiunta di una Milestone
+
+Il sistema deve consentire al responsabile scientifico di aggiungere nuove milestone.
+
+#### Posticipazione delle Milestone
+
+Il sistema deve consentire al responsabile scientifico di posticipare le milestone in caso di necessità.
+
+#### Aggiunta di Task
+
+Il sistema deve consentire al responsabile scientifico di aggiungere nuovi task.
+
 ## <a id="scenari"></a> Scenari
 
 #### 1) 💼 Creazione di Progetti e Allocazione del Responsabile
@@ -144,7 +182,22 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 
 ---
 
+## <a id="test"></a> Test
+
+#### Test con Page Object pattern
+
+- **testPasswordForgot**: verifica il funzionamento della funzione per il recupero della password (scenario 7).
+- **testAddPerson**: verifica il funzionamento della pagina  e delle funzioni per la registrazione di un nuovo utente (scenario 9).
+- **testAddProject**: dati due utenti già registrati, verifica il funzionamento delle funzioni per la creazione di un nuovo progetto e l'allocazione a un responsabile scientifico (scenario 1).
+- **testSendReport**: dati i rispettivi utenti e un report già memorizzato, verifica che la funzione che simula un errore di rete durante l'invio del report funzioni, il risultato può essere l'invio corretto del report, o un errore che ne specifica il fallimento (scenario 5).
+- **createWorkPackage**: dati due utenti e un progetto associato al responsabile scientifico, verifica la creazione di un work package (scenario 3).
+- **createTask**: dati tre utenti (amministratore, responsabile e ricercatore) e un progetto associato al responsabile scientifico, verifica la creazione di un task e la sua associazione ad un ricercatore  (scenario 2).
+- **createMilestone**: dati due utenti e un progetto associato al responsabile scientifico, verifica la corretta creazione di una milestone associata al progetto (scenario 4).
+- **testCreateReport**: verifica il corretto funzionamento della pagina e delle funzioni per la creazione di un report bozza (scenario 6).
+- **postponeMilestone**: dati due utenti e un progetto associato al responsabile scientifico, verifica la posticipazione di una milestone associata al progetto aggiunto (scenario 8).
+
 ## <a id="autori"></a> Autori
+
 - [Mario](https://github.com/Marjo1996)
 - [Christian Farina](https://github.com/FarinaChristian)
 - [Lorenzo Junior Donatiello](https://github.com/LoryDona)
