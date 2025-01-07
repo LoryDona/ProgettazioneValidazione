@@ -54,6 +54,13 @@ Il sistema deve consentire al responsabile scientifico di posticipare le milesto
 
 Il sistema deve consentire al responsabile scientifico di aggiungere nuovi task.
 
+#### Nota bene:
+
+- Solo un amministrativo può creare un progetto
+- Un progetto può essere creato solo in presenza di almeno un responsabile scientifico con un numero di ore sufficiente, è quindi necessario entrare nella pagina del responsabile scientifico e impostare un numero sufficiente di ore
+- Un report può essere messo in bozza solo in presenza di almeno un progetto
+- Un report può essere creato (nel senso che viene salvato su file) solo se controfirmato da un amministrativo e se completo di tutti i dati necessari. Per controfirmare è necessario entrare come amministratore e controfirmare il report nell'apposita pagina.
+
 ## <a id="scenari"></a> Scenari
 
 #### 1) 💼 Creazione di Progetti e Allocazione del Responsabile
