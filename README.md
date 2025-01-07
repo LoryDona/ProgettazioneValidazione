@@ -184,17 +184,41 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 
 ## <a id="test"></a> Test
 
-#### Test con Page Object pattern
+#### Unit test eseguiti nella cartella test\java\demo
+
+Di seguito è riportato l'elenco delle classi usate per gli unit test:
+
+- **AdministratorTest**: test della classe Administrator
+- **MilestoneTest**: test della classe Milestone
+- **PersonRepositoryTests**: test per il repository degli utenti (classe Person)
+- **ProjectTest**: test per la classe Project
+- **ReportTest**: test per la classe dei Report
+- **ResearcherTest**: test per la classe che identifica il ricercatore, ovvero la classe Researcher
+- **ScientificManagerTest**: test per la classe del responsabile scientifico (ScientificManager)
+- **TaskTest**: test per la classe Task
+- **WorkPackageTest**: test per la classe WorkPackage
+
+#### Test con Page Object pattern eseguiti nella classe SystemTest nella cartella test\java\demo
 
 - **testPasswordForgot**: verifica il funzionamento della funzione per il recupero della password (scenario 7).
+
 - **testAddPerson**: verifica il funzionamento della pagina  e delle funzioni per la registrazione di un nuovo utente (scenario 9).
+
 - **testAddProject**: dati due utenti già registrati, verifica il funzionamento delle funzioni per la creazione di un nuovo progetto e l'allocazione a un responsabile scientifico (scenario 1).
+
 - **testSendReport**: dati i rispettivi utenti e un report già memorizzato, verifica che la funzione che simula un errore di rete durante l'invio del report funzioni, il risultato può essere l'invio corretto del report, o un errore che ne specifica il fallimento (scenario 5).
+
 - **createWorkPackage**: dati due utenti e un progetto associato al responsabile scientifico, verifica la creazione di un work package (scenario 3).
+
 - **createTask**: dati tre utenti (amministratore, responsabile e ricercatore) e un progetto associato al responsabile scientifico, verifica la creazione di un task e la sua associazione ad un ricercatore  (scenario 2).
+
 - **createMilestone**: dati due utenti e un progetto associato al responsabile scientifico, verifica la corretta creazione di una milestone associata al progetto (scenario 4).
+
 - **testCreateReport**: verifica il corretto funzionamento della pagina e delle funzioni per la creazione di un report bozza (scenario 6).
+
 - **postponeMilestone**: dati due utenti e un progetto associato al responsabile scientifico, verifica la posticipazione di una milestone associata al progetto aggiunto (scenario 8).
+
+  Ogni classe Page Object contiene nel nome il suffisso "Page". Tutte queste classi ereditano dalla classe PageObject.
 
 ## <a id="autori"></a> Autori
 
