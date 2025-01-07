@@ -68,8 +68,6 @@ public class AppController {
         return "login";
     }
 
-
-
     // Metodo per gestire il recupero della password
     @PostMapping("/recupero")
     public String login(@RequestParam("emailRecupero") String emailRecupero, Model model) {
@@ -80,54 +78,6 @@ public class AppController {
         return "result";
     }
 
-    @PostMapping("/createReport")
-    public String createReport(
-            @RequestParam("results") String results,
-            @RequestParam("hours") String hours,
-            @RequestParam("activities") String activities,
-            Model model) {
-
-        if (results.equals("") || hours.equals("") || activities.equals("")){
-            model.addAttribute("message", "Nessun campo può essere vuoto");
-        }
-        else{
-            try (FileWriter writer = new FileWriter("output.txt")) {
-                writer.write("Risultati:\n"+results+"\nOre: "+hours+"\nActivities:\n"+activities);
-            } catch (IOException e) {
-                System.err.println("Errore durante il salvataggio della stringa: " + e.getMessage());
-                model.addAttribute("message", "Errore nel salvataggio");
-            }
-            model.addAttribute("message", "Report Salvato");
-        }
-
-        return "result";
-    }
-
-    @PostMapping("/submitReport")
-    public String submitReport(
-            @RequestParam("email") String email,
-            @RequestParam("report") String reportName,
-            Model model) {
-        String message="";
-        float randomValue=(float) Math.random();//simula un errore di rete, se minore di 0,5 c'è un errore
-        if (randomValue > 0.5) {
-            message = "Report "+reportName+" inviato a " + email;
-            contaFallimenti=0;
-        }
-        else if (randomValue < 0.5 && contaFallimenti<3) {
-            message = "Errore nell'invio";
-            contaFallimenti++;
-        }
-        else{
-            message = "Controllare lo stato della rete";
-            contaFallimenti=0;
-        }
-        model.addAttribute("message", message);
-        // Restituisci la vista con il messaggio
-        return "result";
-    }
-
-    //---------------------------------------------------------------------------
     @RequestMapping("/list")
     public String list(Model model){
         List<Person> data = new LinkedList<>();
