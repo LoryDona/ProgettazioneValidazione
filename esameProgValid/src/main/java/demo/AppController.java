@@ -88,11 +88,6 @@ public class AppController {
         return "list";
     }
 
-    @RequestMapping("/input")
-    public String input(){
-        return "input";
-    }
-
     @RequestMapping("/read")
     public String read(
             @RequestParam(name="id", required=true) Long id,
@@ -230,7 +225,6 @@ public class AppController {
             }
         }
 
-
         if(start.isAfter(end)) {
             return "errorDate";
         }
@@ -268,7 +262,6 @@ public class AppController {
                 projectsScientificManager.add(p);
             }
         }
-
 
 
         model.addAttribute("projects", projectsScientificManager);
