@@ -107,11 +107,11 @@ Il sistema deve consentire al responsabile scientifico di aggiungere nuovi task.
 
 #### 4) 📅 Aggiunta delle Milestone di Progetto
 
-**Assunzioni iniziali:** Il responsabile scientifico può aggiungere le milestone del progetto. La creazione di una milestone richiede la presenza di almeno un ricercatore associato al progetto.
+**Assunzioni iniziali:** Il responsabile scientifico può aggiungere le milestone del progetto. La creazione di una milestone richiede la presenza di almeno un work package associato al progetto.
 
 **Normale:** Introdurre un’interfaccia per la visualizzazione delle milestone con opzioni di aggiunta.
 
-**Cosa può andare storto:** Una milestone potrebbe essere messa in una data in cui, per diverse ragioni, non può essere registrata (eventuali collisioni con altre milestone oppure giorni festivi). Il sistema deve implementare un sistema di verifica della disponibilità dei giorni e notificare l’eventuale errore all’utente. Dato che la creazione di una milestone richiede la presenza di almeno un ricercatore associato al progetto, sarà necessario implementare anche un messaggio d’errore che avverta l’assenza di ricercatori se tale situazione si verifica.
+**Cosa può andare storto:** Una milestone potrebbe essere messa in una data in cui, per diverse ragioni, non può essere registrata (eventuali collisioni con altre milestone oppure giorni festivi). Il sistema deve implementare un sistema di verifica della disponibilità dei giorni e notificare l’eventuale errore all’utente. Dato che la creazione di una milestone richiede la presenza di almeno un work package associato al progetto, sarà necessario implementare anche un messaggio d’errore che avverta l’assenza di work package se tale situazione si verifica.
 
 **Altre attività:**
 
@@ -163,7 +163,7 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 
 #### 8) ⏳ Posticipazione delle Milestone di Progetto
 
-**Assunzioni iniziali:** Il responsabile scientifico può posticipare le milestone del progetto in caso di ritardo. La posticipa di una milestone richiede la continua presenza di almeno un ricercatore associato al progetto.
+**Assunzioni iniziali:** Il responsabile scientifico può posticipare le milestone del progetto in caso di ritardo.
 
 **Normale**: Introdurre un’interfaccia per la posticipazione delle milestone con opzioni di modifica per la data.
 
