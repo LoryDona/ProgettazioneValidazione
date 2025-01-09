@@ -5,8 +5,9 @@
 1. [🛠️ Scaricare il progetto](#scaricare-il-progetto)
 2. [:black_nib:Requisiti](#requisiti)
 3. [🎯 Scenari](#scenari)
-4. [📋 Test](#test)
-5. [👨‍💻 Autori](#autori)
+4. [📃 Classi](#classi)
+5. [📋 Test](#test)
+6. [👨‍💻 Autori](#autori)
 ---
 
 
@@ -32,7 +33,7 @@ Il sistema deve consentire all'amministrativo di aggiungere nuovi progetti.
 
 #### Salvataggio del Report
 
-Il sistema deve dare la possibilità di salvare i report in stato di bozza (salvataggio in un file .txt nella cartella del progetto).
+Il sistema deve dare la possibilità di salvare su file i report in stato di bozza (salvataggio in un file .txt nella cartella del progetto).
 
 #### Conferma dell'Invio dei Report
 
@@ -149,6 +150,10 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 
 **Cosa può andare storto:** Inserimento errato o incompleto dei dati da parte degli utenti (ricercatori, responsabili scientifici o amministrativi). Il sistema deve garantire che alcuni campi siano obbligatori.
 
+**Altre attività:**
+
+**Stato del sistema al completamento:** Il report risulta salvato su file, oppure si riceve un messaggio di errore che suggerisce come risolvere il problema (es. "Il report deve essere prima controfirmato").
+
 ---
 
 #### 7) 🔒 Autenticazione Recupero credenziali da parte di un utente
@@ -158,6 +163,10 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 **Normale:** L’utente accede al sistema inserendo il proprio username e la propria password. L'utente deve essere stato precedentemente registrato.
 
 **Cosa può andare storto:** L'utente dimentica la password, per risolvere dovrà accedere alla pagina di login e selezionare  "Recupera Password", verrà quindi inviata una mail all’utente in cui si fornirà una password provvisoria che poi andrà cambiata. Se l'utente dovesse inserire dei dati errati, il sistema negherà l'accesso all'utente.
+
+**Altre attività:**
+
+**Stato del sistema al completamento**: La nuova password è stata inviata.
 
 ---
 
@@ -188,6 +197,24 @@ Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il repo
 **Stato** **del** **sistema** **al** **completamento**: Il nuovo utente è stato registrato nel sistema.
 
 ---
+
+## <a id="classi"></a> Classi
+
+Di seguito sono riportate le classi più significative utilizzate nel progetto.
+
+**PersonRepository**: repository degli utenti, contiene oggetti di tipo Person
+
+**ReportRepository**: repository dei report, contiene oggetti di tipo Report
+
+**AppController**: il controller utilizzato nel pattern MVC
+
+**Person**: è la super classe delle classi Administrator, ScientificManager e Researcher
+
+**Project**: rappresenta un progetto, gli amministratori hanno un ArrayList statico di oggetti Project. Ogni progetto ha un ArrayList di oggetti WorkPackage e un ArrayList di  oggetti Milestone
+
+**WorkPackage**: classe che rappresenta un WorkPackage, contiene un ArrayList di oggetti Task
+
+**ServingWebContentApplication**: classe da avviare per far partire il progetto
 
 ## <a id="test"></a> Test
 
@@ -225,10 +252,10 @@ Di seguito è riportato l'elenco delle classi usate per gli unit test:
 
 - **postponeMilestone**: dati due utenti e un progetto associato al responsabile scientifico, verifica la posticipazione di una milestone associata al progetto aggiunto (scenario 8).
 
-  Ogni classe Page Object contiene nel nome il suffisso "Page". Tutte queste classi ereditano dalla classe PageObject.
+  Ogni classe Page Object contiene nel nome il suffisso "Page". Tutte queste classi ereditano dalla classe PageObject. La classe SystemTest eredita dalla classe BaseTest.
 
 ## <a id="autori"></a> Autori
 
-- [Mario](https://github.com/Marjo1996)
-- [Christian Farina](https://github.com/FarinaChristian)
-- [Lorenzo Junior Donatiello](https://github.com/LoryDona)
+- [Marjo Shytermeja VR527312](https://github.com/Marjo1996)
+- [Christian Farina VR501577](https://github.com/FarinaChristian)
+- [Lorenzo Junior Donatiello VR508539](https://github.com/LoryDona)
