@@ -256,25 +256,27 @@ Di seguito è riportato l'elenco delle classi usate per gli unit test:
   
   #### Dati inseriti
   
-  In ogni test eseguito con page object abbiamo inserito i medesimi dati che riportiamo di seguito:
+  In ogni test eseguito con page object abbiamo inserito i dati riportati di seguito:
   
-  Administartor a = new Administrator("a","a","a")
+  ```
+  Administartor a = new Administrator("a","a","a");
   
-  ScientificManager b=new ScientificManager("b","b","b")
+  ScientificManager b=new ScientificManager("b","b","b");
   
   Researcher c = new Researcher("c","c","c");
   
-  Project p = new Project("p", b, "In Pianificazione", dateFormat.parse("2025-01-01"), dateFormat.parse("2025-12-31"), 1)
+  Project p = new Project("p", b, "In Pianificazione", dateFormat.parse("2025-01-01"), dateFormat.parse("2025-12-31"), 1);
   
-  Report r = new Report("r", "res", "1","a","b", "p",false,true)
+  Report r = new Report("r", "res", "1","a","b", "p",false,true);
   
-  WorkPackage w = new WorkPackage("provaWP", "provaWP", "", "2025-01-01", "2025-01-02")
+  WorkPackage w = new WorkPackage("provaWP", "provaWP", "", "2025-01-01", "2025-01-02");
   
-  Milestone m = new Milestone("provaMil", "dMil", "Da Iniziare", "provaWP", "2025-01-01","2025-06-10")
+  Milestone m = new Milestone("provaMil", "dMil", "Da Iniziare", "provaWP", "2025-01-01","2025-06-10",lista_dei_ workpackage);
   
-  Task t =new Task("provaT", "c", "In Pianificazione", "2025-01-01","2025-01-02")
+  Task t =new Task("provaT", "c", lista_ricercatori,"In Pianificazione", "2025-01-01","2025-01-02");
+  ```
   
-  Ogni qualvolta era richiesto di inserire un determinato oggetto, sono stati inseriti i dati appena riportati.
+  Ogni qualvolta era richiesto di inserire un determinato oggetto, sono stati inseriti i dati appena riportati. Prima di ogni test, viene eseguita una pulizia dei due repository.
 
 ## <a id="autori"></a> Autori
 
