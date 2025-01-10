@@ -234,7 +234,7 @@ Di seguito è riportato l'elenco delle classi usate per gli unit test:
 
 #### Test con Page Object pattern eseguiti nella classe SystemTest nella cartella test\java\demo
 
-- **testPasswordForgot**: verifica il funzionamento del metodoper il recupero della password, la mail di recupero è prova@prova (scenario 7).
+- **testPasswordForgot**: verifica il funzionamento del metodo per il recupero della password, la mail di recupero è prova@prova (scenario 7).
 
 - **testAddPerson**: verifica il funzionamento della pagina  e delle funzioni per la registrazione di un nuovo utente (scenario 9).
 
