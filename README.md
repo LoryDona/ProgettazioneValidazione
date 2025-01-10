@@ -146,7 +146,7 @@ Il sistema deve consentire al responsabile scientifico di aggiungere nuovi task.
 
 •   Attività svolte durante il periodo di riferimento
 
-Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il report, dopo la creazione deve essere firmato dal creatore e avere una controfirma da un amministratore per essere convalidato e approvato, inoltre si devono eseguire backup giornalieri per garantire l’integrità dei dati.
+Inoltre è possibile salvare il report in uno stato di bozza temporanea. Il report, dopo la creazione, deve essere firmato dal creatore e avere una controfirma da un amministratore per essere convalidato e approvato.
 
 **Cosa può andare storto:** Inserimento errato o incompleto dei dati da parte degli utenti (ricercatori, responsabili scientifici o amministrativi). Il sistema deve garantire che alcuni campi siano obbligatori.
 
