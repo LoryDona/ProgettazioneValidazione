@@ -234,7 +234,7 @@ Di seguito è riportato l'elenco delle classi usate per gli unit test:
 
 #### Test con Page Object pattern eseguiti nella classe SystemTest nella cartella test\java\demo
 
-- **testPasswordForgot**: verifica il funzionamento della funzione per il recupero della password (scenario 7).
+- **testPasswordForgot**: verifica il funzionamento del metodoper il recupero della password, la mail di recupero è prova@prova (scenario 7).
 
 - **testAddPerson**: verifica il funzionamento della pagina  e delle funzioni per la registrazione di un nuovo utente (scenario 9).
 
@@ -253,6 +253,28 @@ Di seguito è riportato l'elenco delle classi usate per gli unit test:
 - **postponeMilestone**: dati due utenti e un progetto associato al responsabile scientifico, verifica la posticipazione di una milestone associata al progetto aggiunto (scenario 8).
 
   Ogni classe Page Object contiene nel nome il suffisso "Page". Tutte queste classi ereditano dalla classe PageObject. La classe SystemTest eredita dalla classe BaseTest.
+  
+  #### Dati inseriti
+  
+  In ogni test eseguito con page object abbiamo inserito i medesimi dati che riportiamo di seguito:
+  
+  Administartor a = new Administrator("a","a","a")
+  
+  ScientificManager b=new ScientificManager("b","b","b")
+  
+  Researcher c = new Researcher("c","c","c");
+  
+  Project p = new Project("p", b, "In Pianificazione", dateFormat.parse("2025-01-01"), dateFormat.parse("2025-12-31"), 1)
+  
+  Report r = new Report("r", "res", "1","a","b", "p",false,true)
+  
+  WorkPackage w = new WorkPackage("provaWP", "provaWP", "", "2025-01-01", "2025-01-02")
+  
+  Milestone m = new Milestone("provaMil", "dMil", "Da Iniziare", "provaWP", "2025-01-01","2025-06-10")
+  
+  Task t =new Task("provaT", "c", "In Pianificazione", "2025-01-01","2025-01-02")
+  
+  Ogni qualvolta era richiesto di inserire un determinato oggetto, sono stati inseriti i dati appena riportati.
 
 ## <a id="autori"></a> Autori
 
