@@ -136,7 +136,7 @@ Il sistema deve consentire al responsabile scientifico di aggiungere nuovi task.
 
 #### 6) 📊 Creazione dei report
 
-**Assunzioni iniziali:** Generazione di Report: Il sistema deve generare report e garantire la conservazione dei report firmati per almeno 10 anni.
+**Assunzioni iniziali:** Il sistema deve generare report e garantire la conservazione dei report firmati per almeno 10 anni.
 
 **Normale:** Gli utenti autorizzati(Amministratori, responsabile scientifico, ricercatori) possono creare i report dalla dashboard, inserendo queste 3 informazioni:
 
