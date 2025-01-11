@@ -248,7 +248,7 @@ Di seguito è riportato l'elenco delle classi usate per gli unit test:
 
 - **createMilestone**: dati due utenti e un progetto associato al responsabile scientifico, verifica la corretta creazione di una milestone associata al progetto (scenario 4).
 
-- **testCreateReport**: verifica il corretto funzionamento della pagina e delle funzioni per la creazione di un report bozza (scenario 6).
+- **testCreateReport**: verifica il corretto funzionamento della pagina e delle funzioni per la creazione di un report da salvare come bozza (scenario 6).
 
 - **postponeMilestone**: dati due utenti e un progetto associato al responsabile scientifico, verifica la posticipazione di una milestone associata al progetto aggiunto (scenario 8).
 
