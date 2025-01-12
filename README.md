@@ -55,7 +55,7 @@ Il sistema deve consentire al responsabile scientifico di posticipare le milesto
 
 Il sistema deve consentire al responsabile scientifico di aggiungere nuovi task.
 
-#### Nota bene:
+#### Vincoli:
 
 - Solo un amministrativo può creare un progetto
 - Un progetto può essere creato solo in presenza di almeno un responsabile scientifico con un numero di ore sufficiente, è quindi necessario entrare nella pagina del responsabile scientifico e impostare un numero sufficiente di ore
