@@ -30,7 +30,7 @@ public class SystemTest extends BaseTest {
         // pagina principale
         driver.get("http://localhost:8080/");
 
-        // interagisco con la pagina list.html
+        // interagisco con la pagina di login
         LoginPage loginPage = new LoginPage(driver);
 
         // clicco per mostrare il campo per mandare la password
@@ -46,7 +46,7 @@ public class SystemTest extends BaseTest {
         // pagina principale
         driver.get("http://localhost:8080/");
 
-        // interagisco con la pagina list.html
+        // interagisco con la pagina di login
         LoginPage loginPage = new LoginPage(driver);
 
         // vado alla pagina "Create user"
