@@ -4,7 +4,6 @@ pipeline {
     environment {
         JAVA_HOME = 'C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.8.9-hotspot'
         PATH = "${JAVA_HOME}\\bin;${env.PATH}"
-        GRADLE_USER_HOME = 'C:\\Users\\Lorenzo\\.gradle'
     }
 
     stages {
