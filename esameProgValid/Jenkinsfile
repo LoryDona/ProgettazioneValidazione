@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     stages {
+
         stage('Clone Repo') {
             steps {
                 checkout scm
@@ -10,48 +11,58 @@ pipeline {
 
         stage('Config Check') {
             steps {
-                bat 'java -version'
-                bat 'gradlew --version'
+                dir('esameProgValid') {
+                    bat 'java -version'
+                    bat 'gradlew.bat --version'
+                }
             }
         }
 
         stage('Build') {
             steps {
-                bat 'gradlew clean assemble'
+                dir('esameProgValid') {
+                    bat 'gradlew.bat clean build -x test'
+                }
             }
         }
 
         stage('Unit Test') {
             steps {
-                bat 'gradlew test'
+                dir('esameProgValid') {
+                    bat 'gradlew.bat test'
+                }
             }
             post {
                 always {
-                    junit 'build/test-results/test/*.xml'
+                    junit 'esameProgValid/build/test-results/test/*.xml'
                 }
             }
         }
 
         stage('System Test') {
             steps {
-                bat 'gradlew systemTest'
+                dir('esameProgValid') {
+                    bat 'gradlew.bat systemTest'
+                }
             }
             post {
                 always {
-                    junit 'build/test-results/systemTest/*.xml'
+                    junit 'esameProgValid/build/test-results/systemTest/*.xml'
                 }
             }
         }
 
         stage('Coverage') {
             steps {
-                bat 'gradlew jacocoTestReport'
+                dir('esameProgValid') {
+                    bat 'gradlew.bat jacocoTestReport'
+                }
             }
         }
 
         stage('Publish Artifact') {
             steps {
-                archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
+                archiveArtifacts artifacts: 'esameProgValid/build/libs/*.jar', fingerprint: true
             }
         }
     }
