@@ -2,32 +2,56 @@ pipeline {
     agent any
 
     stages {
-
         stage('Clone Repo') {
             steps {
                 checkout scm
             }
         }
 
+        stage('Config Check') {
+            steps {
+                bat 'java -version'
+                bat 'gradlew --version'
+            }
+        }
+
         stage('Build') {
             steps {
-                dir('esameProgValid') {
-                    bat 'gradlew.bat clean build'
+                bat 'gradlew clean assemble'
+            }
+        }
+
+        stage('Unit Test') {
+            steps {
+                bat 'gradlew test'
+            }
+            post {
+                always {
+                    junit 'build/test-results/test/*.xml'
                 }
             }
         }
 
-        stage('Test') {
+        stage('System Test') {
             steps {
-                dir('esameProgValid') {
-                    bat 'gradlew.bat test'
+                bat 'gradlew systemTest'
+            }
+            post {
+                always {
+                    junit 'build/test-results/systemTest/*.xml'
                 }
             }
         }
 
-        stage('Archive Artifact') {
+        stage('Coverage') {
             steps {
-                archiveArtifacts artifacts: 'esameProgValid/build/libs/*.jar'
+                bat 'gradlew jacocoTestReport'
+            }
+        }
+
+        stage('Publish Artifact') {
+            steps {
+                archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
             }
         }
     }
