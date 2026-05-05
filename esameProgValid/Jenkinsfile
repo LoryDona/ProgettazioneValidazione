@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        JAVA_HOME = 'C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.8.9-hotspot'
+        PATH = "${JAVA_HOME}\\bin;${env.PATH}"
+    }
     stages {
 
         stage('Clone Repo') {
