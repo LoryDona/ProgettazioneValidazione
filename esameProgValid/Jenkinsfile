@@ -1,14 +1,13 @@
 pipeline {
     agent any
 
-    environment {
-        JAVA_HOME = 'C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.8.9-hotspot'
-        PATH = "${JAVA_HOME}\\bin;${env.PATH}"
+    tools {
+        jdk 'JDK21'
     }
 
     stages {
 
-        stage('Checkout') {
+        stage('Clone Repo') {
             steps {
                 checkout scm
             }
@@ -16,23 +15,41 @@ pipeline {
 
         stage('Build') {
             steps {
-                dir('esameProgValid') {
-                    bat 'gradlew.bat clean build'
+                bat './gradlew clean assemble'
+            }
+        }
+
+         stage('Unit Test') {
+                    steps {
+                        bat 'gradlew test'
+                    }
+                    post {
+                        always {
+                            junit 'build/test-results/test/*.xml'
+                        }
+                    }
+                }
+
+        stage('System Test') {
+            steps {
+                bat 'gradlew systemTest'
+            }
+            post {
+                always {
+                    junit 'build/test-results/systemTest/*.xml'
                 }
             }
         }
 
-        stage('Test') {
+        stage('Coverage') {
             steps {
-                dir('esameProgValid') {
-                    bat 'gradlew.bat test'
-                }
+                bat 'gradlew jacocoTestReport'
             }
         }
 
-        stage('Archive Artifact') {
+        stage('Publish Artifact') {
             steps {
-                archiveArtifacts artifacts: 'esameProgValid/build/libs/*.jar'
+                archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
             }
         }
     }
