@@ -43,13 +43,6 @@ pipeline {
             }
         }
 
-        stage('Coverage') {
-            steps {
-                dir('esameProgValid') {
-                    bat 'gradlew.bat jacocoTestReport'
-                }
-            }
-        }
 
         stage('Publish Artifact') {
             steps {
