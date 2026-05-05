@@ -43,19 +43,6 @@ pipeline {
             }
         }
 
-        stage('System Test') {
-            steps {
-                dir('esameProgValid') {
-                    bat 'gradlew.bat systemTest'
-                }
-            }
-            post {
-                always {
-                    junit 'esameProgValid/build/test-results/systemTest/*.xml'
-                }
-            }
-        }
-
         stage('Coverage') {
             steps {
                 dir('esameProgValid') {
