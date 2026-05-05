@@ -5,6 +5,7 @@ pipeline {
         JAVA_HOME = 'C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.8.9-hotspot'
         PATH = "${JAVA_HOME}\\bin;${env.PATH}"
     }
+
     stages {
 
         stage('Clone Repo') {
@@ -33,7 +34,18 @@ pipeline {
         stage('Unit Test') {
             steps {
                 dir('esameProgValid') {
-                    bat 'gradlew.bat test'
+                    bat '''
+                    gradlew.bat test ^
+                    --tests "demo.AdministratorTest" ^
+                    --tests "demo.ProjectTest" ^
+                    --tests "demo.WorkPackageTest" ^
+                    --tests "demo.MilestoneTest" ^
+                    --tests "demo.TaskTest" ^
+                    --tests "demo.ResearcherTest" ^
+                    --tests "demo.ScientificManagerTest" ^
+                    --tests "demo.ReportTest" ^
+                    --tests "demo.PersonRepositoryTests"
+                    '''
                 }
             }
             post {
@@ -43,6 +55,18 @@ pipeline {
             }
         }
 
+        stage('System Test') {
+            steps {
+                dir('esameProgValid') {
+                    bat 'gradlew.bat systemTest'
+                }
+            }
+            post {
+                always {
+                    junit 'esameProgValid/build/test-results/systemTest/*.xml'
+                }
+            }
+        }
 
         stage('Publish Artifact') {
             steps {
