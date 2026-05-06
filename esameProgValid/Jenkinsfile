@@ -4,6 +4,9 @@ pipeline {
     options {
         skipDefaultCheckout()
     }
+    triggers {
+        pollSCM('H/2 * * * *') // ogni 2 minuti
+    }
 
     environment {
         JAVA_HOME = 'C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.8.9-hotspot'
